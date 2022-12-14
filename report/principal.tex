@@ -1,0 +1,36 @@
+\documentclass[
+  journal=pasa,
+  manuscript=project\ report, %% or "review"
+  year=2020,
+  volume=37,
+]{cup-journal}
+
+\usepackage{microtype,siunitx,booktabs}
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{ }
+\sisetup{detect-all,separate-uncertainty=true}
+\title{Mathematical modeling and simulation \\ \small{Stochastic representations of ion channel kinetics and exact stochastic simulation of neuronal dynamics}}
+
+
+\author{Giacomo Fantoni}
+%\email[Giacomo Fantoni]{giacomo.fantoni@studenti.unitn.it}
+% \alsoaffiliation{Joint first authors}
+
+
+\author{Alessandro Polignano}
+%\email[Alessandro Polignano]{alessandro.polignano@studenti.unitn.it}
+
+\published{\today}
+
+
+\begin{document}
+
+\input{content}
+% PASA uses footnotes, not endnotes. \endnote in this template will behave like \footnote; and \printendnotes will not output anything.
+% \printendnotes
+\bibliography{bibliography}
+
+\appendix
+\input{appendix}
+
+\end{document}
