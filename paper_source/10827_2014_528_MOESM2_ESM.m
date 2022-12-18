@@ -2,13 +2,13 @@ function [V,N,t,Ntot]=ml_gill_exact_konly(tmax,Ntot)
 
 %function [V,N,t,Ntot]=ml_rtc_exact_konly(tmax,Ntot);
 %
-% Exact solution of Morris Lecar with stochastic potassium channel. 
-% Using the random time change algorithm.  We track two reactions: 
+% Exact solution of Morris Lecar with stochastic potassium channel.
+% Using the random time change algorithm.  We track two reactions:
 %
 % Rxn 1: closed -> open (per capita rate alpha)
 % Rxn 2: open -> closed (per capita rate beta)
 %
-% Default Ntot=40, tmax=4000.  
+% Default Ntot=40, tmax=4000.
 %
 % Author: PJT July 2013, Case Western Reserve University.
 
