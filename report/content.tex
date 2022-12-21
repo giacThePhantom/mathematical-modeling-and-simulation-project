@@ -2,91 +2,425 @@
 \end{abstract}
 
 
-\section{Random time change representation}
-Consider a model of a system with states $A$ for closed and $B$ for open of an ion channel.
-The dynamics of the system are modeled assuming that the dwell times in the two states are determined by independent exponential random variables with parameters $\alpha$ and $\beta$:
+\section{Stochastic representations}
 
-$$A\xleftrightharpoons[\beta]{\alpha}B$$
+	\subsection{Random time change representation}
+	Consider a model of a system with states $A$ for closed and $B$ for open of an ion channel.
+	The dynamics of the system are modeled assuming that the dwell times in the two states are determined by independent exponential random variables with parameters $\alpha$ and $\beta$:
 
-The probability that a closed channel opens in the next increment of time $\Delta s$ is assumed $\alpha\Delta s + o(\Delta s)$, while the probability that an open channel closes is assumed $\beta\Delta s + o(\Delta s)$.
-This model can be described mathematically by a chemical master equation, that for the two states model is:
+	$$A\xleftrightharpoons[\beta]{\alpha}B$$
 
-$$\begin{cases}\frac{d}{dt}p_{x_0}(A, t) = -\alpha p_{x_0}(A, t) + \beta p_{x_0}(B, t)\\\frac{d}{dt}p_{x_0}(B, t) = -\beta p_{x_0}(B, t) + \alpha p_{x_0}(A, t)\end{cases}$$
+	The probability that a closed channel opens in the next increment of time $\Delta s$ is assumed $\alpha\Delta s + o(\Delta s)$, while the probability that an open channel closes is assumed $\beta\Delta s + o(\Delta s)$.
+	This model can be described mathematically by a chemical master equation, that for the two states model is:
 
-Where:
+	$$\begin{cases}\frac{d}{dt}p_{x_0}(A, t) = -\alpha p_{x_0}(A, t) + \beta p_{x_0}(B, t)\\\frac{d}{dt}p_{x_0}(B, t) = -\beta p_{x_0}(B, t) + \alpha p_{x_0}(A, t)\end{cases}$$
 
-\begin{itemize}
-	\item $p_{x_0}(x, t)$ is the probability of being in state $x\in \{A, B\}$ at time $t$ given the initial condition $x_0$.
-	\item $x_0$ is the initial condition.
-\end{itemize}
+	Where:
 
-The chemical master equation is a linear ODE governing the dynamical behaviour of the probability distribution of the model and does not provide a stochastic representation for a particular realization of the process.
-To reconstruct  a path-wise representation let:
+	\begin{itemize}
+		\item $p_{x_0}(x, t)$ is the probability of being in state $x\in \{A, B\}$ at time $t$ given the initial condition $x_0$.
+		\item $x_0$ is the initial condition.
+	\end{itemize}
 
-\begin{itemize}
-	\item $R_1(t)$ be the number of times $A\rightarrow B$ has taken place by time $t$.
-	\item $R_2(t)$ be the number of times $B\rightarrow A$ has taken place by time $t$.
-	\item $X_1(t)\in\{0,1\}$ be $1$ if the channel is closed at time $t$ and zero otherwise.
-	\item $X_2(t)=1-X_1(t)$ be $1$ if the channel is open at time $t$ and zero otherwise.
-	\item $X(t) = \begin{pmatrix}X_1(t) & X_2(t)\end{pmatrix}^T$.
-\end{itemize}
+	The chemical master equation is a linear ODE governing the dynamical behaviour of the probability distribution of the model and does not provide a stochastic representation for a particular realization of the process.
+	To reconstruct  a path-wise representation let:
 
-Now:
+	\begin{itemize}
+		\item $R_1(t)$ be the number of times $A\rightarrow B$ has taken place by time $t$.
+		\item $R_2(t)$ be the number of times $B\rightarrow A$ has taken place by time $t$.
+		\item $X_1(t)\in\{0,1\}$ be $1$ if the channel is closed at time $t$ and zero otherwise.
+		\item $X_2(t)=1-X_1(t)$ be $1$ if the channel is open at time $t$ and zero otherwise.
+		\item $X(t) = \begin{pmatrix}X_1(t) & X_2(t)\end{pmatrix}^T$.
+	\end{itemize}
 
-$$X(t) = X(0) + R_1(t)\begin{pmatrix}-1\\1\end{pmatrix} + R_2(t)\begin{pmatrix}1\\-1\end{pmatrix}$$
+	Now:
 
-The counting processes $R_1$ and $R_2$ are represented as unit-rate Poisson processes.
-A unit-rate Poisson process can be constructed considering:
+	$$X(t) = X(0) + R_1(t)\begin{pmatrix}-1\\1\end{pmatrix} + R_2(t)\begin{pmatrix}1\\-1\end{pmatrix}$$
 
-\begin{itemize}
-	\item $\{e_i\}_{i=1}^{\infty}$ independent exponential random variables with a parameter of $1$.
-	\item $\tau=e_1, \tau_2 = \tau_1+e_2, \dots, t_n = t_{n-1} + e_n$.
-\end{itemize}
+	The counting processes $R_1$ and $R_2$ are represented as unit-rate Poisson processes.
+	A unit-rate Poisson process can be constructed considering:
 
-The associated unit-rate Poisson processes $Y(s)$ is the counting process determined by the number of points $\{\tau_i\}_{i=1}^{\infty}$ that come before $s \ge 0$.
-Let $\lambda:[0, \infty[\rightarrow\mathbb{R}_{\ge 0}$ be the rate of movement along the time axis, then the number of points observed by time $s$ is:
+	\begin{itemize}
+		\item $\{e_i\}_{i=1}^{\infty}$ independent exponential random variables with a parameter of $1$.
+		\item $\tau=e_1, \tau_2 = \tau_1+e_2, \dots, t_n = t_{n-1} + e_n$.
+	\end{itemize}
 
-$$Y\biggl(\int_0^{s}\lambda(r)dr\biggr)$$
+	The associated unit-rate Poisson processes $Y(s)$ is the counting process determined by the number of points $\{\tau_i\}_{i=1}^{\infty}$ that come before $s \ge 0$.
+	Let $\lambda:[0, \infty[\rightarrow\mathbb{R}_{\ge 0}$ be the rate of movement along the time axis, then the number of points observed by time $s$ is:
 
-From the basic properties of exponential random variables, whenever $\lambda(s)>0$, the probability of seeing a jump within the next small increment of time $\Delta s$ is:
+	$$Y\biggl(\int_0^{s}\lambda(r)dr\biggr)$$
 
-$$P\biggl(Y\biggl(\int_{0}^{s+\Delta s}\lambda(r)dr\biggr)-Y\biggl(\int_{0}^{s}\lambda(r)dr\biggr)\ge 1\biggr)\sim \lambda(s)\Delta s$$
+	From the basic properties of exponential random variables, whenever $\lambda(s)>0$, the probability of seeing a jump within the next small increment of time $\Delta s$ is:
 
-Thus the propensity for seeing another jump is $\lambda(s)$.
-Noting that $\forall s, X_1(s) + X_2(s)=1$, the propensity for reactions $1$ and $2$ are:
+	$$P\biggl(Y\biggl(\int_{0}^{s+\Delta s}\lambda(r)dr\biggr)-Y\biggl(\int_{0}^{s}\lambda(r)dr\biggr)\ge 1\biggr)\sim \lambda(s)\Delta s$$
 
-$$\lambda_1(X(s))=\alpha X_1(s), \quad\lambda_2(X(s)) = \beta X_2(s)$$
+	Thus the propensity for seeing another jump is $\lambda(s)$.
+	Noting that $\forall s, X_1(s) + X_2(s)=1$, the propensity for reactions $1$ and $2$ are:
 
-Combining all of the above $R_1$ and $R_2$ can be represented as:
+	$$\lambda_1(X(s))=\alpha X_1(s), \quad\lambda_2(X(s)) = \beta X_2(s)$$
 
-$$R_1(t) = Y_1\biggl(\int_o^t\alpha X_1(s)ds\biggr), \quad Y_2\biggl(int_0^t\beta X_2(s)ds\biggr)$$
+	Combining all of the above $R_1$ and $R_2$ can be represented as:
 
-So a pathways representation for the stochastic model can be obtained:
+	$$R_1(t) = Y_1\biggl(\int_o^t\alpha X_1(s)ds\biggr), \quad Y_2\biggl(int_0^t\beta X_2(s)ds\biggr)$$
+
+	So a pathways representation for the stochastic model can be obtained:
+
+	\begin{align*}
+		X(t) = X_0 &+ Y_1\biggl(\int_0^t \alpha X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
+							 &+ Y_2\biggl(\int_o^t\beta X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+	\end{align*}
+
+	Where $Y_1$ and $Y_2$ are independent, unit-rate Poisson processes.
+	Suppose now that $X_1(0) + X_2(0) = N\ge 1$.
+	Now the model is focusing on the number of open and closed ion channels out of a total of $N$.
+	Suppose that the propensity at which ion channels are opening can be modelled as:
+
+	$$\lambda_1(t, X(t)) = \alpha(t)X_1(t)$$
+
+	And the rate at which they close:
+
+	$$\lambda_2(t, X(t)) = \beta(t)X_2(t)$$
+
+	Where $\alpha(t)$ and $\beta(t)$ are non-negative functions of time, probably depending on voltage.
+	Suppose that for each $i\in\{1, 2\}$, the conditional probability of seeing the counting process $R_1$ increase in the interval $[t, t+h[$ is $\lambda_1(t, X(t))h+o(h)$.
+	The expression is now:
+
+	\begin{align*}
+		X(t) = X_0 &+ Y_1\biggl(\int_0^t\alpha(s)X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
+							 &+Y_2\biggl(\int_0^t\beta(s)X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+	\end{align*}
+
+	Now a jumping model consisting of $d$ chemical constituents (ion channel states) undergoing transitions determined via $M>0$ different reaction channels.
+	Moreover suppose that $X_i(t)$ determines the value of the ith constituent at time $t$, so that $X(t)\in\mathbb{Z}^{d}$, that the propensity function for the kth reaction is $\lambda_k(t, X(t))$ and that if the kth reaction channel takes place at time $t$, then the system is updated according to the addition of the reaction vector $\zeta_k\in\mathbb{Z}^d$:
+
+	$$X(t) = X(t-)+\zeta_k$$
+
+	The path-wise stochastic representation for the model is:
+
+	$$X(t) = X_0 + \sum\limits_kY_k\biggl(\int_0^t\lambda_k(s, X(s))ds\biggr)\zeta_k$$
+
+	Where $Y_k$ are independent unit-rate Poisson processes.
+	The chemical master equation is:
+
+	\begin{align*}
+		\frac{d}{dt} &= \sum\limits_{k=1}^MP_{X_0}(x-\zeta_k, t)\lambda(t, x-\zeta_k)+\\
+								 &-P_{X_0}(x, t)\sum\limits_{k=1}^M\lambda_k(t, x)
+	\end{align*}
+
+	Where $P_{X_0}(x, t)$ is the probability of being in state $x\in\mathbb{Z}^d_{\ge 0}$ at time $t\ge 0$ given an initial condition of $X_0$.
+	When $X$ represents the randomly fluctuating state of an ion channel in a single compartment conductance based neuronal model, the membrane potential $V\in\mathbb{R}$ is added as an additional dynamical variable.
+	The voltage is considered to evolve deterministically, conditional on the states of the ion channels.
+	Suppose that there is a single ion channel type with state variable $X$, then the path-wise representation is supplemented with the solution of Kirchoff's current conservation law:
+
+	$$C\frac{dV}{dt} = I_{app}(t)-I_V(V(t))-\biggl(\sum\limits_{i=1}^dg_i^oX_i(t)\biggr)(V(t)-V_X)$$
+
+	Where:
+
+	\begin{itemize}
+		\item $g_i^o$ is the conductance of an individual channel in the ith state.
+		\item The sum gives the total conductance associated with the channel represented by the vector $X$.
+		\item The reversal potential is $V_X$.
+		\item $I_V(V)$ captures deterministic voltage-dependent currents due to other channels.
+		\item $I_{app}$ is a time-varying, deterministic applied current.
+	\end{itemize}
+
+	The propensity function will be a function of the voltage, so $\lambda_k(s, X(s))$ will be replaced with $\lambda_k(V(s), X(s))$.
+	If there are a finite number of types of channels, the vector $X\in\mathbb{Z}^d$ represents the aggregated channel state.
+
+		\subsubsection{Simulation of the representation}
+		This representation implies a simulation strategy in which each point of the Poisson processes $Y_k$ denoted $\tau_n$ is generated sequentially as needed.
+		So the time until the next reaction that occurs past time $T$ is:
+
+		$$\Delta = \min\limits_k\biggl\{\Delta_k:\int_0^{T+\Delta_k}\lambda_k(s, X(s))ds = \tau_T^k\biggr\}$$
+
+		Where $\tau_T^k$ is the first point associated wuth $Y_k$ coming after $\int_0^T\lambda_k(s, X(s))ds$:
+
+		\begin{align*}
+			\tau_T^k = \inf\biggl\{&r>\int_0^T\lambda_k(s, X(s))ds:\\
+														 &Y_k(r)-Y_k\biggl(\int_0^T\lambda_k(s, X(s))ds\biggr)=1\biggr\}
+		\end{align*}
+
+		The reaction that took place is the index at which the minimum is achieved.
+		This allows to write the algorithm \ref{algo:random-time-change-sim}.
+
+		\input{algorithms/random-time-change-sim}
+
+		In this algorithm $T_k$ denotes the value of the integrated intensity function $\int_0^t\lambda_k(s, X(s))ds$ and $\tau_k$ the first point associated with $Y_k$ located after $T_k$.
+		All random number are assumed to be independent.
+		With a probability of one, the index $\mu$ is unique at each step.
+		This algorithm also relies on being able to compute a hitting time for each of the $T_k(t) = \int_o^t\lambda_k(s, X(s))ds$ exactly, which is in general not possible, but it will be sufficient with reliable integration software.
+		If the equations for the voltage or the intensity functions can be analytically solved, such numerical integration is unnecessary and efficiencies can be gained.
+
+	\subsection{Gillespie representation}
+	The Gillespie representation is an alternative representation for the stochastic process built before.
+	Let:
+
+	\begin{itemize}
+		\item $Y$ be a unit rate Poisson process.
+		\item $\{\epsilon_i, i = 0, 1, 2, \dots\}$ be independent, uniform $(0,1)$ random variables independent of $Y$.
+	\end{itemize}
+
+	Set:
+
+	$$\lambda_0(V(s), X(s)) = \sum\limits_{k=1}^M\lambda_k(V(s), X(s))$$
+
+	$$q_0 = 0$$
+
+	And $\forall k\in\{1, \dots, M\}$:
+
+	$$q_k(s) = \lambda_0(V(s), X(s))^{-1}\sum\limits_{l=1}^k\lambda_l(V(s), X(s))$$
+
+	Where $X$ and $Y$ satisfy:
+
+	$$R_0(t) = Y\biggl(\int_o^t\lambda_0(V(s), X(s))ds\biggr)$$
+
+	$$X(t) = X(0) + \sum\limits_{k=1}^M\zeta_k\int_0^t1\{\epsilon_{r_0(s-)}\in[q_{k-1}(s-), q_k(s-)[\}dR_0(s)$$
+
+	$$C\frac{dV}{dt} = i_{app}(t)-I_V(V(t)) - \biggl(\sum\limits_{i=1}^dg_o^oX_i(t)\biggr)(V(t)-V_X)$$
+
+	The stochastic process $(X, V)$ descried in the equation above is a Markov process equivalent to the one described in the previous section.
+	To understand it note that $R_o(t)$ determines the holding time in each state and the middle equation determines the embedded discrete time Markov chain or skeletal chain in the usual manner.
+	This is the representation for the Gillespie algorithm, with time dependent propensity functions.
+	This representation is analogous to the PDMP formalism with $\lambda_0$ the rate function that determines the time of the next jump and the middle equation the transitions.
+
+		\subsubsection{Simulation of the representation}
+		The simulation is analogous of using Gillespie's algorithm in the time-homogeneous case.
+		The algorithm is \ref{algo:gillespie} and all number are assumed to be independent.
+
+		\input{algorithms/gillespie}
+
+		This algorithm also relies on being able to compute a hitting time.
+
+\section{Morris-Lecar}
+The Morris-Lecar system is a concrete illustration of the exact stochastic simulation algorithms.
+It was developed as a model for oscillation observed in barnacle muscle fibers.
+The determinist equations constitute a planar model for the evolution of the membrane potential $v(t)$ and the fraction of potassium gates $n\in[0,1]$ that are in the open state.
+In addition to this there is a depolarizing current gated by a rapidly equilibrating variable $m$, the calcium conductance which is treated now as a fast, deterministic variable as in the standard fast/slow decomposition or the planar Morris-Lecar model.
+The mean field equation for this model are:
 
 \begin{align*}
-	X(t) = X_0 &+ Y_1\biggl(\int_0^t \alpha X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
-						 &+ Y_2\biggl(\int_o^t\beta X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+	\frac{dv}{dt} = f(v, n) =& \frac{1}{C}(I_{app}-g_{Ca}m_{\infty}(v)(v-v_{Ca})+\\
+													 &-g_L(v-v_L)-g_Kn(v-v_K))
 \end{align*}
 
-Where $Y_1$ and $Y_2$ are independent, unit-rate Poisson processes.
-Suppose now that $X_1(0) + X_2(0) = N\ge 1$.
-Now the model is focusing on the number of open and closed ion channels out of a total of $N$.
-Suppose that the propensity at which ion channels are opening can be modelled as:
+$$\frac{dn}{dt} = g(v, n) = \alpha(v)(1-n)-\beta(v)n = \frac{n_{\infty}(v)-n}{\tau(v)}$$
 
-$$\lambda_1(t, X(t)) = \alpha(t)X_1(t)$$
+The kinetics of the potassium channel can be specified by the instantaneous time constant $\tau$, the asymptotic target $n_{\infty}$ or by the per capita transition rates $\alpha$ and $\beta$.
+Moreover:
 
-And the rate at which they close:
+$$m_{\infty} = \frac{1}{2}\biggl(1+\tanh\biggl(\frac{v-v_a}{v_b}\biggr)\biggr)$$
 
-$$\lambda_2(t, X(t)) = \beta(t)X_2(t)$$
+$$\alpha(v) = \frac{\phi\cosh\bigl(\frac{\epsilon}{2}\bigr)}{1+e^{2\epsilon}}$$
 
-Where $\alpha(t)$ and $\beta(t)$ are non-negative functions of time, probably depending on voltage.
-Suppose that for each $i\in\{1, 2\}$, the conditional probability of seeing the counting process $R_1$ increase in the interval $[t, t+h[$ is $\lambda_1(t, X(t))h+o(h)$.
-The expression is now:
+$$\beta(v) = \frac{\phi\cosh\bigl(\frac{\epsilon}{2}\bigr)}{1+e^{-2\epsilon}}$$
+
+$$n_\infty(v) = \frac{\alpha(v)}{\alpha(v)+\beta(v)} = \frac{1+\tanh\epsilon}{2}$$
+
+$$\tau(v) = \frac{1}{\alpha(v)+\beta(v)} = \frac{1}{\phi\cosh\frac{\epsilon}{2}}$$
+
+Where $\epsilon = \frac{v-v_c}{v_d}$, the parameter will have values:
+
+\begin{multicols}{3}
+	\begin{itemize}
+		\item $v_K = -84$.
+		\item $v_L = -60$.
+		\item $v_{Ca} = 120$.
+		\item $I_{app} = 100$.
+		\item $g_K = 8$.
+		\item $g_L = 2$.
+		\item $C = 20$.
+		\item $v_a = -1.2$.
+		\item $v_b = 18$.
+		\item $v_c = 2$.
+		\item $v_d = 30$.
+		\item $\phi = 0.04$.
+		\item $g_{Ca} = 4.4$.
+	\end{itemize}
+\end{multicols}
+
+For which the deterministic system has a stable limit cycle.
+For smaller values of the applied currents the system has a stable fixed point that loses stability through a subcritical Hopf bifurcation as $I_{app}$ increases.
+A finite number of potassium channels $N_{tot}$ is introduced and the number of open channels are treated as a discrete random process.
+Each potassium channel switches between the closed or open state independently of the other with voltage-dependent per capita transition rates $\alpha$ and $\beta$.
+The entire population conductance ranges from $0$ to $g_K^o = \frac{g_K}{N_{tot}}$.
+In this simulation $N_{tot} = 40$.
+The random variables will be the voltage and the number of open potassium channel.
+In the random time change representation the opening and closing of the potassium channels are drive by two independent unit rate Poisson processes $Y_{open}(t)$ and $Y_{close}(t)$.
+The evolutions  of $V$ and $N$ are linked.
+Whenever $N=n$, the evolution of $V$ obeys a deterministic differential equation:
+
+$$\frac{dV}{dt}|_{N=n} = f(V, n)$$
+
+$N$ evolves as a jump process: $N(t)$ is a piece-wise constant, with transitions occurring with intensities dependent on $V$.
+Whenever $V = v$:
+
+$$N\rightarrow N + 1\text{ net rate } \alpha(v)(N_{tot}-N)$$
+
+$$N\rightarrow N - 1\text{ net rate } \beta(v)N$$
+
+Now representing the state space for $N$ graphically:
 
 \begin{align*}
-	X(t) = X_0 &+ Y_1\biggl(\int_0^t\alpha(s)X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
-						 &+Y_2\biggl(\int_0^t\beta(s)X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+&0\xleftrightharpoons[\beta]{\alpha N_{tot}} 1 \xleftrightharpoons[2\beta]{\alpha(N_{tot}-1)}2\xleftrightharpoons[3\beta]{\alpha(N_{tot}-2)} \dots \xleftrightharpoons[k\beta]{\alpha(N_{tot}-k+1)}&k\\
+& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\scriptstyle{\alpha(N_{tot}-k)}&\downharpoonleft\upharpoonright(k+1)\scriptstyle{\beta}\\
+& N_{tot}\xleftrightharpoons[N_{tot}\beta]{\alpha}(N_{tot}-1)\xleftrightharpoons[\beta(N_{tot}-1)]{2\alpha}\dots\xleftrightharpoons[(k+2)\beta]{\alpha(N_{tot}-k-1)}&(k+1)
 \end{align*}
+
+The nodes represent possible states for process $N$ an the transition intensities located above and below the arrows.
+Adopting the random time change representation the stochastic Morris-Lecar system is written as:
+
+\begin{align*}
+	\frac{dV}{dt} &=& f(V(t), N(t)) = \\
+								&=& \frac{1}{C}(I_{app}-g_{Ca}m_\infty(V(t))(V(t)-V_{Ca})-g_L(V-V_L) +\\
+								& & - g_K^oN(t)(V(t)-V_K))
+\end{align*}
+
+\begin{align*}
+	N(t) = N(0) -&Y_{close}\biggl(\int_0^t\beta(V(s))N(s)ds\biggr) + \\
+							 &Y_{open}\biggl(\int_0^t\alpha(V(s))(N_{tot}-N(s))ds\biggr)
+\end{align*}
+
+\section{Models with more than one channel type}
+Now the original Morris-Lecar model is considered, where there is a three-dimensional phase space, taking both the calcium and potassium channel to be discrete.
+
+	\subsection{Random time change representation}
+	In the original treatment of voltage oscillations  in barnacle muscle fibres the calcium gating variable $m$ is included as a dynamical variable, sot the total system is describes with the following deterministic equations:
+
+
+	\begin{align*}
+		\frac{dv}{dt} = F(v, n, m) =&\frac{1}{C}(I_{app}-g_L(v-v_L)+\\
+																&-g_{Ca}m(v-v_Ca)-g_Kn(v-v_K))
+	\end{align*}
+
+	\begin{align*}
+		\frac{dn}{dt} &= G(v, n, m) = \alpha_n(v)(1-n)-\beta_n(v)n=\\
+									&=\frac{n_{\infty}(v)-n}{\tau_n(v)}
+	\end{align*}
+
+	\begin{align*}
+		\frac{dm}{dt} &= H(v, n, m) = \alpha_m(v)(1-m)-\beta_m(v)m=\\
+									&=\frac{m_\infty(v)-m}{\tau_m(v)}
+	\end{align*}
+
+	The number of calcium gates evolves according to this equation instead of being set to its asymptotic value $m_\infty = \frac{\alpha_m}{\alpha_m+\beta_m}$.
+	The planar form of the equation is obtained by observing that $m$ approaches equilibrium faster than $n$ and $v$, so using standard arguments from singular perturbation theory this system can be brought into the planar model by replacing $F$ and $G$ with: $f(v, n) = F(v, n, m_\infty(v))$ and $g(v, n) = G(v, n, m_\infty(v))$.
+	Now for the $3D$ model $\epsilon_m = \frac{v-v_a}{v_b}$ has to be introduced in addition to $\epsilon_n = \frac{v-v_c}{v_d}$.
+	It can be noted how $\epsilon_x$ represents where the voltage falls along the activation curve for channel type $x$, relative to its half-activation point ($v_a$ for calcium and $v_c$ for potassium )and its slope (reciprocals of $v_b$ for calcium and $v_d$ for potassium).
+	The per capita opening and closing rates for each channel type are then:
+
+	$$\alpha_m(v) = \frac{\phi_m\cosh\frac{\epsilon_m}{2}}{1+e^{2\epsilon_m}}\quad\beta_m(v) = \frac{\phi_m\cosh\frac{\epsilon_m}{2}}{1+e^{-2\epsilon_m}}$$
+
+	$$\alpha_n(v) = \frac{\phi_n\cosh\frac{\epsilon_n}{2}}{1+e^{2\epsilon_n}}\quad\beta_n(v) = \frac{\phi_n\cosh\frac{\epsilon_n}{2}}{1+e^{-2\epsilon_n}}$$
+
+	With parameters:
+
+	\begin{multicols}{3}
+		\begin{itemize}
+			\item $v_a = -1.2$.
+			\item $v_b = 18$.
+			\item $v_c = 2$.
+			\item $v_d = 30$.
+			\item $\phi_m = 0.4$.
+			\item $\phi_n = 0.04$
+		\end{itemize}
+	\end{multicols}
+
+	The asymptotic open probabilities are given by $m_\infty$ and $n_\infty$ and the time constants $\tau_m$ and $\tau_n$, which satisfy the relations:
+
+	$$m_\infty(v) = \frac{\alpha_m(v)}{\alpha_m(v) + \beta_m(v)} = \frac{1+\tanh\epsilon_m}{2}$$
+
+	$$n_\infty(v) = \frac{\alpha_n(v)}{\alpha_n(v) + \beta_n(v)} = \frac{1+\tanh\epsilon_n}{2}$$
+
+	$$\tau_m(v) = \frac{1}{\phi\cosh\frac{\epsilon_m}{2}}$$
+
+	$$\tau_n(v) = \frac{1}{\phi\cosh\frac{\epsilon_n}{2}}$$
+
+	Assuming a population of $M_{tot}$ calcium and $N_{tot}$ potassium gates a stochastic hybrid system is obtained, with a continuous variable $V(t)$ and two discrete ones $M(t)$ and $N(t)$.
+	The voltage evolves according to the sum of the applied, leak, calcium and potassium currents
+
+	\begin{align*}
+		\frac{dV}{dt} &=&  F(V(t), N(t), M(t)) = \\
+									&=& \frac{1}{C}\biggl(I_{app} - g_L(V(t)-v_L)-g_{Ca}\frac{M(t)}{M_{tot}}(V(t)-v_{Ca}) +\\
+									& &- g_K\frac{N(t)}{N_{tot}}(V(t)-v_K)\biggr)
+	\end{align*}
+
+	The number of open gates change only by unit increases and decreases remaining constant between such changes.
+	So the channel states evolve according to:
+
+	\begin{align*}
+		M(t) =&M(0) - Y_{close}^M\biggl(\int_0^t\beta_m(V(s))M(s)ds\biggr)+\\
+					&+Y_{open}^M\biggl(\int_0^t\alpha_m(V(s))(M_{tot}-M(s))ds\biggr)
+	\end{align*}
+
+	\begin{align*}
+		N(t) =&N(0) - Y_{close}^N\biggl(\int_0^t\beta_n(V(s))N(s)ds\biggr)+\\
+					&+Y_{open}^N\biggl(\int_0^t\alpha_n(V(s))(N_{tot}-N(s))ds\biggr)
+	\end{align*}
+
+\section{Comparison of the exact algorithm with a piecewise constant propensity approximation}
+The most common implementation for hybrid ion channel models is an approximate method in which the per capita reaction propensities are held fixed between channel events: in particular in algorithm \ref{algo:random-time-change-sim}, $\int_t^{t+\Delta k}\lambda_k(V(s), X(s))ds$ is replaced with $\Delta_k\lambda_k(V(t), X(t))$, leaving the remainder unchanged.
+In this type of algorithms the sequence of channel states jumps is generated using the propensity immediately following the most recent jump rather than taking into account the time dependence of the reaction propensities due to the changing voltage.
+This is analogous to the forward Euler method for the numerical solution of ordinary differential equations.
+The solution of a stochastic differential equation with a given initial condition is a map from the sample space $\Omega$ to a space of trajectories.
+In this context $\Omega$ is one independent unit rate Poisson process per reaction channel.
+For the planar model a point in $\Omega$ amounts to fixing two Poisson process, $Y_{open}$ and $Y_{closed}$ to drive the transitions of the potassium channels.
+For the full 3D model there are four processes:
+
+\begin{multicols}{2}
+	\begin{itemize}
+		\item $Y_1 \equiv Y_{Ca, open}$.
+		\item $Y_2 \equiv Y_{Ca, closed}$.
+		\item $Y_3 \equiv Y_{K, open}$.
+		\item $Y_4 \equiv Y_{K, closed}$.
+	\end{itemize}
+\end{multicols}
+
+The exact algorithm provides a numerical solution of the map from $\{Y_k\}_{k=1}^4\in\Omega$ and initial conditions $(M_0, N_0, V_0)$ to the trajectory $(M(t), N(t), V(t))$.
+The approximate piecewise algorithm gives a map from the same domain to a different trajectory $(\tilde{M}(t), \tilde{N}(t), \tilde{V}(t)$.
+To make a pathways comparison the initial condition and the four Poisson processes are fixed and the resulting trajectories are compared.
+Both algorithms produce a sequence of noise-dependent voltage spike with similar firing rates.
+The two trajectories remain close together initially and the timing for the first spike is similar for both.
+Over time discrepancies between the trajectories accumulate: the timing of the second and third spikes is different and before ten spikes the spike trains have become uncorrelated.
+Even though the trajectories diverge the two processes could still generate sample paths with similar time-dependent or stationary distributions: the two algorithms could still be close in a weak sense.
+Given $M_{tot}$ and $N_{tot}$ the density for the hybrid Markov process can be written as:
+
+$$\rho_{m,n}(v,t) = \frac{1}{dv}Pr\{M(t) = m, N(t) = n, V\in[v, v+dv]\}$$
+
+Obeying the master equation:
+
+\begin{align*}
+	\frac{\partial\rho_{m, n}(v, t)}{\partial t} =& - \frac{\partial(F(v, n, m)\rho_{m, n}(v, t))}{\partial v} +\\
+																								&-(\alpha_m(v)(M_{tot}-m)+\beta_m(v)m+\\
+																								&+\alpha_n(v)\cdot(N_{tot}-m)+\beta_n(v)n)\rho_{m, n}(v, t)+\\
+																								&+(M_{tot}-m+1)\alpha_m(v)\rho_{m-1, n}(v, t)+\\
+																								&+(m+1)\beta_m(v)\rho_{m+1, n}(v, t)+\\
+																								&+(N_{tot}-n+1)\alpha_n(v)\rho_{m, n-1}(v,t)+\\
+																								&+(n+1)\beta_n(v)\rho_{m, n+1}(v, t)
+\end{align*}
+
+With initial condition $\rho_{m,n}(v,0)\ge 0$ given by any integrable density such that $\in_{v\in\mathbb{R}}\sum\limits_{m,n}\rho_{m, n}(v, 0)dv \equiv 1$ and boundary conditions:$\rho\rightarrow 0$ as $|v|\rightarrow\infty$ and $\rho\equiv 0$ for either $m, n<0$ or $m> M_{tot}$ or $n>N_{tot}$.
+The approximate algorithm does not generate a Markov process since the transition probabilities depend on the past rather than the present value of the voltage.
+Because of this they do not satisfy the master equation, but it is plausible that they may have a unique stationary distributoin.
+
+Looking the histograms in the $(v, n)$ plane with entries summed over $m$.
+The algorithms were run with independent randomm number streams in the limit cycle regime ($I_{app} = 100$) fir $I_{max} \approx 200000$ time units, sampled every $10$.
+Considering $N_{tot} = M_{tot} = k$, for $k<5$ the difference is obvious, while increasing $k$ the histograms become more and more similar.
+
+Looking now at bar plots of the histograms with points projected on the voltage axis: entries summed over $m$ and $n$, the plots become increasingly similar the greater the $k$>
+
+To quantify the similarity of the histogram the empirical $L_1$ difference between them has been computed.
+For the full $(v, n, m)$ histograms and then for the collapsed voltage axis.
+Let $\rho_{m,n}(v)$ and $\tilde{\rho}_{m, n}(v)$ denote the stationary distributions for the exact and approximate algorithms respectively.
+To compare the two the $L_1$ distance between them is approximated:
+
+$$d(\rho,\tilde{\rho}) = \int_{v_{\min}}^{v{\max}}\biggl(\sum\limits_{m=0}^{M_{tot}}\sum\limits_{n=0}^{N_{tot}}|\rho_{m, n}(v)-\tilde{\rho}_{m,n}(v)|\biggr)dv$$
+
+Where $v_{min}$ and $v_{max}$ where chosen so that $F(v_{min}, n, m>0\land F(v_{max}, n, m)<0\forall m,n$.
+Such value must exist since $F(v,n,m)$ is linear and monotonically decreasing for $v$ for any fixed pair of $(n,m)$.
+For any exact simulation algorithm, once the voltage component falls between $v_{min}\le v \le v_{max}$ it remains in that interval for all time.
+
+\section{Coupling, variance reduction and parametric sensitivities}
+
 
 
 

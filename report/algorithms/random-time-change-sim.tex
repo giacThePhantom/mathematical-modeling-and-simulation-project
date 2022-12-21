@@ -1,0 +1,53 @@
+\begin{algorithm}[hbt!]
+\DontPrintSemicolon
+\SetKwComment{comment}{$\%$}{}
+\SetKw{Int}{int}
+\SetKw{To}{to}
+\SetKw{Return}{return}
+\SetKw{Not}{not}
+\SetKwData{Item}{item}
+\SetKwFunction{Min}{min}
+\SetKwFunction{TitleFunction}{RandomTimeChangeSimulation}
+
+\caption{\protect\TitleFunction{}}
+$X$ = Initial number of molecules of each species\;
+$V$ = Initial voltage\;
+$t = 0$\;
+
+\ForEach{$k$}{
+	$\tau_k = 0$\;
+	$T_k = 0$\;
+}
+
+$\{r_k\} = [\cdots]$\;
+
+\For{$i = 0$ \To M}{
+	$r_k[i] = norm(0,1)$\;
+	$\tau_k = \ln\biggl(\frac{1}{r_k}\biggr)$\;
+}
+$\Delta = 0$\;
+\While{$\int_{t}^{t+\Delta}\lambda_k(V(s), X(s))ds\neq \tau_k-T_k$}{
+	Integrate forward in time: $C\frac{dV}{dt} = I_{app}(t)-I_V(V(t))-\biggl(\sum\limits_{i=1}^dg_i^oX_i(t)\biggr)(V(t)-V_X)$\;
+	$\Delta += \Delta t$\;
+
+}
+
+$\mu = k$ such that $\int_{t}^{t+\Delta}\lambda_k(V(s), X(s))ds \tau_k-T_k$\;
+
+\ForEach{$k$}{
+	$T_k = T_k + \int_{t}^{t+\Delta}\lambda_k(V(s), X(s))ds$\;
+}
+
+$t += \Delta$\;
+
+$X \leftarrow X + \zeta_\mu$\;
+
+$r = norm(0,1)$\;
+
+$\tau_\mu += \ln\biggl(\frac{1}{r}\biggr)$\;
+
+\Return to the while or quit
+
+
+\label{algo:random-time-change-sim}
+\end{algorithm}

@@ -1,0 +1,44 @@
+
+\begin{algorithm}[hbt!]
+\DontPrintSemicolon
+\SetKwComment{comment}{$\%$}{}
+\SetKw{Int}{int}
+\SetKw{To}{to}
+\SetKw{Return}{return}
+\SetKw{Not}{not}
+\SetKwData{Item}{item}
+\SetKwFunction{Min}{min}
+\SetKwFunction{TitleFunction}{GillespieRepresentation}
+
+\caption{\protect\TitleFunction{}}
+$X$ = Initial number of molecules of each species\;
+$V$ = Initial voltage\;
+$t = 0$\;
+
+$r = norm(0,1)$\;
+
+\While{$\int_{t}^{t+\Delta}\lambda_0(V(s), X(s))ds\neq \ln\biggl(\frac{1}{r}\biggr)$}{
+	Integrate forward in time: $C\frac{dV}{dt} = I_{app}(t)-I_V(V(t))-\biggl(\sum\limits_{i=1}^dg_i^oX_i(t)\biggr)(V(t)-V_X)$\;
+	$\Delta += \Delta t$\;
+
+}
+
+$\epsilon = norm(0,1)$\;
+$\Delta_1 = 0$\;
+$k_1 = 0$\:
+\ForEach{$k$}{
+	\If{$\epsilon \in[q_{k-1}((t+\Delta)-), q_k((t+\Delta)-)]$}{
+		$\Delta_1 = \Delta$\;
+		$k_1 = k$\;
+	}
+}
+
+$t += \Delta_i$\;
+
+$X \leftarrow X + \zeta_{k_1}$\;
+
+\Return to the while or quit
+
+
+\label{algo:gillespie}
+\end{algorithm}
