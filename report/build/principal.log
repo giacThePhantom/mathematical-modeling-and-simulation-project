@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.15)  21 DEC 2022 12:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.15)  22 DEC 2022 16:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1334,7 +1334,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 2.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 (Font)              scaled to size 7.0pt on input line 2.
-<unitn_logo.pdf, id=48, 405.515pt x 125.46875pt>
+<unitn_logo.pdf, id=68, 405.515pt x 125.46875pt>
 File: unitn_logo.pdf Graphic file (type pdf)
 <use unitn_logo.pdf>
 Package pdftex.def Info: unitn_logo.pdf  used on input line 2.
@@ -1475,22 +1475,51 @@ cmr/m/it/10 (-20) F\T1/cmr/m/n/10 (-20) (\T1/cmr/m/it/10 (-20) v[]\T1/cmr/m/n/1
  \T1/cmr/m/n/10 (-20) >
  []
 
+[6]
+Overfull \hbox (37.44731pt too wide) detected at line 483
+[]
+ []
+
+
+Overfull \hbox (25.98347pt too wide) detected at line 488
+[]
+ []
+
+
+Overfull \hbox (13.00568pt too wide) in paragraph at lines 497--502
+\T1/cmr/m/n/10 (-20) con-structs a cou-pled pair of pro-cesses $((\T1/cmr/m/it/
+10 (-20) V[]\T1/cmr/m/n/10 (-20) , \T1/cmr/m/it/10 (-20) X[]\T1/cmr/m/n/10 (-20
+) ), (\T1/cmr/m/it/10 (-20) V[]\T1/cmr/m/n/10 (-20) , \T1/cmr/m/it/10 (-20) X[]
+\T1/cmr/m/n/10 (-20) ))$
+ []
+
+
+Overfull \hbox (62.41592pt too wide) detected at line 503
+\T1/cmr/m/it/10 Var\T1/cmr/m/n/10 (\T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m
+/it/10 t\T1/cmr/m/n/10 ) ^^U \T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10
+ t\T1/cmr/m/n/10 )) = \T1/cmr/m/it/10 Var\T1/cmr/m/n/10 (\T1/cmr/m/it/10 X[]\T1
+/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 )) + \T1/cmr/m/it/10 Var\T1/cmr/m/
+n/10 (\T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 )) ^^U
+ 2\T1/cmr/m/it/10 Cov\T1/cmr/m/n/10 (\T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr
+/m/it/10 t\T1/cmr/m/n/10 ), \T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 )
+ []
+
 ) (./build/principal.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 3.
 
-) (./appendix.tex [6]) 
+) (./appendix.tex [7]) 
 AED: lastpage setting LastPage
 (./build/principal.aux)
 Package rerunfilecheck Info: File `principal.out' has not changed.
-(rerunfilecheck)             Checksum: FD3F228340B0013891E5A24278C07503;2576.
+(rerunfilecheck)             Checksum: E0CC1439736AF6BE8D629EFCA8D27264;3607.
  ) 
 Here is how much of TeX's memory you used:
- 25940 strings out of 478238
- 472234 string characters out of 5850455
- 839315 words of memory out of 5000000
- 43478 multiletter control sequences out of 15000+600000
- 584878 words of font info for 218 fonts, out of 8000000 for 9000
+ 25961 strings out of 478238
+ 472488 string characters out of 5850455
+ 839318 words of memory out of 5000000
+ 43483 multiletter control sequences out of 15000+600000
+ 585229 words of font info for 223 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  87i,22n,131p,1676b,774s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/t
@@ -1505,21 +1534,22 @@ nts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
 fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/e
-urm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm7.pfb></
-usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-di
-st/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/
-public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super
-/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><
-/usr/share/texmf-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/share/texm
-f-dist/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/ty
-pe1/public/cm-super/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
-uper/sftt1000.pfb>
-Output written on ./build/principal.pdf (6 pages, 512862 bytes).
+msfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm7.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/
+public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super
+/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><
+/usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texm
+f-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/ty
+pe1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
+uper/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.p
+fb>
+Output written on ./build/principal.pdf (7 pages, 533883 bytes).
 PDF statistics:
- 218 PDF objects out of 1000 (max. 8388607)
- 159 compressed objects within 2 object streams
- 24 named destinations out of 1000 (max. 500000)
- 74334 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 250 PDF objects out of 1000 (max. 8388607)
+ 188 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 74374 words of extra memory for PDF output out of 89155 (max. 10000000)
 

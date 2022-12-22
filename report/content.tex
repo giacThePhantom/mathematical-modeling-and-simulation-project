@@ -420,7 +420,93 @@ Such value must exist since $F(v,n,m)$ is linear and monotonically decreasing fo
 For any exact simulation algorithm, once the voltage component falls between $v_{min}\le v \le v_{max}$ it remains in that interval for all time.
 
 \section{Coupling, variance reduction and parametric sensitivities}
+The random time change formalism can be used to develop new and faster computational methods with no loss in accuracy coupling two processes in order to reduce the variance and increase the speed of different natural estimatore.
+Consider for example the computation of parametric sensitivities, which is a tool that allow to determine parameters to which a system output is most responsive.
+Suppose that the intensity or propensity functions are dependent on some vectors of parameters $\theta$.
+$\theta$ may represent a subset of the system's mass action kinetics constants, the cell capacitance, or the underlying number of channels of each type.
+To know how sensitively a quantity such as the average firing rate or interspike interval variance depends on $\theta$ a family of models $(V^\theta, X^\theta)$, parameeterized by $\theta$ is considered, with stochastic equations:
 
+$$\frac{d}{dt}V^\theta(t) = f(\theta, V^\theta(t), X^\theta(t))$$
+
+$$X^\theta(t) = x_0^\theta + \sum\limits_kY_k\biggl(\int_0^t\lambda_k^\theta(V^\theta(s), X^\theta(s))ds\biggr)\zeta_k$$
+
+Where $f$ is some function and all other notation is as before.
+Some quantities depend on the entire sample path.
+Let $g(\theta, V^\theta, X^\theta)$ be a path functional capturing the quantity of interest.
+In order to evaluate the relative shift in expectation of $g$ due to a perturbation of the parameter vector, the estimation would be:
+
+\begin{align*}
+	\tilde{s} &=\epsilon^{-1}\mathbb{E}\bigl[g(\theta', V^{\theta'}, X^{\theta'})-g(\theta, V^\theta, X^\theta)\bigr]\approx\\
+						&\approx\frac{1}{\epsilon N}\sum\limits_{i=1}^N\bigl[g(\theta', V_{[i]}^{\theta'}, X_{[i]}^{\theta'})-g(\theta, V_{[i]}^\theta, X_{[i]}^\theta)\bigr]
+\end{align*}
+
+Where:
+
+\begin{itemize}
+	\item $\epsilon= ||\theta-\theta'||$.
+	\item $(V_{[i]}^\theta, X_{[i]}^{\theta})$ is the $i$th path generated with parameter $\theta$.
+	\item $N$ is the number of sample paths computed for the estimation.
+\end{itemize}
+
+A finite difference and Monte Carlo sampling could be used to approximate the change in expectation.
+If the paths $(V_{[i]}^{\theta'}, X_{[i]}^{\theta'})$ and $(V_{[i]}^\theta, X_{[i]}^{\theta})$ are generated independently, the variance of the estimator for $\tilde{s}$ is $O(N^{-1}\epsilon^{-2})$ and its standard deviation $O(N^{-\frac{1}{2}}\epsilon^{-1})$.
+In order to reduce the confidence interval of the estimator to a target level of $\rho >0$:
+
+$$N^{-\frac{1}{2}}\epsilon^{-1}\lesssim\rho\Rightarrow N \gtrsim\epsilon^{-2}\rho^{-2}$$
+
+Which can be prohibitive.
+Reducing the variance of the estimator can be achieved coupling the processes $(V_{[i]}^{\theta'}, X_{[i]}^{\theta'})$ and $(V_{[i]}^\theta, X_{[i]}^{\theta})$ so that they are correlated by constructing them on the same probability space.
+Different approach to this problem are discussed in the next sections.
+
+	\subsection{The common random number method}
+	The common random number CRN method simulates bot processes according to Gillespie representation with the same Poisson process $Y$ and the same stream of random variables $\{\epsilon_i\}$.
+
+	\subsection{The common reaction path method}
+	The common reaction path method CRP simulates both processes according to the same random time change representation with the same Poisson processes $Y_k$.
+	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes.
+
+	\subsection{The coupled finite difference method}
+	The coupled finite difference method CFD utilizes a split coupling method.
+	It splits the counting process for each of the reaction channels into three pieces:
+
+	\begin{itemize}
+		\item One counting process shared by $X^\theta$ and $X^{\theta'}$ and has propensity equal to the minimum of their respective intensities.
+		\item One that only accounts for the jumps of $X^\theta$.
+		\item One than only accounts for the jumps of $X^{\theta'}$.
+	\end{itemize}
+
+	Letting $a\land b = \min\{a, b\}$, the precise coupling is:
+
+	\begin{align*}
+		X^{\theta'}(t) = &X_0^{\theta'} + \sum\limits_kY_{k, 1}\biggl(\int_0^tm_k(\theta, \theta', s)ds\biggr)\zeta_k+\\
+										 &+\sum\limits_{k}Y_{k, 2}\biggl(\int_o^t\lambda_k^{\theta'}(V^{\theta'}(s), X^{\theta'}(s))-m_k(\theta, \theta', s)ds\biggr)\zeta_k
+	\end{align*}
+
+	\begin{align*}
+		X^\theta(t) = &X^\theta(t) + \sum\limits_{l}Y_{k,1}\biggl(\int_0^tm_k(\theta, \theta', s)ds\biggr)\zeta_k+\\
+									&+\sum\limits_kY_{k, 3}\biggl(\int_0^t\lambda_k^0(V^\theta(s), X^\theta(s))-m_k(\theta, \theta', s)ds\biggr)\zeta_k
+	\end{align*}
+
+	Where:
+
+	$$m_k(\theta, \theta', s) = \lambda_k^0(V^\theta(s), X^\theta(s))\land\lambda_k^{\theta'}(V^{\theta'}(s), X^{\theta'}(s))$$
+
+	And $\{Y_{k, 1}, Y_{k, 2}, Y_{k, 3}\}$ are independent unit-rate Poisson processes.
+
+	\subsection{Covariance and methods' performace}
+	The algorithm presented could still produce statistically equivalent path.
+	This is not the case for the methods for parametric sensitivities provided.
+	Each of the methods constructs a coupled pair of processes $((V_{[i]}^{\theta'}, X_{[i]}^{\theta'}),(V_{[i]}^\theta, X_{[i]}^{\theta}))$  and the marginal processes $(V_{[i]}^{\theta'}, X_{[i]}^{\theta'})$ and $(V_{[i]}^\theta, X_{[i]}^{\theta})$ are all statistically equivalent no matter the method used.
+	The covariance $Cov((V_{[i]}^{\theta'}, X_{[i]}^{\theta'}),(V_{[i]}^\theta, X_{[i]}^{\theta}))$  can be different.
+	This is important since the objective is the variance reduction for any component $X_j$:
+
+	$$Var(X_k^\theta(t)-X_j^{\theta'}(t)) = Var(X_j^\theta(t))+Var(X_k^{\theta'}(t))-2Cov(X_j^\theta(t), X_j^{\theta'(t)})$$
+
+	Minimizing the variance is equivalent to maximizing the covariance.
+	The CRN method is the worst at maximizing covariance.
+	The CFD method with the split coupling procedure is the best, though the CRP method can be more efficient in some context.
+
+\section{Discussion}
 
 
 
