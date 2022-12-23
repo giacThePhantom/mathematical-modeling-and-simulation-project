@@ -507,6 +507,22 @@ Different approach to this problem are discussed in the next sections.
 	The CFD method with the split coupling procedure is the best, though the CRP method can be more efficient in some context.
 
 \section{Discussion}
+The random time change representation can be useful to computational neuroscience as it allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible.
+The random time change approach avoids several approximations: for example in simulation algorithms based on a fixed time step chemical Langevin approach, it is necessary to assume that the increments in channel state are Gaussian distributed over an appropriate time interval.
+However in exact simulation of small patches the exact algorithm visits states incompatible with the Gaussian increment approximation regardless of time step size.
+Another algorithm found in literature is the piecewise constant propensity or approximate forward algorithm.
+This ignore changes to membrane potential during the intervals between channel state changes.
+As the sensitivity of ion channel opening and closing to voltage is fundamental these algorithm are not appropriate unless time between openings and closing is especially small.
+This study restrict attention to the suprathreshold regime of the Morris-Lecar model, in which the applied current puts the system above the Hoph bifurcation marking onset of oscillations.
+Spiking is not the result of noise-facilitated release.
+Another study used eigenfunction expansion methods, path integrals and theory of large deviations to study spike initiation as noise facilitated escape problem in the excitable regime, as well as to incorporate synaptic currents into a stochastic network model using versions of the exact algorithm presented in this paper.
+the usual separation-of-time scales picture breaks done: the firing rate obtained by 1D Kramers rate theory when the slow recovery variable (fraction of open potassium channels) is taken to be fixed does not match that obtained by direct simulation with the exact algorithm.
+By considering a maximum likelihood approach to the 2D escape problem, spontaneous closure of potassium channels contributes significantly to noise induced escape than spontaneous opening of sodium channel.
+The algorithm presented are applicable beyond the effects of channel noise on the regularity of action potential firing in a single compartment neuron model.
+Exact simulation of hybrid stochastic models have been used to study spontaneous dendritic NMDA spikes, intracellular growth of the T7 bacteriophage and hybrid stochastic network models taking into account piecewise deterministic synaptic currents.
+The latter example represents a significant extension of the neural master equation approach to stochastic population models.
+The random time change representation extends naturally to scenarios in which each channel has a greater number of states, but it would be better to combine it with complexity reduction methods such as the stochastic shielding algorithm.
+Analysis of algorithms combining stochastic shielding and the random time change framework are a promising direction for future research.
 
 
 
