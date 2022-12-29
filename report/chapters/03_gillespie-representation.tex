@@ -1,0 +1,39 @@
+	\subsection{Gillespie representation}
+	The Gillespie representation is an alternative representation for the stochastic process built before.
+	Let:
+
+	\begin{itemize}
+		\item $Y$ be a unit rate Poisson process.
+		\item $\{\epsilon_i, i = 0, 1, 2, \dots\}$ be independent, uniform $(0,1)$ random variables independent of $Y$.
+	\end{itemize}
+
+	Set:
+
+	$$\lambda_0(V(s), X(s)) = \sum\limits_{k=1}^M\lambda_k(V(s), X(s))$$
+
+	$$q_0 = 0$$
+
+	And $\forall k\in\{1, \dots, M\}$:
+
+	$$q_k(s) = \lambda_0(V(s), X(s))^{-1}\sum\limits_{l=1}^k\lambda_l(V(s), X(s))$$
+
+	Where $X$ and $Y$ satisfy:
+
+	$$R_0(t) = Y\biggl(\int_o^t\lambda_0(V(s), X(s))ds\biggr)$$
+
+	$$X(t) = X(0) + \sum\limits_{k=1}^M\zeta_k\int_0^t1\{\epsilon_{r_0(s-)}\in[q_{k-1}(s-), q_k(s-)[\}dR_0(s)$$
+
+	$$C\frac{dV}{dt} = i_{app}(t)-I_V(V(t)) - \biggl(\sum\limits_{i=1}^dg_o^oX_i(t)\biggr)(V(t)-V_X)$$
+
+	The stochastic process $(X, V)$ descried in the equation above is a Markov process equivalent to the one described in the previous section.
+	To understand it note that $R_o(t)$ determines the holding time in each state and the middle equation determines the embedded discrete time Markov chain or skeletal chain in the usual manner.
+	This is the representation for the Gillespie algorithm, with time dependent propensity functions.
+	This representation is analogous to the PDMP formalism with $\lambda_0$ the rate function that determines the time of the next jump and the middle equation the transitions.
+
+		\subsubsection{Simulation of the representation}
+		The simulation is analogous of using Gillespie's algorithm in the time-homogeneous case.
+		The algorithm is \ref{algo:gillespie} and all number are assumed to be independent.
+
+		\input{algorithms/gillespie}
+
+		This algorithm also relies on being able to compute a hitting time.

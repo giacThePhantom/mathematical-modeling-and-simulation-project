@@ -1,0 +1,148 @@
+\section{Stochastic representations}
+
+	\subsection{Random time change representation}
+	Consider a model of a system with states $A$ for closed and $B$ for open of an ion channel.
+	The dynamics of the system are modeled assuming that the dwell times in the two states are determined by independent exponential random variables with parameters $\alpha$ and $\beta$:
+
+	$$A\xleftrightharpoons[\beta]{\alpha}B$$
+
+	The probability that a closed channel opens in the next increment of time $\Delta s$ is assumed $\alpha\Delta s + o(\Delta s)$, while the probability that an open channel closes is assumed $\beta\Delta s + o(\Delta s)$.
+	This model can be described mathematically by a chemical master equation, that for the two states model is:
+
+	$$\begin{cases}\frac{d}{dt}p_{x_0}(A, t) = -\alpha p_{x_0}(A, t) + \beta p_{x_0}(B, t)\\\frac{d}{dt}p_{x_0}(B, t) = -\beta p_{x_0}(B, t) + \alpha p_{x_0}(A, t)\end{cases}$$
+
+	Where:
+
+	\begin{itemize}
+		\item $p_{x_0}(x, t)$ is the probability of being in state $x\in \{A, B\}$ at time $t$ given the initial condition $x_0$.
+		\item $x_0$ is the initial condition.
+	\end{itemize}
+
+	The chemical master equation is a linear ODE governing the dynamical behaviour of the probability distribution of the model and does not provide a stochastic representation for a particular realization of the process.
+	To reconstruct  a path-wise representation let:
+
+	\begin{itemize}
+		\item $R_1(t)$ be the number of times $A\rightarrow B$ has taken place by time $t$.
+		\item $R_2(t)$ be the number of times $B\rightarrow A$ has taken place by time $t$.
+		\item $X_1(t)\in\{0,1\}$ be $1$ if the channel is closed at time $t$ and zero otherwise.
+		\item $X_2(t)=1-X_1(t)$ be $1$ if the channel is open at time $t$ and zero otherwise.
+		\item $X(t) = \begin{pmatrix}X_1(t) & X_2(t)\end{pmatrix}^T$.
+	\end{itemize}
+
+	Now:
+
+	$$X(t) = X(0) + R_1(t)\begin{pmatrix}-1\\1\end{pmatrix} + R_2(t)\begin{pmatrix}1\\-1\end{pmatrix}$$
+
+	The counting processes $R_1$ and $R_2$ are represented as unit-rate Poisson processes.
+	A unit-rate Poisson process can be constructed considering:
+
+	\begin{itemize}
+		\item $\{e_i\}_{i=1}^{\infty}$ independent exponential random variables with a parameter of $1$.
+		\item $\tau=e_1, \tau_2 = \tau_1+e_2, \dots, t_n = t_{n-1} + e_n$.
+	\end{itemize}
+
+	The associated unit-rate Poisson processes $Y(s)$ is the counting process determined by the number of points $\{\tau_i\}_{i=1}^{\infty}$ that come before $s \ge 0$.
+	Let $\lambda:[0, \infty[\rightarrow\mathbb{R}_{\ge 0}$ be the rate of movement along the time axis, then the number of points observed by time $s$ is:
+
+	$$Y\biggl(\int_0^{s}\lambda(r)dr\biggr)$$
+
+	From the basic properties of exponential random variables, whenever $\lambda(s)>0$, the probability of seeing a jump within the next small increment of time $\Delta s$ is:
+
+	$$P\biggl(Y\biggl(\int_{0}^{s+\Delta s}\lambda(r)dr\biggr)-Y\biggl(\int_{0}^{s}\lambda(r)dr\biggr)\ge 1\biggr)\sim \lambda(s)\Delta s$$
+
+	Thus the propensity for seeing another jump is $\lambda(s)$.
+	Noting that $\forall s, X_1(s) + X_2(s)=1$, the propensity for reactions $1$ and $2$ are:
+
+	$$\lambda_1(X(s))=\alpha X_1(s), \quad\lambda_2(X(s)) = \beta X_2(s)$$
+
+	Combining all of the above $R_1$ and $R_2$ can be represented as:
+
+	$$R_1(t) = Y_1\biggl(\int_o^t\alpha X_1(s)ds\biggr), \quad Y_2\biggl(int_0^t\beta X_2(s)ds\biggr)$$
+
+	So a pathways representation for the stochastic model can be obtained:
+
+	\begin{align*}
+		X(t) = X_0 &+ Y_1\biggl(\int_0^t \alpha X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
+							 &+ Y_2\biggl(\int_o^t\beta X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+	\end{align*}
+
+	Where $Y_1$ and $Y_2$ are independent, unit-rate Poisson processes.
+	Suppose now that $X_1(0) + X_2(0) = N\ge 1$.
+	Now the model is focusing on the number of open and closed ion channels out of a total of $N$.
+	Suppose that the propensity at which ion channels are opening can be modelled as:
+
+	$$\lambda_1(t, X(t)) = \alpha(t)X_1(t)$$
+
+	And the rate at which they close:
+
+	$$\lambda_2(t, X(t)) = \beta(t)X_2(t)$$
+
+	Where $\alpha(t)$ and $\beta(t)$ are non-negative functions of time, probably depending on voltage.
+	Suppose that for each $i\in\{1, 2\}$, the conditional probability of seeing the counting process $R_1$ increase in the interval $[t, t+h[$ is $\lambda_1(t, X(t))h+o(h)$.
+	The expression is now:
+
+	\begin{align*}
+		X(t) = X_0 &+ Y_1\biggl(\int_0^t\alpha(s)X_1(s)ds\biggr)\begin{pmatrix}-1\\1\end{pmatrix} +\\
+							 &+Y_2\biggl(\int_0^t\beta(s)X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
+	\end{align*}
+
+	Now a jumping model consisting of $d$ chemical constituents (ion channel states) undergoing transitions determined via $M>0$ different reaction channels.
+	Moreover suppose that $X_i(t)$ determines the value of the ith constituent at time $t$, so that $X(t)\in\mathbb{Z}^{d}$, that the propensity function for the kth reaction is $\lambda_k(t, X(t))$ and that if the kth reaction channel takes place at time $t$, then the system is updated according to the addition of the reaction vector $\zeta_k\in\mathbb{Z}^d$:
+
+	$$X(t) = X(t-)+\zeta_k$$
+
+	The path-wise stochastic representation for the model is:
+
+	$$X(t) = X_0 + \sum\limits_kY_k\biggl(\int_0^t\lambda_k(s, X(s))ds\biggr)\zeta_k$$
+
+	Where $Y_k$ are independent unit-rate Poisson processes.
+	The chemical master equation is:
+
+	\begin{align*}
+		\frac{d}{dt} &= \sum\limits_{k=1}^MP_{X_0}(x-\zeta_k, t)\lambda(t, x-\zeta_k)+\\
+								 &-P_{X_0}(x, t)\sum\limits_{k=1}^M\lambda_k(t, x)
+	\end{align*}
+
+	Where $P_{X_0}(x, t)$ is the probability of being in state $x\in\mathbb{Z}^d_{\ge 0}$ at time $t\ge 0$ given an initial condition of $X_0$.
+	When $X$ represents the randomly fluctuating state of an ion channel in a single compartment conductance based neuronal model, the membrane potential $V\in\mathbb{R}$ is added as an additional dynamical variable.
+	The voltage is considered to evolve deterministically, conditional on the states of the ion channels.
+	Suppose that there is a single ion channel type with state variable $X$, then the path-wise representation is supplemented with the solution of Kirchoff's current conservation law:
+
+	$$C\frac{dV}{dt} = I_{app}(t)-I_V(V(t))-\biggl(\sum\limits_{i=1}^dg_i^oX_i(t)\biggr)(V(t)-V_X)$$
+
+	Where:
+
+	\begin{itemize}
+		\item $g_i^o$ is the conductance of an individual channel in the ith state.
+		\item The sum gives the total conductance associated with the channel represented by the vector $X$.
+		\item The reversal potential is $V_X$.
+		\item $I_V(V)$ captures deterministic voltage-dependent currents due to other channels.
+		\item $I_{app}$ is a time-varying, deterministic applied current.
+	\end{itemize}
+
+	The propensity function will be a function of the voltage, so $\lambda_k(s, X(s))$ will be replaced with $\lambda_k(V(s), X(s))$.
+	If there are a finite number of types of channels, the vector $X\in\mathbb{Z}^d$ represents the aggregated channel state.
+
+		\subsubsection{Simulation of the representation}
+		This representation implies a simulation strategy in which each point of the Poisson processes $Y_k$ denoted $\tau_n$ is generated sequentially as needed.
+		So the time until the next reaction that occurs past time $T$ is:
+
+		$$\Delta = \min\limits_k\biggl\{\Delta_k:\int_0^{T+\Delta_k}\lambda_k(s, X(s))ds = \tau_T^k\biggr\}$$
+
+		Where $\tau_T^k$ is the first point associated wuth $Y_k$ coming after $\int_0^T\lambda_k(s, X(s))ds$:
+
+		\begin{align*}
+			\tau_T^k = \inf\biggl\{&r>\int_0^T\lambda_k(s, X(s))ds:\\
+														 &Y_k(r)-Y_k\biggl(\int_0^T\lambda_k(s, X(s))ds\biggr)=1\biggr\}
+		\end{align*}
+
+		The reaction that took place is the index at which the minimum is achieved.
+		This allows to write the algorithm \ref{algo:random-time-change-sim}.
+
+		\input{algorithms/random-time-change-sim}
+
+		In this algorithm $T_k$ denotes the value of the integrated intensity function $\int_0^t\lambda_k(s, X(s))ds$ and $\tau_k$ the first point associated with $Y_k$ located after $T_k$.
+		All random number are assumed to be independent.
+		With a probability of one, the index $\mu$ is unique at each step.
+		This algorithm also relies on being able to compute a hitting time for each of the $T_k(t) = \int_o^t\lambda_k(s, X(s))ds$ exactly, which is in general not possible, but it will be sufficient with reliable integration software.
+		If the equations for the voltage or the intensity functions can be analytically solved, such numerical integration is unnecessary and efficiencies can be gained.

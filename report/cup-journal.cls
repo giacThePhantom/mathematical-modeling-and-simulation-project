@@ -1231,7 +1231,7 @@
   }
     \def\ps@plain{
       \renewcommand{\@oddhead}{\sffamily{\journalnamefont\cup@journal@name}\hfill\thepage}%
-      \renewcommand{\@evenhead}{\sffamily\thepage\hfill Cherchi, Fantoni, Pettinà, Polignano}%
+      \renewcommand{\@evenhead}{\sffamily\thepage\hfill Fantoni, Polignano}%
       \renewcommand{\@evenfoot}{}%
       \renewcommand{\@oddfoot}{\@evenfoot}%
     }
@@ -1354,7 +1354,7 @@
       \end{@twocolumnfalse}]}
   \def\ps@plain{
       \renewcommand{\@oddhead}{\sffamily{\journalnamefont\cup@journal@name}\hfill\thepage}%
-      \renewcommand{\@evenhead}{\sffamily\thepage\hfill Cherchi, Fantoni, Pettinà, Polignano}%
+      \renewcommand{\@evenhead}{\sffamily\thepage\hfill Fantoni, Polignano}%
       \renewcommand{\@evenfoot}{}%
       \renewcommand{\@oddfoot}{\@evenfoot}%
     }
