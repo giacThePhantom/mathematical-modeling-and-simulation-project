@@ -1,3 +1,9 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{stochastic-neuron}
+L.~Harrison, O.~David, and K.~Friston.
+\newblock Stochastic models of neuronal dynamics.
+\newblock {\em Philosophical Transactions of the Royal Society B: Biological
+  Sciences}, 360(1457):1075--1091, 2005.
 
 \end{thebibliography}

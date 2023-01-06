@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.15)  29 DEC 2022 10:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.12.19)  6 JAN 2023 22:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1334,7 +1334,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 2.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 (Font)              scaled to size 7.0pt on input line 2.
-<unitn_logo.pdf, id=68, 405.515pt x 125.46875pt>
+<unitn_logo.pdf, id=96, 405.515pt x 125.46875pt>
 File: unitn_logo.pdf Graphic file (type pdf)
 <use unitn_logo.pdf>
 Package pdftex.def Info: unitn_logo.pdf  used on input line 2.
@@ -1401,20 +1401,38 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 Package mdframed Info: mdframed works in twoside mode on input line 2.
 Package mdframed Info: mdframed inside a box 
  mdframed uses option nobreak mdframed on input line 2.
+ (./chapters/01_introduction.tex
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/sb/it' aliased to
-(Font)              `T1/SourceSansPro-TLF/semibold/it' on input line 7.
+(Font)              `T1/SourceSansPro-TLF/semibold/it' on input line 18.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/semibold/it' will be
-(Font)              scaled to size 10.0pt on input line 7.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+(Font)              scaled to size 10.0pt on input line 18.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
+(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 29.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
+(Font)              scaled to size 10.0pt on input line 29.
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./unitn_logo.pdf>]
-LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
-(Font)              `T1/SourceSansPro-TLF/regular/it' on input line 130.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
-(Font)              scaled to size 10.0pt on input line 130.
+[2]
+Overfull \hbox (5.34874pt too wide) detected at line 189
+[][][][] \T1/cmr/m/n/10 = (\U/zeur/m/n/10 ^^Z\T1/cmr/m/n/10 (\T1/cmr/m/it/10 x 
+\T1/cmr/m/n/10 + \T1/cmr/m/it/10 h\T1/cmr/m/n/10 )\T1/cmr/m/it/10 f\T1/cmr/m/n/
+10 (\T1/cmr/m/it/10 x \T1/cmr/m/n/10 + \T1/cmr/m/it/10 h\T1/cmr/m/n/10 ) ^^U \U
+/zeur/m/n/10 ^^Z\T1/cmr/m/n/10 (\T1/cmr/m/it/10 x\T1/cmr/m/n/10 )\T1/cmr/m/it/1
+0 f\T1/cmr/m/n/10 (\T1/cmr/m/it/10 x\T1/cmr/m/n/10 )) + \T1/cmr/m/it/10 r\T1/cm
+r/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 )(\U/zeur/m/n/10 ^^Z\T1/cmr/m/n/10 (\
+T1/cmr/m/it/10 x \T1/cmr/m/n/10 ^^U \T1/cmr/m/it/10 h\T1/cmr/m/n/10 ) ^^U \U/ze
+ur/m/n/10 ^^Z\T1/cmr/m/n/10 (\T1/cmr/m/it/10 h\T1/cmr/m/n/10 ))
+ []
 
-(./algorithms/random-time-change-sim.tex
+
+Overfull \hbox (7.03763pt too wide) in paragraph at lines 236--237
+[]$\T1/cmr/m/it/10 (-20) P$ \T1/cmr/m/n/10 (-20) is the prob-a-bil-ity dis-tri-
+bu-tion over a multi-dimensional
+ []
+
+[3]) [4] (./algorithms/random-time-change-sim.tex
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
 2.
 
@@ -1425,8 +1443,8 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-) [2]
-Overfull \hbox (22.21062pt too wide) detected at line 177
+) [5]
+Overfull \hbox (22.21062pt too wide) detected at line 178
 \T1/cmr/m/it/10 X\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 ) = \T1/cmr/m/
 it/10 X\T1/cmr/m/n/10 (0) + [] \U/zeur/m/n/10 ^^P[] [][] \T1/cmr/m/n/10 1{\U/ze
 ur/m/n/10 ^^O[] \OMS/cmsy/m/n/10 2 \T1/cmr/m/n/10 [\T1/cmr/m/it/10 q[]\T1/cmr/m
@@ -1435,23 +1453,23 @@ ur/m/n/10 ^^O[] \OMS/cmsy/m/n/10 2 \T1/cmr/m/n/10 [\T1/cmr/m/it/10 q[]\T1/cmr/m
 cmr/m/it/10 s\T1/cmr/m/n/10 )
  []
 
-(./algorithms/gillespie.tex) [3]
-Overfull \hbox (33.6665pt too wide) detected at line 267
+(./algorithms/gillespie.tex) [6]
+Overfull \hbox (33.6665pt too wide) detected at line 268
 []
  []
 
 
-Overfull \hbox (20.98743pt too wide) detected at line 276
+Overfull \hbox (20.98743pt too wide) detected at line 277
 []
  []
 
-[4]
-Overfull \hbox (9.62503pt too wide) detected at line 345
+[7]
+Overfull \hbox (9.62503pt too wide) detected at line 346
 []
  []
 
-[5]
-Overfull \hbox (0.80005pt too wide) detected at line 387
+[8]
+Overfull \hbox (0.80005pt too wide) detected at line 388
 \U/zeur/m/n/10 ^^Z[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10 v\T1/cmr/m/n/10 , \T1/cmr/m
 /it/10 t\T1/cmr/m/n/10 ) = []\T1/cmr/m/it/10 Pr\T1/cmr/m/n/10 {\T1/cmr/m/it/10 
 M\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 ) = \T1/cmr/m/it/10 m\T1/cmr/m
@@ -1462,12 +1480,12 @@ cmr/m/it/10 dv\T1/cmr/m/n/10 ]}
  []
 
 
-Overfull \hbox (5.40607pt too wide) detected at line 399
+Overfull \hbox (5.40607pt too wide) detected at line 400
 []
  []
 
 
-Overfull \hbox (14.83011pt too wide) in paragraph at lines 418--421
+Overfull \hbox (14.83011pt too wide) in paragraph at lines 419--422
 []\T1/cmr/m/n/10 (-20) Where $\T1/cmr/m/it/10 (-20) v[]$ \T1/cmr/m/n/10 (-20) a
 nd $\T1/cmr/m/it/10 (-20) v[]$ \T1/cmr/m/n/10 (-20) where cho-sen so that $\T1/
 cmr/m/it/10 (-20) F\T1/cmr/m/n/10 (-20) (\T1/cmr/m/it/10 (-20) v[]\T1/cmr/m/n/1
@@ -1475,18 +1493,18 @@ cmr/m/it/10 (-20) F\T1/cmr/m/n/10 (-20) (\T1/cmr/m/it/10 (-20) v[]\T1/cmr/m/n/1
  \T1/cmr/m/n/10 (-20) >
  []
 
-[6]
-Overfull \hbox (37.44731pt too wide) detected at line 483
+[9]
+Overfull \hbox (37.44731pt too wide) detected at line 484
 []
  []
 
 
-Overfull \hbox (25.98347pt too wide) detected at line 488
+Overfull \hbox (25.98347pt too wide) detected at line 489
 []
  []
 
 
-Overfull \hbox (13.00568pt too wide) in paragraph at lines 497--502
+Overfull \hbox (13.00568pt too wide) in paragraph at lines 498--503
 \T1/cmr/m/n/10 (-20) con-structs a cou-pled pair of pro-cesses $((\T1/cmr/m/it/
 10 (-20) V[]\T1/cmr/m/n/10 (-20) , \T1/cmr/m/it/10 (-20) X[]\T1/cmr/m/n/10 (-20
 ) ), (\T1/cmr/m/it/10 (-20) V[]\T1/cmr/m/n/10 (-20) , \T1/cmr/m/it/10 (-20) X[]
@@ -1494,7 +1512,7 @@ Overfull \hbox (13.00568pt too wide) in paragraph at lines 497--502
  []
 
 
-Overfull \hbox (62.41592pt too wide) detected at line 503
+Overfull \hbox (62.41592pt too wide) detected at line 504
 \T1/cmr/m/it/10 Var\T1/cmr/m/n/10 (\T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m
 /it/10 t\T1/cmr/m/n/10 ) ^^U \T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10
  t\T1/cmr/m/n/10 )) = \T1/cmr/m/it/10 Var\T1/cmr/m/n/10 (\T1/cmr/m/it/10 X[]\T1
@@ -1504,29 +1522,26 @@ n/10 (\T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 )) ^^U
 /m/it/10 t\T1/cmr/m/n/10 ), \T1/cmr/m/it/10 X[]\T1/cmr/m/n/10 )
  []
 
-[7]) (./build/principal.bbl
+[10]) (./build/principal.bbl) (./appendix.tex [11
 
-Package natbib Warning: Empty `thebibliography' environment on input line 3.
+])
 
-) (./appendix.tex [8
-
-]) 
 AED: lastpage setting LastPage
 (./build/principal.aux)
 Package rerunfilecheck Info: File `principal.out' has not changed.
-(rerunfilecheck)             Checksum: E0CC1439736AF6BE8D629EFCA8D27264;3607.
+(rerunfilecheck)             Checksum: FA8A64351F8B4A184ACCD7BAD63669FC;5199.
  ) 
 Here is how much of TeX's memory you used:
- 25962 strings out of 478238
- 472494 string characters out of 5850455
- 839242 words of memory out of 5000000
- 43483 multiletter control sequences out of 15000+600000
- 585229 words of font info for 223 fonts, out of 8000000 for 9000
+ 26020 strings out of 478238
+ 473465 string characters out of 5850455
+ 839566 words of memory out of 5000000
+ 43501 multiletter control sequences out of 15000+600000
+ 586138 words of font info for 230 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 87i,22n,131p,1676b,774s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,22n,131p,1676b,783s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/t
-exmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texmf-dist/font
-s/enc/dvips/sourcesanspro/a_emkxm5.enc}</usr/share/texmf-dist/fonts/type1/adobe
+exmf-dist/fonts/enc/dvips/sourcesanspro/a_emkxm5.enc}{/usr/share/texmf-dist/fon
+ts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/type1/adobe
 /sourcesanspro/SourceSansPro-It.pfb></usr/share/texmf-dist/fonts/type1/adobe/so
 urcesanspro/SourceSansPro-Regular.pfb></usr/share/texmf-dist/fonts/type1/adobe/
 sourcesanspro/SourceSansPro-Semibold.pfb></usr/share/texmf-dist/fonts/type1/ado
@@ -1548,10 +1563,10 @@ f-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/ty
 pe1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
 uper/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.p
 fb>
-Output written on ./build/principal.pdf (8 pages, 537249 bytes).
+Output written on ./build/principal.pdf (11 pages, 579311 bytes).
 PDF statistics:
- 255 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 74374 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 322 PDF objects out of 1000 (max. 8388607)
+ 255 compressed objects within 3 object streams
+ 54 named destinations out of 1000 (max. 500000)
+ 74430 words of extra memory for PDF output out of 89155 (max. 10000000)
 

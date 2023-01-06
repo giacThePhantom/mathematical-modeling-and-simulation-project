@@ -1,1 +1,262 @@
-\chapter{Introduction}
+\section{Introduction}
+Fluctuations in membrane potential arise in part due to stochastic switching in voltage-gated ion channel populations.
+Neural dynamics is represented by a stochastic model, with noise arising through the molecular fluctuations of ion channel states.
+Nerve cells are represented by a single isopotential volume surrounded by a membrane with capacitance $C>0$.
+These are hybrid stochastic models which include continuous and piecewise differentiable components.
+These components are coupled: the parameters of the ordinary differential equation for the voltage depend upon the number of open channels, and the propensity of state transition of the channels depend on the voltage.
+
+These hybrid stochastic models are described in the literature by providing and ODE governing the continuous portion of the system and a chemical master equation providing the dynamics of the probability distribution of the jump portion.
+These models are piecewise-deterministic Markov processes or PDMP, which can be charaterized by providing:
+
+\begin{itemize}
+	\item The ODE for the absolutely continuous portion of the system.
+	\item A rate function that determines when the next jump of the process occurs and a transition measure determining which type of jump occurs at that time.
+\end{itemize}
+
+The use of the PDMP formalism allowed the formulation of limite theorems, dimensionality reduction schemes and extensions of the models to the spatial domain.
+
+	\subsection{Classic neural dynamics model}
+	As said before the classic neural dynamics model involves coupled piecewise and continuous values which change over time.
+	This type of model is described in \cite{stochastic-neuron} and encompasses four characteristics of neuronal activity:
+
+	\begin{itemize}
+		\item Neurons are Dynamic units.
+		\item Neurons are driven by stochastic forces.
+		\item Neurons are organized into population with similar biophysical properties and response characteristics.
+		\item Multiple populations interact to form functional networks.
+	\end{itemize}
+
+		\subsubsection{A deterministic model neuron}
+		To build a neural model the starting point is a deterministic characterization of neurons.
+		In particular, their response to an input $s(t)$ has a generic form represented as:
+
+		\begin{equation}
+			\frac{\partial x}{\partial t} = f(x(t), s(t), \theta)
+			\label{det-neu}
+		\end{equation}
+
+		Where $x$ is the state vector defines a space within which its dynamics unfold.
+		The dimensionality of the space depends depends on the variables of $x$, which will be the membrane potential and the proportion of open ionic channels.
+		The solution of equation \ref{det-neu} will be the trajectory in time of a point in $x\in x(t)$.
+		The right-hand term is a function of:
+
+		\begin{itemize}
+			\item The states $x(t)$.
+			\item The input $s(t)$, exogenous or internal.
+			\item The model parameters $\theta$, the time-constant characteristics of the system.
+		\end{itemize}
+
+		As neurons are electrical units and can be represented as a resistance-capacitance circuit:
+
+		$$C\frac{dV}{dt} = \sum\limits_i I_i(t)$$
+
+		Where:
+
+		\begin{itemize}
+			\item $V$ is the membrane potential.
+			\item $C$ is the membrane capacitance.
+			\item $I_i$ the membrane current from source $i$.
+		\end{itemize}
+
+		The dynamic repertoire of a specific model depends on the nature of the different source currents, which can include fixed-point attractors, limit cycles and chaotic dynamics.
+		The easiest model is the simple integrate and fire model, where all voltage and synaptic channels are ignored: the current is modelled as a constant passive leak of charge, reducing the equation to:
+
+		$$C\frac{dV}{dt} = g_L(E_L-V)+s(t)$$
+
+		Where:
+
+		\begin{itemize}
+			\item $g_L$ is the conductance of the leak current.
+			\item $E_L$ is equilibrium potential.
+		\end{itemize}
+
+		This model does not model the biophysical properties necessary for spike generation.
+		Instead spiking is modelled as a threshold process: once the membrane potential exceed the threshold value $V_T$ a spike is assumed and the membrane potential is reset to a resting value $V_R$, such that $V_R\le E_L\le V_T$.
+		No spike is actually emitted and only sub-threshold dynamics are modelled.
+
+		\subsubsection{Modelling supra-threshold dynamics}
+		To allow the system to generate spikes the integrate and fire model is augmented with an additional variable $T$, the inter-spike time or IST.
+		This will be modelled as a state variable because:
+
+		\begin{itemize}
+			\item It constraints the neuronal trajectory to a finite region of the state space.
+			\item The time between spikes can bee computed directly from its density.
+			\item It allows to model time-dependent changes in the systems parameters.
+		\end{itemize}
+
+		The resulting model is two-dimensional and automates renewal to reset voltage once the threshold has been exceeded.
+
+
+		\begin{equation}
+			\begin{aligned}
+				\frac{dV}{dt} &= \frac{1}{C}(g_L(E_L-V)+s(t)) + \alpha(V_R-V)\beta\\
+				\frac{dT}{dt} &= 1-\alpha TH(V)\\
+				H(V) &= \begin{cases}1 & V\ge V_T\\0&V < V_t\end{cases}
+				\label{eqs:supra-threshold}
+			\end{aligned}
+		\end{equation}
+
+		A feature of this model is that the input has to reach a threshold before spikes are generated.
+		After this threshold the firing rate increases monotonically.
+		The membrane voltage is reset to $V_R$ using the Heaviside function $H$, ensuring that once $V>V_T$, the rate of change of $T$ is large and negative (typically $\alpha\approx 10^4$), reversing the progression of the IST back to zero.
+		After that it will increase constantly for $V_R<V<V_T$.
+		The membrane potential is coupled to $T$ via the Gaussian function $\beta$, centred at $T=0$ and with a small dispersion $\gamma=1ms$.
+		During the first few millisecond this term provides a brief impulse to clam the membrane potential near to $V_R$ modelling the refractory period.
+
+		\subsubsection{Modelling spike-rate adaptation and synaptic dynamics}
+		Equation \ref{eqs:supra-threshold} can be extended to include ion-channel dynamics to model spike-rate adaptation and synaptic transmission.:
+
+		\begin{equation}
+			\begin{aligned}
+				\frac{dV}{dt} &= \frac{1}{C}\biggl(g_L(E_L-V)+g_{sK}x_{sK}(E_{sK}-V) +\\
+				& +g_{\scriptscriptstyle{AMPA}}x_{\scriptscriptstyle{AMPA}}(E_{\scriptscriptstyle{AMPA}}-V) +\\
+				& +g_{\scriptscriptstyle{GABA}}x_{\scriptscriptstyle{GABA}}(E_{\scriptscriptstyle{GABA}}-V) +\\
+				& +\frac{g_{\scriptscriptstyle{NMDA}}x_{\scriptscriptstyle{NMDA}}(E_{\scriptscriptstyle{NMDA}}-V)}{1+e^{-\frac{V-a}{b}}}\biggr)+\\
+				& + \alpha(V_R-V)\beta\\
+				\frac{dT}{dt} &= -\alpha TH(V)\\
+				\tau_{sK}\frac{dx_{sK}}{dt} &= (1-x_{sK})4\beta-x_{sK}\\
+				\tau_{\scriptscriptstyle{AMPA}}\frac{dx_{\scriptscriptstyle{AMPA}}}{dt} &= (1-x_{\scriptscriptstyle{AMPA}})(p_{\scriptscriptstyle{AMPA}}+s(t))-x_{\scriptscriptstyle{AMPA}}\\
+				\tau_{\scriptscriptstyle{GABA}}\frac{dx_{\scriptscriptstyle{GABA}}}{dt} &= (1-x_{\scriptscriptstyle{GABA}})p_{\scriptscriptstyle{GABA}}-x_{\scriptscriptstyle{GABA}}\\
+				\tau_{\scriptscriptstyle{NMDA}}\frac{dx_{\scriptscriptstyle{NMDA}}}{dt} &= (1-x_{\scriptscriptstyle{NMDA}})p_{\scriptscriptstyle{NMDA}}-x_{\scriptscriptstyle{NMDA}}\\
+				\label{eqs:synaptic-dynamics}
+			\end{aligned}
+		\end{equation}
+
+		In this way spike-rate adaptation and synaptic dynamics are modelled by a generic synaptic channel mechanism, considering:
+
+		\begin{itemize}
+			\item Fast excitatory AMPA channels.
+			\item Slow excitatory NMDA channels.
+			\item Inhibitory GABA channels.
+			\item Slow potassium channels.
+		\end{itemize}
+
+		Where $x_i$ is the activation variable that controls the proportion of open channels and in particular $0\le x_i\le 1$.
+		Given no input, the ratio of open to closed channel will relax to the equilibrium state:
+
+		$$\frac{p}{1+p}$$
+
+		For GABA and NMDA channels.
+
+		The rate of closing is proportional to $x_i$, while the rate of opening will be proportional to $1-x_i$.
+		Synaptic inputs is taken in consideration by increasing the opening rate of AMPA channels instead of affecting $V$ directly.
+
+		\subsubsection{A stochastic model neuron}
+		The addition of system noise in the form of a random input will transform the deterministic equation into a stochastic differential equation or SDE or Langevin equation.
+		This type of equation has an ensemble of solutions.
+		The effect of the variable spike-time arrival disperse trajectories through the state space.
+		Under smoothness constraints on the random input the ensemble of solutions are described by the FPE, which enables them to be framed as a deterministic dynamic equation.
+		This equation models the dispersive effect of stochastic input as a diffusive process.
+		This leads of the description of the system in terms of a probability density over the state space or $\rho(x,t)$.
+		Going back to the system described by equation \ref{det-neu}, with $s(t)$ as a random variable:
+
+		\begin{equation}
+			s(t) = h\sum\limits_n\delta(t-t_n)
+		\end{equation}
+
+		Where:
+
+		\begin{itemize}
+			\item $h$ is a discrete quantity representing the change in post-synaptic membrane potential due to a synaptic event.
+			\item $t_n$ represents the time of the $n$-th event.
+		\end{itemize}
+
+		Typically the time between spikes is sampled from a Poisson distribution.
+		Given the neuronal response function $\sigma(t)$, the mean impulse rate $r(t)$ can be computed by taking an average over a short time-interval $T$:
+
+		\begin{equation}
+			\begin{aligned}
+				\sigma(t) &= \sum\limits_n\delta(t-t_n)\\
+				r(t) &= \frac{1}{T}\int_0^T\sigma(\tau)d\tau\\
+				s(t) &= hr(t)
+			\end{aligned}
+		\end{equation}
+
+		To describe how $\rho(x,t)$ change in time consider a simple integrate and fire model with only an excitatory input and without synaptic dynamics.
+		The master equation detailing the rate of change of $\rho(x,t)$ over time can be written as:
+
+		\begin{equation}
+			\begin{aligned}
+				\frac{\partial\rho(x,t)}{\partial t} &= \frac{\partial\rho_{IN}}{\partial t} + \frac{\partial\rho_{OUT}}{\partial t} =\rho(x + h)f(x+h)+\\
+																						 &+\rho(x-h)r(t)-\rho(x)r(t)-\rho(x)f(x)
+			\end{aligned}
+		\end{equation}
+
+		Which, on rearranging:
+
+		\begin{equation}
+			\frac{\partial\rho(x,t)}{\partial t} = (\rho(x+h)f(x+h)-\rho(x)f(x))+r(t)(\rho(x-h)-\rho(h))
+		\end{equation}
+
+		And approximating the first bracketed expression using a first-order Taylor expansion:
+
+		\begin{equation}
+			\frac{\partial\rho(x,t)}{\partial t} = -\frac{\partial}{\partial x}f\rho + r(t)(\rho(x-h)-\rho(x))
+			\label{eqs:population}
+		\end{equation}
+
+		Or the population equation.
+		The first right-hand term is due to the leakage current and generates a steady flow towards $E_L$.
+		The second is due to input and is composed of two terms, considered as replenishing and depleting term respectively.
+		Given an impulse of input, the probability between $x-h$ and $x$ will contribute to flow at $x$, whereas $\rho(x)$ flows away from $x$.
+		The replenishing term can be approximated using a second-order Taylor series expansion about $x$:
+
+		\begin{equation}
+			\rho(x-h)\approx \rho(x) - h\frac{\partial\rho}{\partial x}+\frac{h^2}{2}\frac{\partial^2\rho}{\partial x^2}
+		\end{equation}
+
+		And substituting back into \ref{eqs:population} and using $w^2 = sh$ with $w$ the diffusion coefficient, the diffusion approximation of the population equation, the FPE or the advection-diffusion equation can be obtained:
+
+		\begin{equation}
+			\frac{\partial\rho}{\partial t} = -\frac{\partial((f+s)\rho)}{\partial x} +\frac{w^2}{2}\frac{\partial^2\rho}{\partial x^2}
+			\label{eqs:advection-diffusion}
+		\end{equation}
+
+		Or, more simply:
+
+		\begin{equation}
+			\frac{\partial\rho}{\partial t} = Q(x, s)\rho
+		\end{equation}
+
+		Where $Q(x,s)$ contains all the dynamic information entailed by the differential equations of the model.
+		The first term of equation \ref{eqs:advection-diffusion} is known as the advection term, describes movement of the probability density owning to the system's deterministi dynamics.
+		The second describes dispersion of density brought about by stochastic variations in the input.
+		It is weighted by half the square of the diffusion coefficient, which quantifies the root-mean-squared distance travelled owing to this variability.
+		An assumption to be made is that $h$ will be very small, as the accuracy of the Taylor expansion increases as $h\rightarrow 0$.
+		It has been demonstrated how this works for neuronal models.
+		The advection-diffusion in \ref{eqs:advection-diffusion} generalizes to models with multiple states, such as the more complex integrate-and-fire deterministic model described earlier:
+
+		\begin{equation}
+			\frac{\partial P}{\partial t} = \nabla\cdot(W\nabla - F(x,s))P
+		\end{equation}
+
+		Where:
+
+		\begin{itemize}
+			\item $P$ is the probability distribution over a multi-dimensional state space.
+			\item $W$ is the co-variation matrix involving diffusion coefficient with the denominator $2$ absorbed into it.
+			\item An example of $F(x,s)$ can be found in \ref{eqs:synaptic-dynamics}.
+		\end{itemize}
+
+	\subsection{Expanding the stochastic neuronal model}
+	In this paper two piecewise stochastic representations for the models are introduced.
+	These are similar to the Langevin model presented earlier with the difference that the noise arise via stochastic counting processes as opposed to Brownian motions.
+	These representations imply different exact simulation strategies, which are not being explored in this context.
+	From a computational standpoint the change to path wise representation is useful because:
+
+	\begin{itemize}
+		\item The different representations imply different exact simulation strategies.
+		\item The different representation can be used to develop new methods such as finite difference methods for the approximation of parametric sensitivities and multi-level Monte Carlo methods for the approximation of expectations.
+		\item The representations can be used for the rigorous analysis of different computational strategies and for the algorithmic reduction of models with multiple scales.
+	\end{itemize}
+
+	These representations are not well known in the context of computational neuroscience and so approximated methods for the simulation of sample paths like fixed time step methods or piecewise constant propensity algorithm are still used in the literature where there is no need to make such approximations.
+	Because of this this work should contribute in a way to:
+
+	\begin{itemize}
+		\item Formulate two path wise representations for the specific models under consideration.
+		\item A presentation of the corresponding exact simulation strategies for the different representations.
+		\item A comparison of the error induced by utilizing approximated simulation strategies on the Morris-Lecar model.
+	\end{itemize}
+
+	Moreover this work show how to use the different representations in the development of methods for parametric sensitivity analysis.
