@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.12.19)  6 JAN 2023 22:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.15)  12 JAN 2023 09:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1415,7 +1415,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 
  <./unitn_logo.pdf>]
 [2]
-Overfull \hbox (5.34874pt too wide) detected at line 189
+Overfull \hbox (5.34874pt too wide) detected at line 190
 [][][][] \T1/cmr/m/n/10 = (\U/zeur/m/n/10 ^^Z\T1/cmr/m/n/10 (\T1/cmr/m/it/10 x 
 \T1/cmr/m/n/10 + \T1/cmr/m/it/10 h\T1/cmr/m/n/10 )\T1/cmr/m/it/10 f\T1/cmr/m/n/
 10 (\T1/cmr/m/it/10 x \T1/cmr/m/n/10 + \T1/cmr/m/it/10 h\T1/cmr/m/n/10 ) ^^U \U
@@ -1427,7 +1427,7 @@ ur/m/n/10 ^^Z\T1/cmr/m/n/10 (\T1/cmr/m/it/10 h\T1/cmr/m/n/10 ))
  []
 
 
-Overfull \hbox (7.03763pt too wide) in paragraph at lines 236--237
+Overfull \hbox (7.03763pt too wide) in paragraph at lines 237--238
 []$\T1/cmr/m/it/10 (-20) P$ \T1/cmr/m/n/10 (-20) is the prob-a-bil-ity dis-tri-
 bu-tion over a multi-dimensional
  []
@@ -1532,11 +1532,11 @@ Package rerunfilecheck Info: File `principal.out' has not changed.
 (rerunfilecheck)             Checksum: FA8A64351F8B4A184ACCD7BAD63669FC;5199.
  ) 
 Here is how much of TeX's memory you used:
- 26020 strings out of 478238
- 473465 string characters out of 5850455
+ 26025 strings out of 478238
+ 473489 string characters out of 5850455
  839566 words of memory out of 5000000
  43501 multiletter control sequences out of 15000+600000
- 586138 words of font info for 230 fonts, out of 8000000 for 9000
+ 587647 words of font info for 235 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  87i,22n,131p,1676b,783s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/t
@@ -1563,7 +1563,7 @@ f-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/ty
 pe1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
 uper/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.p
 fb>
-Output written on ./build/principal.pdf (11 pages, 579311 bytes).
+Output written on ./build/principal.pdf (11 pages, 579846 bytes).
 PDF statistics:
  322 PDF objects out of 1000 (max. 8388607)
  255 compressed objects within 3 object streams

@@ -9,6 +9,9 @@ Vm(1) = -65; %mV
 g_L = 0.02; %uS
 C = 0.2; %nF
 V_th = -55; %mV
+alpha = 10000;
+gamma = 1;
+
 
 s = zeros(sim_time/dt + 1, 1);
 
@@ -27,18 +30,13 @@ end
 
 
 for t=1:length(T)-1,
-    if Vm(t) >= V_th,
-
-        Vm(t+1) = E_L;
-
-    else,
-
-      Vm(t+1) = Vm(t) + dt * (g_L*(E_L-Vm(t)) + s(t)*1000)/C;
-    end;
-
+    T(t+1) = T(t) + dt * ( 1 - (alpha * T(t) * H(Vm(t), V_th)));
+    beta = exp(-(T(t).^2)/(2*gamma.^2));
+    Vm(t+1) = Vm(t) + dt * ((g_L*(E_L-Vm(t)) + s(t)*1000)/C + alpha*(E_L - Vm(t))*beta);
 end;
 
 T = T*1000;
+Vm
 
 subplot(2,1,1);
 plot(T,Vm,'LineWidth', 3.0);
@@ -58,3 +56,10 @@ grid on;
 
 
 % Parameters from https://www.cns.nyu.edu/~david/handouts/integrate-and-fire.pdf
+function res = H(V, V_th)
+    if V >= V_th,
+        res = 1;
+    else
+        res = 0;
+    end
+end
