@@ -17,7 +17,14 @@ s = zeros(sim_time/dt + 1, 1);
 
 
 opts = odeset('AbsTol', 1e-8, 'RelTol', 1e-8);
-y_0 = [-0.1, -0.4, 15];
+
+
+
+y_0 = [V, C, E_l, g_l, gamma, alpha];
+
+
+
+
 [T, Y] = ode15s(@(t, y) neuron(t, y), [0 100], y_0, opts);
 
 figure;
@@ -28,19 +35,31 @@ grid on;
 
 
 
-function dy = neuron(t, y)
+function dv = neuron(t, y)
 
-	y = reshape(y, [], 3);
-	xi = y(:, 1);
-	xi_rest = y(:, 2);
-	tau = y(:, 3);
+	y = reshape(y, [], 6);
+	V = y(:, 1);
+	C y(:, 2);
+	E_l = y(:, 3);
+	g_l = y(:, 4);
+	gammma = y(:, 5);
+  alpha = y(:, 6);
 
-	dy = zeros(size(y));
+	dv = zeros(size(y));
+
+  beta = exp(-(T.^2)/2*gamma.^2)
+
+
+  dT = @(V) 1-alpha*(T*H)
+  dv(:,1) = 1/C(g_l*(E_l-V)+s) + alpha*(E_l -V)*beta
+
+
+
+
 	dy(:,1) = (xi_rest - xi)/tau;
 	dy = dy(:);
 
 end
-
 
 
 %for t = 1:length(T) - 1,
