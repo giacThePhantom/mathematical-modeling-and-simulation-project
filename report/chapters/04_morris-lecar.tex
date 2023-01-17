@@ -25,7 +25,7 @@ $$n_\infty(v) = \frac{\alpha(v)}{\alpha(v)+\beta(v)} = \frac{1+\tanh\epsilon}{2}
 
 $$\tau(v) = \frac{1}{\alpha(v)+\beta(v)} = \frac{1}{\phi\cosh\frac{\epsilon}{2}}$$
 
-Where $\epsilon = \frac{v-v_c}{v_d}$, the parameter will have values:
+Where $\epsilon = \frac{v-v_c}{v_d}$ and the parameter will have values:
 
 \begin{multicols}{3}
 	\begin{itemize}
@@ -52,11 +52,11 @@ Each potassium channel switches between the closed or open state independently o
 The entire population conductance ranges from $0$ to $g_K^o = \frac{g_K}{N_{tot}}$.
 In this simulation $N_{tot} = 40$.
 The random variables will be the voltage and the number of open potassium channel.
-In the random time change representation the opening and closing of the potassium channels are drive by two independent unit rate Poisson processes $Y_{open}(t)$ and $Y_{close}(t)$.
+In the random time change representation the opening and closing of the potassium channels are driven by two independent unit rate Poisson processes $Y_{open}(t)$ and $Y_{close}(t)$.
 The evolutions  of $V$ and $N$ are linked.
 Whenever $N=n$, the evolution of $V$ obeys a deterministic differential equation:
 
-$$\frac{dV}{dt}|_{N=n} = f(V, n)$$
+$$\frac{dV}{dt}\biggr\vert_{N=n} = f(V, n)$$
 
 $N$ evolves as a jump process: $N(t)$ is a piece-wise constant, with transitions occurring with intensities dependent on $V$.
 Whenever $V = v$:
@@ -68,9 +68,9 @@ $$N\rightarrow N - 1\text{ net rate } \beta(v)N$$
 Now representing the state space for $N$ graphically:
 
 \begin{align*}
-&0\xleftrightharpoons[\beta]{\alpha N_{tot}} 1 \xleftrightharpoons[2\beta]{\alpha(N_{tot}-1)}2\xleftrightharpoons[3\beta]{\alpha(N_{tot}-2)} \dots \xleftrightharpoons[k\beta]{\alpha(N_{tot}-k+1)}&k\\
-& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\scriptstyle{\alpha(N_{tot}-k)}&\downharpoonleft\upharpoonright(k+1)\scriptstyle{\beta}\\
-& N_{tot}\xleftrightharpoons[N_{tot}\beta]{\alpha}(N_{tot}-1)\xleftrightharpoons[\beta(N_{tot}-1)]{2\alpha}\dots\xleftrightharpoons[(k+2)\beta]{\alpha(N_{tot}-k-1)}&(k+1)
+&0\xleftrightharpoons[\beta]{\alpha N_{tot}} 1 \xleftrightharpoons[2\beta]{\alpha(N_{tot}-1)}2\xleftrightharpoons[3\beta]{\alpha(N_{tot}-2)} \dots \xleftrightharpoons[k\beta]{\alpha(N_{tot}-k+1)}k&\\
+&\scriptstyle{\alpha(N_{tot}-k)}\downharpoonleft\upharpoonright&\scriptstyle{(k+1)\beta}\\
+& N_{tot}\xleftrightharpoons[N_{tot}\beta]{\alpha}(N_{tot}-1)\xleftrightharpoons[\beta(N_{tot}-1)]{2\alpha}\dots\xleftrightharpoons[(k+2)\beta]{\alpha(N_{tot}-k-1)}(k+1)&
 \end{align*}
 
 The nodes represent possible states for process $N$ an the transition intensities located above and below the arrows.
