@@ -1,65 +1,76 @@
+% Utils
 clear all;
 close all;
-sim_time = 60; %s
+
+% Useless?
 dt = 0.0002;
-T = 0:dt:sim_time; % 1 second simulation
-Vm = zeros(sim_time/dt + 1, 1);
-E_L = -65; %mV
-Vm(1) = -65; %mV
-g_L = 0.02; %uS
-C = 0.2; %nF
-V_th = -55; %mV
-alpha = 10000;
-gamma = 1;
+sim_time = 60; %s
+init_cond = [-65; 0];
+global s_array;
+global t_array;
+
+[t, v] = ode15s(@neuron, [0 100], init_cond);
 
 
-s = zeros(sim_time/dt + 1, 1);
+t_array = 0:100;
 
-
-opts = odeset('AbsTol', 1e-8, 'RelTol', 1e-8);
-
-
-
-y_0 = [V, C, E_l, g_l, gamma, alpha];
-
-
-
-
-[T, Y] = ode15s(@(t, y) neuron(t, y), [0 100], y_0, opts);
-
-figure;
-plot(T, Y(:, 1), 'LineWidth', 3.0);
-xlabel('Time [ms]');
-ylabel('Potential [mV]');
-grid on;
-
-
-
-function dv = neuron(t, y)
-
-	y = reshape(y, [], 6);
-	V = y(:, 1);
-	C y(:, 2);
-	E_l = y(:, 3);
-	g_l = y(:, 4);
-	gammma = y(:, 5);
-  alpha = y(:, 6);
-
-	dv = zeros(size(y));
-
-  beta = exp(-(T.^2)/2*gamma.^2)
-
-
-  dT = @(V) 1-alpha*(T*H)
-  dv(:,1) = 1/C(g_l*(E_l-V)+s) + alpha*(E_l -V)*beta
-
-
-
-
-	dy(:,1) = (xi_rest - xi)/tau;
-	dy = dy(:);
-
+for i=1:length(t_array),
+    s_array(end + 1) = compute_s(i);
 end
+    
+subplot(2, 1, 1)
+plot(t, v)
+subplot(2, 1, 2)
+plot(t_array, s_array)
+
+% Functions
+function dv = neuron(t, v)
+    
+    % Parameters
+    E_L = -65; %mV
+    g_L = 0.02; %uS
+    C = 0.2; %nF
+    V_th = -55; %mV
+    alpha = 10000;
+    gamma = 1;
+    s = compute_s(t);
+    %global s_array
+    %global t_array
+    disp([v(2) gamma])
+    beta_test = exp(-(v(2)^2)/(2*gamma^2));
+    disp(beta_test)
+
+    %s_array(length(s_array) + 1) = s;
+    %t_array(length(t_array) + 1) = t;
+
+    dv = [
+       1/C*(g_L*(E_L-v(1))+s) + alpha * (E_L-v(1)) * beta_test;
+       1 - alpha * v(2) * H(v(1), V_th);
+    ]; 
+end
+
+function s = compute_s(t)
+    if t > 20 && t < 40
+        s = 100;
+    elseif t > 45 && t < 80
+        s = 300; 
+    else, s = 0;
+    end
+end
+
+function heaviside = H(V, V_t)
+    if V >= V_t
+        heaviside = 1;
+    else
+        heaviside = 0;
+    end
+end
+
+%figure;
+%plot(T, Y(:, 1), 'LineWidth', 3.0);
+%xlabel('Time [ms]');
+%ylabel('Potential [mV]');
+%grid on;
 
 
 %for t = 1:length(T) - 1,
