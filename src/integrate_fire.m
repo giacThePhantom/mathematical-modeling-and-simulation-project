@@ -4,22 +4,23 @@ sim_time = 60; %s
 dt = 0.0002;
 T = 0:dt:sim_time; % 1 second simulation
 Vm = zeros(sim_time/dt + 1, 1);
-E_L = -65; %mV
-Vm(1) = -65; %mV
-g_L = 0.02; %uS
-C = 0.2; %nF
-V_th = -55; %mV
+E_L = -73; %mV
+Vm(1) = E_L; %mV
+g_L = 0.025; %uS
+C = 0.375; %nF
+V_th = -53; %mV
+V_R = -90;
 
 s = zeros(sim_time/dt + 1, 1);
 
 
 for t = 1:length(T) - 1,
     if t > 20 & t <=21,
-        s(t) = 10;
+        s(t) = 37.5;
     elseif t > 15000 & t< 200000 & mod(t, 20000) == 0,
+        s(t) = 20;
+    elseif t > 200000 & mod(t, 20000) == 0,
         s(t) = 5;
-    elseif t > 200000 & t< 250000 & mod(t, 20000) == 0,
-        s(t) = 3;
     end
 end
 
@@ -29,7 +30,7 @@ end
 for t=1:length(T)-1,
     if Vm(t) >= V_th,
 
-        Vm(t+1) = E_L;
+        Vm(t+1) = V_R;
 
     else,
 
