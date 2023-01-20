@@ -35,7 +35,7 @@ function dy = neuron(t, y)
     dy = zeros(size(y));
 
     dy(:, 1) = (g_L*(E_L-V)+s(t))/C + alpha_m*(V_r-V)*beta_m(T);
-    dy(:, 2) = 1 - alpha_m*T*H(V, V_th);
+    dy(:, 2) = 1- alpha_m*T*H(V, V_th);
     dy = dy(:);
 end
 
@@ -51,19 +51,10 @@ function compute_s = s(t)
     if t > 10 && t < 10.1
         compute_s = 63770;
     elseif t > 15 && t < 25
-        compute_s = 3;
-    elseif t > 30 && t < 32
-        compute_s = 3;
-    elseif t > 36 && t < 38
-        compute_s = 3; 
-    elseif t > 42 && t < 45
-        compute_s = 3;
-    elseif t > 50 && t < 52
-        compute_s = 1;
-    elseif t > 54 && t < 56
-        compute_s = 1; 
-    elseif t > 58 && t < 60
-        compute_s = 1;    
+        compute_s = 2600;
+    elseif t > 30 && t < 40 && mod(, 1) == 0
+        disp("here")
+        compute_s = 63000;
     else
         compute_s = 0;
     end
