@@ -1,117 +1,46 @@
-% Utils
 clear all;
 close all;
+opts = odeset('AbsTol', 1e-6, 'RelTol', 1e-6, 'InitialStep', 1e-8, 'MaxStep', 1e-2);
+y_0 = [-73, 10];
+[T, Y] = ode15s(@(t, y) supra_threshold(t, y), [0 100], y_0, opts);
 
-% Useless?
-dt = 0.0002;
-sim_time = 60; %s
-init_cond = [-73; 10];
-global s_array;
-global t_array;
+subplot(2,1,1)
+plot(T, Y(:, 1), 'LineWidth', 3.0);
+xlabel('Time [ms]');
+ylabel('Potential [mV]');
+subplot(2,1,2)
+plot(T, Y(:, 2), 'LineWidth', 3.0);
+xlabel('Time [ms]');
+ylabel('T');
+grid on;
 
-%opts = odeset('AbsTol', 1e-8, 'RelTol', 1e-8);
-[t, v] = ode15s(@neuron, [0 100], init_cond);
 
 
-t_array = 0:100;
 
-for i=1:length(t_array),
-    s_array(end + 1) = compute_s(i);
+function dy = supra_threshold(t, y)
+
+    E_L = -73;
+    g_L = 0.025;
+    C = 0.375;
+    V_th = -53;
+    alpha_m = 10000;
+    gamma_m = 1;
+    V_r = -90;
+
+
+    y = reshape(y, [], 2);
+    V = y(:, 1);
+    T = y(:, 2);
+
+    beta_m = @(T) exp(-(T^2)/(2*gamma_m^2));
+
+    H = 1/(1 + exp(-200*(V-V_th)));
+
+    s = 1 * (sign(t-10) - sign(t-11));
+
+    dy = zeros(size(y));
+
+    dy(:, 2) = 1- alpha_m*T*H;
+    dy(:, 1) = (g_L*(E_L-V)+s)/C + alpha_m*(V_r-V)*beta_m(T);
+    dy = dy(:);
 end
-
-subplot(2, 1, 1)
-plot(t, v)
-subplot(2, 1, 2)
-plot(t_array, s_array)
-
-% Functions
-function dv = neuron(t, v)
-
-    % Parameters
-    E_L = -73; %mV
-    g_L = 0.025; %uS
-    C = 0.375; %nF
-    V_th = -53; %mV
-    alpha = 10000;
-    gamma = 1;
-    V_R = E_L;
-    disp(t);
-    s = compute_s(t);
-    beta_test = exp(-(v(2)^2)/(2*gamma^2));
-    dv = [
-       1/C*(g_L*(E_L-v(1))+s) + alpha * (V_R-v(1)) * beta_test;
-       1 - alpha * v(2) * H(v(1), V_th);
-    ];
-end
-
-function s = compute_s(t)
-    if t > 20 && t < 40
-        s = 100;
-    elseif t > 45 && t < 80
-        s = 300;
-    else, s = 0;
-    end
-end
-
-function heaviside = H(V, V_t)
-    if V >= V_t
-        heaviside = 1;
-    else
-        heaviside = 0;
-    end
-end
-
-%figure;
-%plot(T, Y(:, 1), 'LineWidth', 3.0);
-%xlabel('Time [ms]');
-%ylabel('Potential [mV]');
-%grid on;
-
-
-%for t = 1:length(T) - 1,
-    %if t > 20 & t <=21,
-        %s(t) = 10;
-    %elseif t > 15000 & t< 200000 & mod(t, 20000) == 0,
-        %s(t) = 5;
-    %elseif t > 200000 & t< 250000 & mod(t, 20000) == 0,
-        %s(t) = 3;
-    %end
-%end
-%
-%
-%
-%
-%for t=1:length(T)-1,
-    %T(t+1) = T(t) + dt * ( 1 - (alpha * T(t) * H(Vm(t), V_th)));
-    %beta = exp(-(T(t).^2)/(2*gamma.^2));
-    %Vm(t+1) = Vm(t) + dt * ((g_L*(E_L-Vm(t)) + s(t)*1000)/C + alpha*(E_L - Vm(t))*beta);
-%end;
-%
-%T = T*1000;
-%Vm
-%
-%subplot(2,1,1);
-%plot(T,Vm,'LineWidth', 3.0);
-%
-%xlabel('Time [ms]');
-%
-%ylabel('Voltage [mV]');
-%
-%subplot(2,1,2)
-%plot(T, s, 'r', 'LineWidth', 3.0);
-%
-%xlabel('Time [ms]');
-%
-%ylabel('Current [nA]');
-%
-%grid on;
-%
-%
-%% Parameters from https://www.cns.nyu.edu/~david/handouts/integrate-and-fire.pdf
-%function res = H(V, V_th)
-    %if V >= V_th,
-        %res = 1;
-    %else
-        %res = 0;
-    %end
-%end
