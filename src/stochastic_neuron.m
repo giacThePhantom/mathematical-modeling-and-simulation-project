@@ -1,6 +1,6 @@
 clear all;
 close all;
-sim_time = 1000; %s
+sim_time = 100; %s
 dt = 0.0002;
 T = 0:dt:sim_time; % 1 second simulation
 Vm = zeros(sim_time/dt + 1, 1);

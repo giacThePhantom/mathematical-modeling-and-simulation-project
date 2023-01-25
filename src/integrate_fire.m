@@ -1,6 +1,6 @@
 clear all;
 close all;
-sim_time = 60; %s
+sim_time = 100; %s
 dt = 0.0002;
 T = 0:dt:sim_time; % 1 second simulation
 Vm = zeros(sim_time/dt + 1, 1);
@@ -39,19 +39,19 @@ for t=1:length(T)-1,
 
 end;
 
-T = T*1000;
+T = T;
 
 subplot(2,1,1);
 plot(T,Vm,'LineWidth', 3.0);
 
-xlabel('Time [ms]');
+xlabel('Time [s]');
 
 ylabel('Voltage [mV]');
 
 subplot(2,1,2)
 plot(T, s, 'r', 'LineWidth', 3.0);
 
-xlabel('Time [ms]');
+xlabel('Time [s]');
 
 ylabel('Current [nA]');
 
