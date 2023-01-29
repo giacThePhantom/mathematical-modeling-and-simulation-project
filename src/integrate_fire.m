@@ -25,8 +25,6 @@ for t = 1:length(T) - 1,
 end
 
 
-
-
 for t=1:length(T)-1,
     if Vm(t) >= V_th,
 
