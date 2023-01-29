@@ -2,7 +2,6 @@
 clear all;
 close all;
 
-% Useless?
 dt = 0.0002;
 sim_time = 60; %s
 p_ampa = 0.875;
@@ -23,32 +22,33 @@ for i=1:length(t_array),
 end
 
 subplot(7, 1, 1)
-plot(T, Y(:, 1))
+plot(T, Y(:, 1), 'LineWidth', 3.0)
 legend("Voltage")
 
-subplot(7, 1, 2)
-plot(t_array, s_array)
-legend("Current")
 
-subplot(7, 1, 3)
-plot(T, Y(:, 2))
+subplot(7, 1, 2)
+plot(T, Y(:, 2), 'g', 'LineWidth', 3.0)
 legend("InterSpikeTime")
 
-subplot(7, 1, 4)
-plot(T, Y(:, 3))
+subplot(7, 1, 3)
+plot(T, Y(:, 3), 'm', 'LineWidth', 3.0)
 legend("SK")
 
-subplot(7, 1, 5)
-plot(T, Y(:, 4))
+subplot(7, 1, 4)
+plot(T, Y(:, 4), 'y', 'LineWidth', 3.0)
 legend("AMPA")
 
-subplot(7, 1, 6)
-plot(T, Y(:, 5))
+subplot(7, 1, 5)
+plot(T, Y(:, 5), 'c', 'LineWidth', 3.0)
 legend("GABA")
 
-subplot(7, 1, 7)
-plot(T, Y(:, 6))
+subplot(7, 1, 6)
+plot(T, Y(:, 6), 'k', 'LineWidth', 3.0)
 legend("NMDA")
+
+subplot(7, 1, 7)
+plot(t_array, s_array, 'r', 'LineWidth', 3.0)
+legend("Current")
 
 % Functions
 function dy = neuron(t, y)
@@ -114,15 +114,15 @@ function compute_s = s(t)
     elseif t > 30 && t < 32
         compute_s = 3;
     elseif t > 36 && t < 38
-        compute_s = 3; 
+        compute_s = 3;
     elseif t > 42 && t < 45
         compute_s = 3;
     elseif t > 50 && t < 52
         compute_s = 1;
     elseif t > 54 && t < 56
-        compute_s = 1; 
+        compute_s = 1;
     elseif t > 58 && t < 60
-        compute_s = 1;    
+        compute_s = 1;
     else
         compute_s = 0;
     end
