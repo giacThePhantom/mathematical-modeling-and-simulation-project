@@ -2,8 +2,8 @@ clear all;
 close all;
 
 opts = odeset('AbsTol', 1e-6, 'RelTol', 1e-6, 'InitialStep', 1e-8, 'MaxStep', 1e-2);
-y_0 = [-84, 0];
-[T, Y] = ode15s(@(t, y) neuron(t, y), [0 100], y_0, opts);
+y_0 = [-60, 0];
+[T, Y] = ode15s(@(t, y) neuron(t, y), [0 1000], y_0, opts);
 
 subplot(2,1,1)
 plot(T, Y(:, 1), 'LineWidth', 3.0);
@@ -22,7 +22,7 @@ function dy = neuron(t, y)
     v_k = -84;
     v_l = -60;
     v_ca = 120;
-    i_app = 100;
+    i_app = 0;
     g_k = 8;
     g_l = 2;
     C = 20;
