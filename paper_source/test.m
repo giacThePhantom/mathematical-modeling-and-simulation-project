@@ -26,7 +26,7 @@ global tau2  T2
 % time to next closing event (internal to reaction 2)
 
 %% Set defaults for input arguments
-if nargin < 2, Ntot=40; end
+if nargin < 2, Ntot=70; end
 Npotassium_tot=Ntot;
 if nargin < 1, tmax=4e3; end
 
@@ -40,7 +40,8 @@ vd = 30;
 phi = 0.04;
 
 %% Functions for Morris-Lecar
-global Iapp; Iapp=@(t)100; % applied current.
+global Iapp; Iapp=@(t)0; % applied current.
+%% 
 global minf; minf=@(v)0.5*(1+tanh((v-va)/vb)); % m-gate activation
 global xi; xi=@(v)(v-vc)/vd;  % scaled argument for n-gate input
 global ninf; ninf=@(v)0.5*(1+tanh(xi(v)));  % n-gate activation function
@@ -92,6 +93,7 @@ elseif mu==2 % next reaction is another channel closing
     N0=N0-1;    % decrement channel state
     tau2=tau2-log(rand); % increment in tau2 likewise
 end
+
 Npotassium=N0;
 if N0>Npotassium_tot, error('N>Ntot'), end
 if N0<0, error('N<0'), end
@@ -102,9 +104,10 @@ end % while t(end)<tmax
 
 %% Plot output
 figure
-subplot(4,1,1),plot(t,N),xlabel('time'),ylabel('N')
-subplot(4,1,2:3),plot(V,N,'.-'),xlabel('V'),ylabel('N')
-subplot(4,1,4),plot(t,V),xlabel('time'),ylabel('V')
+subplot(3,1,1),plot(t,V),xlabel('time'),ylabel('V')
+subplot(3,1,2),plot(t,N),xlabel('time'),ylabel('N')
+subplot(3,1,3),plot(V, N, '-.'),xlabel('V'),ylabel('N')
+%subplot(3,1,3),plot(t,Iapp),xlabel('time'),ylabel('I')
 shg
 end
 
@@ -131,18 +134,28 @@ gCa = 4.4;
 
 %% calculate the RHS;
 v=u(1); % extract the voltage from the input vector
-dudt=[(Iapp(t)-gCa*minf(v)*(v-vCa)-gL*(v-vL)-...
-        gK*(Npotassium/Npotassium_tot)*(v-vK))/C; % voltage
+dudt=[(Iapp(t)-gCa*minf(v)*(v-vCa)-gL*(v-vL)-gK*(Npotassium/Npotassium_tot)*(v-vK))/C; % voltage
     alpha(v)*(Npotassium_tot-Npotassium); % channel opening internal time
     beta(v)*Npotassium;% channel closing internal time
 0]; % N is constant between events
 end
 
 %% Define behavior at threshold crossing
+% function [value,isterminal,direction] = nextevent(~,u)
+%     global tau1 T1 % timing trigger for reaction 1 (opening)
+%     global tau2 T2 % timing trigger for reaction 2 (closing)
+%     value=[u(2)-(tau1-T1);u(3)-(tau2-T2)];
+%     isterminal=[1;1]; % stop and restart integration at crossing
+%     direction=[1;1]; % increasing value of the quantity at the trigger
+% end
+
+% Define behavior at threshold crossing
 function [value,isterminal,direction] = nextevent(~,u)
     global tau1 T1 % timing trigger for reaction 1 (opening)
     global tau2 T2 % timing trigger for reaction 2 (closing)
-    value=[u(2)-(tau1-T1);u(3)-(tau2-T2)];
+    value=[tau1-log(rand);];
     isterminal=[1;1]; % stop and restart integration at crossing
     direction=[1;1]; % increasing value of the quantity at the trigger
 end
+
+
