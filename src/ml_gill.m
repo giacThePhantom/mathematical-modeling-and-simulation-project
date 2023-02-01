@@ -2,8 +2,8 @@ function [V,N,t,Ntot]=ml_gill()
     
     global Npotassium_tot
     global Npotassium
-    global tau1  T1
-    global tau2  T2
+    global tau1 T1
+    global tau2 T2
 
     Npotassium_tot = 40;
     Ntot = Npotassium_tot;
@@ -20,7 +20,6 @@ function [V,N,t,Ntot]=ml_gill()
     t0=0;
     t=t0; % global "external" time
     tau1=-log(rand); % time of next event on reaction stream 1 ("internal time")
-    tau2=-log(rand); % time of next event on reaction stream 2 ("internal time")
     T1=0; % integrated intensity function for reaction 1
     T2=0; % integrated intensity function for reaction 2
     V0=-50; % start at an arbitrary middle voltage
@@ -88,9 +87,9 @@ function dudt=dudtfunc(t,u)
     vK = -84;
     vL = -60;
     vCa = 120;
-    gK =8;
-    gL =2;
-    C=20;
+    gK = 8;
+    gL = 2;
+    C = 20;
     gCa = 4.4;
 
     v=u(1); % extract the voltage from the input vect

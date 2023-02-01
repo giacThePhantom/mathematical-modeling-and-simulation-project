@@ -6,13 +6,16 @@ function [V,N,t,Ntot]=ml_gill()
     global Mcalcium % number of Calcium channels in conducting state
     global Npotassium_tot
     global Npotassium
-    global tau1  T1
-    global tau2  T2
+    global tau1 T1
+    global tau2 T2
+    global tau3 T3
+    global tau4 T4
 
     Npotassium_tot = 40;
     Ntot = Npotassium_tot;
-    Mtot = 40;
-    Mcalcium_tot = Mtot;
+    
+    Mcalcium_tot = 40;
+    Mtot = Mcalcium_tot;
     tmax=4e3;
 
     % Parameters
@@ -106,13 +109,11 @@ function [V,N,t,Ntot]=ml_gill()
 
     %% Plot output
     figure
-    subplot(6,1,1),plot(t,M),ylabel('M','FontSize',20),set(gca,'FontSize',20)
-    subplot(6,1,2),plot(t,N),ylabel('N','FontSize',20),set(gca,'FontSize',20)
-    subplot(6,1,6),plot(t,V),xlabel('Time','FontSize',20)
-        ylabel('V','FontSize',20),set(gca,'FontSize',20)
-    subplot(6,1,4:6),plot3(V,M,N,'.-'),xlabel('V','FontSize',20)
-        ylabel('M','FontSize',20),zlabel('N','FontSize',20),set(gca,'FontSize',20)
-    grid on, rotate3d, shg
+    subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
+    subplot(6,1,2),plot(t,N), xlabel('Time'), ,ylabel('N')
+    subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
+    subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
+    subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
 
 end
 
@@ -132,14 +133,14 @@ function dudt=dudtfunc(t,u)
 dudt=[...  % voltage
     (Iapp(t)-gCa*(Mcalcium/Mcalcium_tot)*(v-vCa)-gL*(v-vL)...
     -gK*(Npotassium/Npotassium_tot)*(v-vK))/C;
-    % Calcium chan. opening, internal time elapsed
-    alpha_m(v)*(Mcalcium_tot-Mcalcium);
-    % Calcium chan. closing, internal time elapsed
-    beta_m(v)*Mcalcium;
     % Potassium chan. opening, internal time elapsed
     alpha_n(v)*(Npotassium_tot-Npotassium);
     % Potassium chan. closing, internal time elapsed
     beta_n(v)*Npotassium;
+    % Calcium chan. opening, internal time elapsed
+    alpha_m(v)*(Mcalcium_tot-Mcalcium);
+    % Calcium chan. closing, internal time elapsed
+    beta_m(v)*Mcalcium;
     0; % M is constant between events
     0]; % N is constant between events
 end
@@ -148,7 +149,8 @@ end
 function [value,isterminal,direction] = nextevent(~,u)
     global tau1 T1 % timing trigger for reaction 1 (opening)
     global tau2 T2 % timing trigger for reaction 2 (closing)
-    value=[u(2)-tau1];
+    global tau3 T3 % timing trigger for reaction 3 (opening)
+    value=[u(2)+u(3)+u(4)+u(5)-tau1];
     isterminal=[1]; % stop and restart integration at crossing
     direction=[1]; % increasing value of the quantity at the trigger
 end
