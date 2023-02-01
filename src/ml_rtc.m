@@ -80,7 +80,6 @@ function [V,N,t,Ntot]=ml_rtc()
 end
 
 function dudt=dudtfunc(t,u)
-       
     global Iapp  % Applied Current
     global minf  % asymptotic target for (deterministic) Calcium channel
     global Npotassium Npotassium_tot  % num. open, total num. of channels
