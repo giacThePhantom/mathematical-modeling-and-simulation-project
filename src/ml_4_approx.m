@@ -1,3 +1,4 @@
+
 function [V,M,N,t,Mtot,Ntot]=ml_rtc()
 
     % Calcium
@@ -66,13 +67,14 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
 
     %% Loop over events
     while t(end)<tmax
-
-        U0=[V0;0;0;0;0;M0;N0];
+        global t_start
+        t_start = t(end);
+        U0=[V0;M0;N0];
         tspan=[t(end),tmax];
         [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
         Vout=Uout(:,1); % voltage at time of next event
-        Mout=Uout(:,6); % number of calcium channels open at end of next event
-        Nout=Uout(:,7); % number of potassium channels open at end of next event
+        Mout=Uout(:,2); % number of calcium channels open at end of next event
+        Nout=Uout(:,3); % number of potassium channels open at end of next event
         t=[t,tout'];
         V=[V,Vout'];
         M=[M,Mout'];
@@ -100,10 +102,14 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         if M0<0, error('M<0'), end
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
-        T1=T1+Uout(end,2);
-        T2=T2+Uout(end,3);
-        T3=T3+Uout(end,4);
-        T4=T4+Uout(end,5);
+
+        global alpha_m_t alpha_n_t
+        global beta_m_t beta_n_t
+
+        T1=T1+alpha_m_t;
+        T2=T2+beta_m_t;
+        T3=T3+alpha_n_t;
+        T4=T4+beta_n_t;
         V0=V(end);
     end % while t(end)<tmax
 
@@ -125,6 +131,20 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         global Npotassium Npotassium_tot
         global alpha_m beta_m
         global alpha_n beta_n
+        global alpha_m_t; alpha_m_t = 0;
+        global beta_m_t; beta_m_t = 0;
+        global alpha_n_t; alpha_n_t = 0;
+        global beta_n_t; beta_n_t = 0;
+        global t_start
+        delta_t = t - t_start;
+        v=u(1); % extract the voltage from the input vector
+        alpha_m_t = delta_t * alpha_m(v)*(Mcalcium_tot-Mcalcium);
+        beta_m_t = delta_t * beta_m(v)*Mcalcium;
+            % Potassium chan. opening, internal time elapsed
+        alpha_n_t = delta_t * alpha_n(v)*(Npotassium_tot-Npotassium);
+            % Potassium chan. closing, internal time elapsed
+        beta_n_t = delta_t * beta_n(v)*Npotassium;
+
 
         vK = -84;
         vL = -60;
@@ -134,18 +154,10 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         C=20;
         gCa = 4.4;
 
-        v=u(1); % extract the voltage from the input vector
         dudt=[
             (Iapp(t)-gCa*(Mcalcium/Mcalcium_tot)*(v-vCa)-gL*(v-vL)...
             -gK*(Npotassium/Npotassium_tot)*(v-vK))/C;
             % Calcium chan. opening, internal time elapsed
-            alpha_m(v)*(Mcalcium_tot-Mcalcium);
-            % Calcium chan. closing, internal time elapsed
-            beta_m(v)*Mcalcium;
-            % Potassium chan. opening, internal time elapsed
-            alpha_n(v)*(Npotassium_tot-Npotassium);
-            % Potassium chan. closing, internal time elapsed
-            beta_n(v)*Npotassium;
             0; % M is constant between events
             0]; % N is constant between events
     end
@@ -155,7 +167,10 @@ function [value,isterminal,direction] = nextevent(~,u)
         global tau2 T2 % timing trigger for reaction 2 (Calcium closing)
         global tau3 T3 % timing trigger for reaction 3 (Potassium opening)
         global tau4 T4 % timing trigger for reaction 4 (Potassium closing)
-        value=[u(2)-(tau1-T1);u(3)-(tau2-T2);u(4)-(tau3-T3);u(5)-(tau4-T4)];
+        global alpha_m_t beta_m_t
+        global alpha_n_t beta_n_t
+        alpha_m_t
+        value=[alpha_m_t-(tau1-T1);beta_m_t-(tau2-T2);alpha_n_t-(tau3-T3);beta_n_t-(tau4-T4)];
         isterminal=[1;1;1;1]; % stop and restart integration at crossing
         direction=[1;1;1;1]; % increasing value of the quantity at the trigger
 end

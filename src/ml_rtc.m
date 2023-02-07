@@ -1,5 +1,5 @@
 function [V,N,t,Ntot]=ml_rtc()
-    
+
     global Npotassium_tot
     global Npotassium
     global tau1  T1
@@ -8,7 +8,7 @@ function [V,N,t,Ntot]=ml_rtc()
     Npotassium_tot = 40;
     Ntot = Npotassium_tot;
     tmax=4e3;
-    
+
     % Parameters
     va = -1.2;
     vb = 18;
@@ -41,7 +41,7 @@ function [V,N,t,Ntot]=ml_rtc()
     options=odeset('Events',@nextevent);
 
     while t(end)<tmax
-        
+
         U0=[V0;0;0;N0];
         tspan=[t(end),tmax];
         [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
@@ -50,7 +50,7 @@ function [V,N,t,Ntot]=ml_rtc()
         t=[t,tout'];
         V=[V,Vout'];
         N=[N,Nout'];
-        
+
         %% Identify which reaction occurred, adjust state, and
         %  continue, and set trigger for next event.
         mu=event_idx; % next reaction index
@@ -61,7 +61,7 @@ function [V,N,t,Ntot]=ml_rtc()
             N0=N0-1;    % decrement channel state
             tau2=tau2-log(rand); % increment in tau2 likewise
         end
-        
+
         Npotassium=N0;
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
@@ -69,7 +69,7 @@ function [V,N,t,Ntot]=ml_rtc()
         T2=T2+Uout(end,3);
         V0=V(end);
     end % while t(end)<tmax
-    
+
     %% Plot output
     figure
     subplot(3,1,1),plot(t,V),xlabel('time'),ylabel('V')
@@ -84,7 +84,7 @@ function dudt=dudtfunc(t,u)
     global minf  % asymptotic target for (deterministic) Calcium channel
     global Npotassium Npotassium_tot  % num. open, total num. of channels
     global alpha beta  % per capita transition rates
-    
+
     vK = -84;
     vL = -60;
     vCa = 120;
@@ -100,7 +100,7 @@ function dudt=dudtfunc(t,u)
     0]; % N is constant between events
 end
 
-% Define behavior at threshold crossing 
+% Define behavior at threshold crossing
 function [value,isterminal,direction] = nextevent(~,u)
     global tau1 T1 % timing trigger for reaction 1 (opening)
     global tau2 T2 % timing trigger for reaction 2 (closing)
