@@ -1,4 +1,4 @@
-function [V,N,t,Ntot]=ml_gill()
+function [V,M,N,t,Mtot,Ntot]=ml_4_gill()
     close all;
     clear all;
 
@@ -11,12 +11,12 @@ function [V,N,t,Ntot]=ml_gill()
     global tau3 T3
     global tau4 T4
 
-    Npotassium_tot = 40;
+    Npotassium_tot = 100;
     Ntot = Npotassium_tot;
     
-    Mcalcium_tot = 40;
+    Mcalcium_tot = 100;
     Mtot = Mcalcium_tot;
-    tmax=4e3;
+    tmax=1e3;
 
     % Parameters
     phi_m=0.4;
@@ -109,11 +109,11 @@ function [V,N,t,Ntot]=ml_gill()
 
     %% Plot output
     figure
-    subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
-    subplot(6,1,2),plot(t,N), xlabel('Time'), ,ylabel('N')
-    subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
-    subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-    subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
+    % subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
+    % subplot(6,1,2),plot(t,N), xlabel('Time'), ,ylabel('N')
+    % subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
+    % subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
+    % subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
 
 end
 
