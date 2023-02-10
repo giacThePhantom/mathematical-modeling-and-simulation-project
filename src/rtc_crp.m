@@ -1,9 +1,4 @@
 function statistics = compute_rtc_statistics(f1, f2)
-    
-    tau_mat = [ ; ; ; ]; 
-    [V1,M1,N1,t1,tau_mat] = ml_4_rtc(f1, tau_mat, 0);
-    disp(tau_mat)
-    [V2,M2,N2,t2,tau_mat] = ml_4_rtc(f2, tau_mat, 0);
 
     params1 = readtable(f1);
     params2 = readtable(f2);
