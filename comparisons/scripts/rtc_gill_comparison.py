@@ -1,9 +1,10 @@
+import os
+import sys
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-import os
-import sys
 from tqdm import tqdm
 
 # argv[1] e argv[2] path ai dati .csv

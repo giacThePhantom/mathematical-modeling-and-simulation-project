@@ -1,4 +1,4 @@
-function [V,M,N,t,Mcalcium_tot,Npotassium_tot, tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
+function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
 
     params = readtable(csv_name); 
 
@@ -66,6 +66,7 @@ function [V,M,N,t,Mcalcium_tot,Npotassium_tot, tau_arr, eps_arr]=ml_4_gill(csv_n
     index = 0;
     tau_arr = tau_arr_in;
     eps_arr = eps_arr_in;
+
     while t(end)<tmax
         index = index + 1;
         if length(tau_arr) < index
@@ -75,10 +76,11 @@ function [V,M,N,t,Mcalcium_tot,Npotassium_tot, tau_arr, eps_arr]=ml_4_gill(csv_n
         if length(eps_arr) < index
             eps_arr = [eps_arr, rand]; 
         end
-
+       
         tau = tau_arr(index);
         epsilon = eps_arr(index);
 
+        %disp(epsilon)
         U0=[V0;0;0;0;0;M0;N0];
         tspan=[t(end),tmax];
         [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
@@ -89,7 +91,6 @@ function [V,M,N,t,Mcalcium_tot,Npotassium_tot, tau_arr, eps_arr]=ml_4_gill(csv_n
         V=[V,Vout'];
         M=[M,Mout'];
         N=[N,Nout'];
-
 
 
         lambda_0 = (alpha_n(V(end)) * (Npotassium_tot-N0)) + (beta_n(V(end)) * N0) + (alpha_m(V(end)) * (Mcalcium_tot-M0)) + (beta_m(V(end)) * M0);
@@ -122,13 +123,13 @@ function [V,M,N,t,Mcalcium_tot,Npotassium_tot, tau_arr, eps_arr]=ml_4_gill(csv_n
 
     end % while t(end)<tmax
 
-    %% Plot output
-    figure
-    subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
-    subplot(6,1,2),plot(t,N), xlabel('Time'), ylabel('N')
-    subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
-    subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-    subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
+    % %% Plot output
+    % figure
+    % subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
+    % subplot(6,1,2),plot(t,N), xlabel('Time'), ylabel('N')
+    % subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
+    % subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
+    % subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
 
 end
 
