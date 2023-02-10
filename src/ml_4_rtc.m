@@ -100,6 +100,7 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         if M0<0, error('M<0'), end
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
+        Uout(end, 2)
         T1=T1+Uout(end,2);
         T2=T2+Uout(end,3);
         T3=T3+Uout(end,4);

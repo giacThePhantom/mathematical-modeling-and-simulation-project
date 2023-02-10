@@ -68,6 +68,10 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     %% Loop over events
     while t(end)<tmax
         global t_start
+        global alpha_m_t
+        global alpha_n_t
+        global beta_m_t
+        global beta_n_t
         t_start = t(end);
         U0=[V0;M0;N0];
         tspan=[t(end),tmax];
@@ -103,8 +107,7 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
 
-        global alpha_m_t alpha_n_t
-        global beta_m_t beta_n_t
+
 
         T1=T1+alpha_m_t;
         T2=T2+beta_m_t;
@@ -169,7 +172,6 @@ function [value,isterminal,direction] = nextevent(~,u)
         global tau4 T4 % timing trigger for reaction 4 (Potassium closing)
         global alpha_m_t beta_m_t
         global alpha_n_t beta_n_t
-        alpha_m_t
         value=[alpha_m_t-(tau1-T1);beta_m_t-(tau2-T2);alpha_n_t-(tau3-T3);beta_n_t-(tau4-T4)];
         isterminal=[1;1;1;1]; % stop and restart integration at crossing
         direction=[1;1;1;1]; % increasing value of the quantity at the trigger

@@ -13,7 +13,7 @@ function [V,N,t,Ntot]=ml_gill()
 
     Npotassium_tot = 40;
     Ntot = Npotassium_tot;
-    
+
     Mcalcium_tot = 40;
     Mtot = Mcalcium_tot;
     tmax=4e3;
