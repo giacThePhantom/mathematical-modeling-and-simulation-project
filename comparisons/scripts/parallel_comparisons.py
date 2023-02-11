@@ -51,9 +51,9 @@ for files in pairs_list:
     file1_path = os.path.join("..", "comparisons", files[0])
     file2_path = os.path.join("..", "comparisons", files[1])
 
-    # Run matlab process 
+    # Run matlab process
     cmd = f"""matlab -nojvm -batch "{function[sys.argv[1]]}('{file1_path}','{file2_path}')" """
-    p = subprocess.Popen(cmd, 
+    p = subprocess.Popen(cmd,
                         shell=True,
                         stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE,
