@@ -27,7 +27,7 @@ f = open(os.path.join("..", "results", "distance", f"log_{sys.argv[2]}.txt"), "a
 f.write("sim_name,result\n")
 
 s_p = 0;
-for files in pairs_list:
+for files in tqdm(pairs_list):
 
     # Create log file for this run
     f_file = re.search(r"[0-9]{1,}_[0-9]{1,}", files[0]).group(0)
@@ -50,9 +50,7 @@ for files in pairs_list:
     # Set how many jobs are allowed to run at the same time
     j += 1
     if j % int(sys.argv[3]) == 0:
-        print(f"Processing {s_p} to {j}...")
         p.wait()
-        s_p = j
 
 
 for p, sim_name in processes:
