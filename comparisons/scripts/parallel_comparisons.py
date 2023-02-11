@@ -13,8 +13,20 @@ from itertools import combinations
 # argv[2] name of the log file
 # argv[3] max parallel jobs
 
+def get_process_output(p, sim_name, f):
+        out, err = p.communicate()
+        if (not(err)):
+            decoded_out = out.decode("utf-8")
+            print(f"{sim_name},{decoded_out}\n")
+            f.write(f"{sim_name},{decoded_out}\n")
+        else:
+            decoded_err = err.decode("utf-8")
+            print(f"{sim_name},{decoded_err}\n")
+            f.write(f"{sim_name},{decoded_err}\n")
+
+
 test_list = [os.path.join("params_files", x) for x in os.listdir("../params_files")]
-pairs_list = list(combinations(test_list, r=2))[0:10] 
+pairs_list = list(combinations(test_list, r=2))[0:12] 
 processes = []
 j = 0
 
@@ -27,7 +39,8 @@ f = open(os.path.join("..", "results", "distance", f"log_{sys.argv[2]}.txt"), "a
 f.write("sim_name,result\n")
 
 s_p = 0;
-for files in tqdm(pairs_list):
+done = []
+for files in pairs_list:
 
     # Create log file for this run
     f_file = re.search(r"[0-9]{1,}_[0-9]{1,}", files[0]).group(0)
@@ -45,21 +58,23 @@ for files in tqdm(pairs_list):
                         stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE,
                         cwd="../../src/")
+
     processes.append((p, sim_name))
+
     
     # Set how many jobs are allowed to run at the same time
     j += 1
     if j % int(sys.argv[3]) == 0:
-        p.wait()
+        print(f"Processing {s_p} to {j}..")
+        for i in range(s_p, j):
+            get_process_output(p, sim_name, f)
+            done.append(i)
+            s_p = j
 
-
-for p, sim_name in processes:
-    p.wait()
-    out, err = p.communicate()
-    if (not(err)):
-        decoded_out = out.decode("utf-8")
-        f.write(f"{sim_name},{decoded_out}\n")
-    else:
-        decoded_ett = err.decode("utf-8")
-        f.write(f"{sim_name},{decoded_ett}\n")
+#Left over
+for i in range(0, len(processes)):
+    if (i not in done):
+        p, sim_name = processes[i]
+        print(f"Processing {sim_name}..")
+        get_process_output(p, sim_name, f)
 f.close()
