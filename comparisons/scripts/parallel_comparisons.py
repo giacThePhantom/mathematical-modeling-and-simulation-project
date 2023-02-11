@@ -17,11 +17,11 @@ def get_process_output(p, sim_name, f):
         out, err = p.communicate()
         if (not(err)):
             decoded_out = out.decode("utf-8")
-            print(f"{sim_name},{decoded_out}\n")
+            print(f"{sim_name},{decoded_out}")
             f.write(f"{sim_name},{decoded_out}\n")
         else:
             decoded_err = err.decode("utf-8")
-            print(f"{sim_name},{decoded_err}\n")
+            print(f"{sim_name},{decoded_err}")
             f.write(f"{sim_name},{decoded_err}\n")
 
 
@@ -67,7 +67,7 @@ for files in pairs_list:
     if j % int(sys.argv[3]) == 0:
         print(f"Processing {s_p} to {j}..")
         for i in range(s_p, j):
-            get_process_output(p, sim_name, f)
+            get_process_output(processes[i][0], processes[i][1], f)
             done.append(i)
             s_p = j
 
