@@ -26,7 +26,7 @@ def get_process_output(p, sim_name, f):
 
 
 test_list = [os.path.join("params_files", x) for x in os.listdir("../params_files")]
-pairs_list = list(combinations(test_list, r=2))[0:12] 
+pairs_list = list(combinations(test_list, r=2))
 processes = []
 j = 0
 
