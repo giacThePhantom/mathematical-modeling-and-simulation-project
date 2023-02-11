@@ -61,7 +61,6 @@ for files in pairs_list:
 
     processes.append((p, sim_name))
 
-    
     # Set how many jobs are allowed to run at the same time
     j += 1
     if j % int(sys.argv[3]) == 0:
@@ -71,7 +70,7 @@ for files in pairs_list:
             done.append(i)
             s_p = j
 
-#Left over
+# Left over
 for i in range(0, len(processes)):
     if (i not in done):
         p, sim_name = processes[i]
