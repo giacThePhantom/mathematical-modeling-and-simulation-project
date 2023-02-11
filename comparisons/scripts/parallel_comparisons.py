@@ -51,15 +51,17 @@ for files in pairs_list:
     j += 1
     if j % int(sys.argv[3]) == 0:
         print(f"Processing {s_p} to {j}...")
-        for i in tqdm(range(s_p, j)):
-            p, sim_name = processes[i]
-            p.wait()
-            out, err = p.communicate()
-            if (not(err)):
-                decoded_out = out.decode("utf-8")
-                f.write(f"{sim_name},{decoded_out}\n")
-            else:
-                decoded_ett = err.decode("utf-8")
-                f.write(f"{sim_name},{decoded_ett}\n")
+        p.wait()
         s_p = j
+
+
+for p, sim_name in processes:
+    p.wait()
+    out, err = p.communicate()
+    if (not(err)):
+        decoded_out = out.decode("utf-8")
+        f.write(f"{sim_name},{decoded_out}\n")
+    else:
+        decoded_ett = err.decode("utf-8")
+        f.write(f"{sim_name},{decoded_ett}\n")
 f.close()
