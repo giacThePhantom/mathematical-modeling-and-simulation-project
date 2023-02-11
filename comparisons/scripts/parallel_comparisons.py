@@ -47,30 +47,29 @@ for files in pairs_list:
         s_file = re.search(r"[0-9]{1,}_[0-9]{1,}", files[1]).group(0)
         sim_name = f"{f_file}-with-{s_file}"
 
-        if (sim_name not in sim_name_list):
 
-            # Pass correct file paths to matlab
-            file1_path = os.path.join("..", "comparisons", files[0])
-            file2_path = os.path.join("..", "comparisons", files[1])
+        # Pass correct file paths to matlab
+        file1_path = os.path.join("..", "comparisons", files[0])
+        file2_path = os.path.join("..", "comparisons", files[1])
 
-            # Run matlab process 
-            cmd = f"""matlab -nojvm -batch "{function[sys.argv[1]]}('{file1_path}','{file2_path}')" """
-            p = subprocess.Popen(cmd, 
-                                shell=True,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                cwd="../../src/")
+        # Run matlab process 
+        cmd = f"""matlab -nojvm -batch "{function[sys.argv[1]]}('{file1_path}','{file2_path}')" """
+        p = subprocess.Popen(cmd, 
+                            shell=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            cwd="../../src/")
 
-            processes.append((p, sim_name))
+        processes.append((p, sim_name))
 
-            # Set how many jobs are allowed to run at the same time
-            j += 1
-            if j % int(sys.argv[3]) == 0:
-                print(f"Processing {s_p} to {j}..")
-                for i in range(s_p, j):
-                    get_process_output(processes[i][0], processes[i][1], f)
-                    done.append(i)
-                    s_p = j
+        # Set how many jobs are allowed to run at the same time
+        j += 1
+        if j % int(sys.argv[3]) == 0:
+            print(f"Processing {s_p} to {j}..")
+            for i in range(s_p, j):
+                get_process_output(processes[i][0], processes[i][1], f)
+                done.append(i)
+                s_p = j
     
     except Exception as e:
         print(files, e)
