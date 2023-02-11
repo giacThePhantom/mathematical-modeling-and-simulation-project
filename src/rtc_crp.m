@@ -8,12 +8,12 @@ function statistics = compute_rtc_statistics(f1, f2)
 
     diff_params = params1_arr - params2_arr;
     norm = sqrt(sum(diff_params.^2));
-    
-    N = 5;
+
+    N = 10;
     spike_diff = 0;
     for i=1:N
-        tau_mat = [ ; ; ; ]; 
-        
+        tau_mat = [ ; ; ; ];
+
         [V1,M1,N1,t1,tau_mat] = ml_4_rtc(f1, tau_mat, 0);
         [V2,M2,N2,t2,tau_mat] = ml_4_rtc(f2, tau_mat, 0);
 
