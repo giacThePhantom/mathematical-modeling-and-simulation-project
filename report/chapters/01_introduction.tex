@@ -13,10 +13,10 @@ These models are piecewise-deterministic Markov processes or PDMP, which can be 
 	\item A rate function that determines when the next jump of the process occurs and a transition measure determining which type of jump occurs at that time.
 \end{itemize}
 
-The use of the PDMP formalism allowed the formulation of limite theorems, dimensionality reduction schemes and extensions of the models to the spatial domain.
+The use of the PDMP formalism allowed the formulation of limit theorems, dimensionality reduction schemes and extensions of the models to the spatial domain.
 
-	\subsection{Classic neural dynamics model}
-	As said before the classic neural dynamics model involves coupled piecewise and continuous values which change over time.
+	\subsection{Deterministic neural dynamics model}
+	Deterministic neuronal dynamics models abstract from the channel states and evolve only according to a set of ordinary differential equations.
 	This type of model is described in \cite{stochastic-neuron} and encompasses four characteristics of neuronal activity:
 
 	\begin{itemize}
@@ -26,40 +26,41 @@ The use of the PDMP formalism allowed the formulation of limite theorems, dimens
 		\item Multiple populations interact to form functional networks.
 	\end{itemize}
 
-		\subsubsection{A deterministic model neuron}
-		To build a neural model the starting point is a deterministic characterization of neurons.
-		In particular, their response to an input $s(t)$ has a generic form represented as:
+	To build a neural model the starting point is a deterministic characterization of neurons.
+	In particular, their response to an input $s(t)$ has a generic form represented as:
 
-		\begin{equation}
-			\frac{\partial x}{\partial t} = f(x(t), s(t), \theta)
-			\label{det-neu}
-		\end{equation}
+	\begin{equation}
+		\frac{\partial x}{\partial t} = f(x(t), s(t), \theta)
+		\label{det-neu}
+	\end{equation}
 
-		Where $x$ is the state vector defines a space within which its dynamics unfold.
-		The dimensionality of the space depends depends on the variables of $x$, which will be the membrane potential and the proportion of open ionic channels.
-		The solution of equation \ref{det-neu} will be the trajectory in time of a point in $x\in x(t)$.
-		The right-hand term is a function of:
+	Where $x$ is the state vector that defines a space within which its dynamics unfold.
+	The dimensionality of the space depends depends on the variables of $x$, which will be the membrane potential and the proportion of open ionic channels.
+	The solution of equation \ref{det-neu} will be the trajectory in time of a point in $x\in x(t)$.
+	The right-hand term is a function of:
 
-		\begin{itemize}
-			\item The states $x(t)$.
-			\item The input $s(t)$, exogenous or internal.
-			\item The model parameters $\theta$, the time-constant characteristics of the system.
-		\end{itemize}
+	\begin{itemize}
+		\item The states $x(t)$.
+		\item The input $s(t)$, exogenous or internal.
+		\item The model parameters $\theta$, the time-constant characteristics of the system.
+	\end{itemize}
 
-		As neurons are electrical units and can be represented as a resistance-capacitance circuit:
+	As neurons are electrical units they can be represented as a resistance-capacitance circuit, for which the voltage evolves according to:
 
-		$$C\frac{dV}{dt} = \sum\limits_i I_i(t)$$
+	$$C\frac{dV}{dt} = \sum\limits_i I_i(t)$$
 
-		Where:
+	Where:
 
-		\begin{itemize}
-			\item $V$ is the membrane potential.
-			\item $C$ is the membrane capacitance.
-			\item $I_i$ the membrane current from source $i$.
-		\end{itemize}
+	\begin{itemize}
+		\item $V$ is the membrane potential.
+		\item $C$ is the membrane capacitance.
+		\item $I_i$ the membrane current from source $i$.
+	\end{itemize}
 
-		The dynamic repertoire of a specific model depends on the nature of the different source currents, which can include fixed-point attractors, limit cycles and chaotic dynamics.
-		The easiest model is the simple integrate and fire model, where all voltage and synaptic channels are ignored: the current is modelled as a constant passive leak of charge, reducing the equation to:
+	The dynamic repertoire of a specific model depends on the nature of the different source currents, which can include fixed-point attractors, limit cycles and chaotic dynamics.
+
+		\subsubsection{Leaky integrate-and-fire}
+		The easiest model is the simple integrate-and-fire model, where all voltage and synaptic channels are ignored: the current is modelled as a constant passive leak of charge, reducing the equation to:
 
 		$$C\frac{dV}{dt} = g_L(E_L-V)+s(t)$$
 
@@ -73,6 +74,35 @@ The use of the PDMP formalism allowed the formulation of limite theorems, dimens
 		This model does not model the biophysical properties necessary for spike generation.
 		Instead spiking is modelled as a threshold process: once the membrane potential exceed the threshold value $V_T$ a spike is assumed and the membrane potential is reset to a resting value $V_R$, such that $V_R\le E_L\le V_T$.
 		No spike is actually emitted and only sub-threshold dynamics are modelled.
+		So, in conclusion the models behave according to:
+
+		$$\begin{cases}C\frac{dV}{dt} = g_L(E_L-V)+s(t) & V< V_T\\V = V_R & V\ge V_T\end{cases}$$
+
+		We implemented it solving the system with the forward Euler method for $100s$ of total simulation.
+		The parameters used were:
+
+		\begin{multicols}{2}
+			\begin{itemize}
+				\item Time step $0.0002s$.
+				\item $E_l = -73mV$.
+				\item $V(0) = -73mV$.
+				\item $g_L = 0.025\mu S$.
+				\item $C = 0.375 nF$.
+				\item $V_T = -53mV$.
+				\item $V_R = -90$.
+			\end{itemize}
+		\end{multicols}
+
+		As described in \cite{integrate-fire-params}.
+		The trajectory obtained is visible in figure \ref{fig:integrate-fire}.
+
+		\begin{figure}
+			\includegraphics[width=\textwidth]{Figures/integrate-fire}
+			\caption{Trajectory of the leaky integrate-and-fire neuronal model. \textbf{Top} The membrane voltage. \textbf{Bottom} The input current.}
+			\label{fig:integrate-fire}
+		\end{figure}
+
+		The input current $s(t)$ was studied ad hoc to try to characterize at best the behaviour of the system
 
 		\subsubsection{Modelling supra-threshold dynamics}
 		To allow the system to generate spikes the integrate and fire model is augmented with an additional variable $T$, the inter-spike time or IST.

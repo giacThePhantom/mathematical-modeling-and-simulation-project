@@ -3,44 +3,52 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: ./build/principal.aux
 The style file: abbrv.bst
 Database file #1: bibliography.bib
-You've used 1 entry,
+Warning--entry type for "integrate-fire-params" isn't style-file defined
+--line 12 of file bibliography.bib
+Illegal end of database file---line 15 of file bibliography.bib
+ :   note = {Accessed: \today}
+ :                            
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in integrate-fire-params
+You've used 2 entries,
             2118 wiz_defined-function locations,
-            506 strings with 3946 characters,
-and the built_in function-call counts, 402 in all, are:
-= -- 39
-> -- 18
+            509 strings with 4070 characters,
+and the built_in function-call counts, 561 in all, are:
+= -- 54
+> -- 19
 < -- 0
-+ -- 7
++ -- 8
 - -- 6
-* -- 35
-:= -- 72
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 6
+* -- 40
+:= -- 89
+add.period$ -- 5
+call.type$ -- 2
+change.case$ -- 9
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 11
-empty$ -- 30
+cite$ -- 3
+duplicate$ -- 18
+empty$ -- 53
 format.name$ -- 6
-if$ -- 78
+if$ -- 118
 int.to.chr$ -- 0
-int.to.str$ -- 1
+int.to.str$ -- 2
 missing$ -- 1
-newline$ -- 8
+newline$ -- 12
 num.names$ -- 2
-pop$ -- 4
+pop$ -- 12
 preamble$ -- 1
-purify$ -- 5
+purify$ -- 7
 quote$ -- 0
-skip$ -- 7
+skip$ -- 15
 stack$ -- 0
-substring$ -- 36
-swap$ -- 1
+substring$ -- 41
+swap$ -- 2
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
-warning$ -- 0
+type$ -- 8
+warning$ -- 1
 while$ -- 4
-width$ -- 2
-write$ -- 13
+width$ -- 3
+write$ -- 20
+(There was 1 error message)

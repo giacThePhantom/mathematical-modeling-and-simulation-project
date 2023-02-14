@@ -1,9 +1,10 @@
+import os
+import sys
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-import os
-import sys
 from tqdm import tqdm
 
 # argv[1] e argv[2] path ai dati .csv
@@ -58,7 +59,7 @@ for key in name_to_df:
 
         plt.figure(figsize = (30, 15))
         plt.title(f"{key} - {channel} CHANNELS")
-        plt.imshow(heatmap, cmap = "inferno")
+        plt.imshow(heatmap, cmap = "inferno", interpolation='nearest', aspect='auto')
         plt.xticks(x_axis, x_labels)
         plt.gca().invert_yaxis()
         img_folder = os.path.join("..", "images", sys.argv[3])
