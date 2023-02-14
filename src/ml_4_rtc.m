@@ -1,4 +1,4 @@
-function [V,M,N,t,Mtot,Ntot]=ml_rtc()
+function [V,M,N,t,Mtot,Ntot]=ml_4_rtc()
 
     % Calcium
     global Mcalcium_tot % total number of Calcium channels
@@ -6,7 +6,7 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     global tau1  T1 % dummy variables for time to next Ca-opening event
     global tau2  T2 % dummy variables for time to next Ca-closing event
 
-    Mcalcium_tot = 40;
+    Mcalcium_tot = 100;
     Mtot = Mcalcium;
 
     % Potassium
@@ -15,10 +15,10 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     global tau3 T3 % dummy variables for time to next K-opening event
     global tau4 T4 % dummy variables for time to next K-closing event
 
-    Npotassium_tot = 40;
+    Npotassium_tot = 100;
     Ntot = Npotassium_tot;
 
-    tmax=4e3;
+    tmax=1e3;
 
     % Parameters
     phi_m = 0.4;
@@ -62,7 +62,7 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     global beta_n; beta_n=@(v)((1-ninf(v))./tau_n(v));
 
     % ODE options including reset
-    options=odeset('Events',@nextevent);
+    options=odeset('Events',@nextevent); 
 
     %% Loop over events
     while t(end)<tmax
@@ -70,17 +70,21 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         U0=[V0;0;0;0;0;M0;N0];
         tspan=[t(end),tmax];
         [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
+        
         Vout=Uout(:,1); % voltage at time of next event
         Mout=Uout(:,6); % number of calcium channels open at end of next event
         Nout=Uout(:,7); % number of potassium channels open at end of next event
+
         t=[t,tout'];
         V=[V,Vout'];
         M=[M,Mout'];
         N=[N,Nout'];
 
+
         %% Identify which reaction occurred, adjust state, and continue;
         % and set trigger for next event.
         mu=event_idx; % next reaction index
+        %fprintf("Fired: %d\n", mu)
         if mu==1 % next reaction is a calcium channel opening
             M0=M0+1; % increment calcium channel state
             tau1=tau1-log(rand); % increment in tau1 is exponentially distributed with mean 1
@@ -94,28 +98,36 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
             N0=N0-1;    % decrement potassium channel state
             tau4=tau4-log(rand); % increment in tau4 likewise
         end
+ 
         Mcalcium=M0;
         Npotassium=N0;
         if M0>Mcalcium_tot, error('M>Mtot'), end
         if M0<0, error('M<0'), end
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
+<<<<<<< HEAD
         Uout(end, 2)
+=======
+
+>>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
         T1=T1+Uout(end,2);
         T2=T2+Uout(end,3);
         T3=T3+Uout(end,4);
         T4=T4+Uout(end,5);
+
+        %fprintf("%f %f %f %f \n", T1, T2, T3, T4)
+
         V0=V(end);
     end % while t(end)<tmax
 
     %% Plot output
-    figure
-        subplot(5,1,1),plot(t,M),ylabel('M'), xlabel('Time')
-        subplot(5,1,2),plot(t,N),ylabel('N'), xlabel('Time')
-        subplot(5,1,3),plot(t,V),xlabel('Time'), ylabel('V')
-        subplot(5,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-        subplot(5,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('N')
-        grid on
+    % figure
+    %     subplot(5,1,1),plot(t,M),ylabel('M'), xlabel('Time')
+    %     subplot(5,1,2),plot(t,N),ylabel('N'), xlabel('Time')
+    %     subplot(5,1,3),plot(t,V),xlabel('Time'), ylabel('V')
+    %     subplot(5,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
+    %     subplot(5,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('N')
+    %     grid on
     end % End of function mlexactboth
 
     %% Define the RHS for Morris-Lecar
@@ -126,6 +138,8 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         global Npotassium Npotassium_tot
         global alpha_m beta_m
         global alpha_n beta_n
+        global tau1 tau2 tau3 tau4
+        global T1 T2 T3 T4
 
         vK = -84;
         vL = -60;
@@ -135,7 +149,9 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         C=20;
         gCa = 4.4;
 
+
         v=u(1); % extract the voltage from the input vector
+
         dudt=[
             (Iapp(t)-gCa*(Mcalcium/Mcalcium_tot)*(v-vCa)-gL*(v-vL)...
             -gK*(Npotassium/Npotassium_tot)*(v-vK))/C;
@@ -156,6 +172,7 @@ function [value,isterminal,direction] = nextevent(~,u)
         global tau2 T2 % timing trigger for reaction 2 (Calcium closing)
         global tau3 T3 % timing trigger for reaction 3 (Potassium opening)
         global tau4 T4 % timing trigger for reaction 4 (Potassium closing)
+
         value=[u(2)-(tau1-T1);u(3)-(tau2-T2);u(4)-(tau3-T3);u(5)-(tau4-T4)];
         isterminal=[1;1;1;1]; % stop and restart integration at crossing
         direction=[1;1;1;1]; % increasing value of the quantity at the trigger

@@ -19,7 +19,25 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     Npotassium_tot = 40;
     Ntot = Npotassium_tot;
 
-    tmax=4e3;
+    global count_du
+    count_du = 0;
+    global count_event
+    count_event = 0;
+
+    global acc_am, acc_am = 0;
+    global acc_bm, acc_bm = 0;
+    global acc_an, acc_an = 0;
+    global acc_bn, acc_bn = 0;
+    global arr_acc_am, arr_acc_am = [];
+    global arr_time, arr_time = [];
+    
+    global delta_t, delta_t = 0;
+    global previous_t, previous_t = 0;
+
+    global eps
+    eps = 1;
+
+    tmax=200;
 
     % Parameters
     phi_m = 0.4;
@@ -63,30 +81,68 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
     global beta_n; beta_n=@(v)((1-ninf(v))./tau_n(v));
 
     % ODE options including reset
-    options=odeset('Events',@nextevent);
+    options=odeset('Events',@nextevent,  'InitialStep', 1e-8, 'MaxStep', 1e-3);
+
+    global fam
+    global fbm
+    global fan
+    global fbn
+
+    fam = alpha_m(V0)*(Mcalcium_tot-Mcalcium);
+    fbm = beta_m(V0)*Mcalcium;
+    fan = alpha_n(V0)*(Npotassium_tot-Npotassium);
+    fbn = beta_n(V0)*Npotassium;
+
+    %fprintf("%f %f %f %f \n", fam, fbm, fan, fbn)
+
 
     %% Loop over events
     while t(end)<tmax
+<<<<<<< HEAD
         global t_start
         global alpha_m_t
         global alpha_n_t
         global beta_m_t
         global beta_n_t
         t_start = t(end);
+=======
+
+>>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
         U0=[V0;M0;N0];
         tspan=[t(end),tmax];
-        [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
+
+        acc_am = 0;
+        acc_bm = 0;
+        acc_an = 0;
+        acc_bn = 0;
+        delta_t = 0;
+
+        [tout,Uout,~,~,event_idx]=ode15s(@dudtfunc,tspan,U0,options);
+
         Vout=Uout(:,1); % voltage at time of next event
         Mout=Uout(:,2); % number of calcium channels open at end of next event
         Nout=Uout(:,3); % number of potassium channels open at end of next event
-        t=[t,tout'];
+        
+        t=[t,tout']; 
         V=[V,Vout'];
         M=[M,Mout'];
         N=[N,Nout'];
 
+        fam = alpha_m(V(end))*(Mcalcium_tot-Mcalcium);
+        fbm = beta_m(V(end))*Mcalcium;
+        fan = alpha_n(V(end))*(Npotassium_tot-Npotassium);
+        fbn = beta_n(V(end))*Npotassium;
+            
         %% Identify which reaction occurred, adjust state, and continue;
         % and set trigger for next event.
-        mu=event_idx; % next reaction index
+        
+        %disp(event_idx)
+        if isempty(event_idx)
+            mu = 0;
+        else
+            mu=event_idx(1); % next reaction index
+        end
+        
         if mu==1 % next reaction is a calcium channel opening
             M0=M0+1; % increment calcium channel state
             tau1=tau1-log(rand); % increment in tau1 is exponentially distributed with mean 1
@@ -100,6 +156,8 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
             N0=N0-1;    % decrement potassium channel state
             tau4=tau4-log(rand); % increment in tau4 likewise
         end
+
+      
         Mcalcium=M0;
         Npotassium=N0;
         if M0>Mcalcium_tot, error('M>Mtot'), end
@@ -107,24 +165,29 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
 
+<<<<<<< HEAD
 
+=======
+        T1 = T1 + acc_am;
+        T2 = T2 + acc_bm;
+        T3 = T3 + acc_an;
+        T4 = T4 + acc_bn;
+>>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
 
-        T1=T1+alpha_m_t;
-        T2=T2+beta_m_t;
-        T3=T3+alpha_n_t;
-        T4=T4+beta_n_t;
         V0=V(end);
     end % while t(end)<tmax
 
     %% Plot output
     figure
-        subplot(5,1,1),plot(t,M),ylabel('M'), xlabel('Time')
-        subplot(5,1,2),plot(t,N),ylabel('N'), xlabel('Time')
-        subplot(5,1,3),plot(t,V),xlabel('Time'), ylabel('V')
-        subplot(5,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-        subplot(5,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('N')
+        subplot(3,1,1),plot(t,M),ylabel('M'), xlabel('Time')
+        subplot(3,1,2),plot(t,N),ylabel('N'), xlabel('Time')
+        subplot(3,1,3),plot(t,V),xlabel('Time'), ylabel('V')
         grid on
+
+    fprintf("%d %d", count_du, count_event) 
     end % End of function mlexactboth
+
+
 
     %% Define the RHS for Morris-Lecar
 
@@ -132,35 +195,59 @@ function [V,M,N,t,Mtot,Ntot]=ml_rtc()
         global Iapp % applied current
         global Mcalcium Mcalcium_tot
         global Npotassium Npotassium_tot
-        global alpha_m beta_m
-        global alpha_n beta_n
-        global alpha_m_t; alpha_m_t = 0;
-        global beta_m_t; beta_m_t = 0;
-        global alpha_n_t; alpha_n_t = 0;
-        global beta_n_t; beta_n_t = 0;
-        global t_start
-        delta_t = t - t_start;
-        v=u(1); % extract the voltage from the input vector
-        alpha_m_t = delta_t * alpha_m(v)*(Mcalcium_tot-Mcalcium);
-        beta_m_t = delta_t * beta_m(v)*Mcalcium;
-            % Potassium chan. opening, internal time elapsed
-        alpha_n_t = delta_t * alpha_n(v)*(Npotassium_tot-Npotassium);
-            % Potassium chan. closing, internal time elapsed
-        beta_n_t = delta_t * beta_n(v)*Npotassium;
+        global alpha_m 
+        global beta_m
+        global alpha_n 
+        global beta_n
 
+        global alpha_m_t
+        global beta_m_t
+        global alpha_n_t
+        global beta_n_t
+        global delta_t
+        global previous_t
 
+        global tau1 T1
+        global tau2 T2 % timing trigger for reaction 2 (Calcium closing)
+        global tau3 T3 % timing trigger for reaction 3 (Potassium opening)
+        global tau4 T4 % timing trigger for reaction 4 (Potassium closing)
+
+        global fam
+        global fbm
+        global fan
+        global fbn
+
+        global acc_am
+        global acc_bm
+        global acc_an
+        global acc_bn
+
+        global tau1 T1
+
+        delta_t = delta_t + t - previous_t;
+        previous_t = t;
+        
+        %fprintf("Delta t before: %f, Now t: %f, Previous t: %f \n", delta_t, t, previous_t);
+        
+        v = u(1);
+
+        acc_am = delta_t * fam;
+        acc_bm = delta_t * fbm;
+        acc_an = delta_t * fan;
+        acc_bn = delta_t * fbn;
+        
         vK = -84;
         vL = -60;
         vCa = 120;
         gK = 8;
         gL = 2;
-        C=20;
+        C = 20;
         gCa = 4.4;
+        global count_du
+        count_du = count_du + 1;
 
         dudt=[
-            (Iapp(t)-gCa*(Mcalcium/Mcalcium_tot)*(v-vCa)-gL*(v-vL)...
-            -gK*(Npotassium/Npotassium_tot)*(v-vK))/C;
-            % Calcium chan. opening, internal time elapsed
+            (Iapp(t)-gCa*(Mcalcium/Mcalcium_tot)*(v-vCa)-gL*(v-vL)-gK*(Npotassium/Npotassium_tot)*(v-vK))/C;
             0; % M is constant between events
             0]; % N is constant between events
     end
@@ -170,9 +257,28 @@ function [value,isterminal,direction] = nextevent(~,u)
         global tau2 T2 % timing trigger for reaction 2 (Calcium closing)
         global tau3 T3 % timing trigger for reaction 3 (Potassium opening)
         global tau4 T4 % timing trigger for reaction 4 (Potassium closing)
+<<<<<<< HEAD
         global alpha_m_t beta_m_t
         global alpha_n_t beta_n_t
         value=[alpha_m_t-(tau1-T1);beta_m_t-(tau2-T2);alpha_n_t-(tau3-T3);beta_n_t-(tau4-T4)];
+=======
+        
+        global acc_am
+        global acc_bm
+        global acc_an
+        global acc_bn
+        global delta_t
+
+        global fam
+        global fbm
+        global fan
+        global fbn
+        global count_event
+        count_event = count_event + 1;
+
+        value=[abs(acc_am-(tau1-T1)) >= eps; abs(acc_bm-(tau2-T2)) >= eps; abs(acc_an-(tau3-T3)) >= eps; abs(acc_bn-(tau4-T4)) >= eps];
+>>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
         isterminal=[1;1;1;1]; % stop and restart integration at crossing
         direction=[1;1;1;1]; % increasing value of the quantity at the trigger
+
 end
