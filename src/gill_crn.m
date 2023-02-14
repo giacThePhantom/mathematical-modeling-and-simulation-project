@@ -19,6 +19,7 @@ function statistics = compute_gill_statistics(f1, f2)
         [V1,M1,N1,t1,tau_arr,eps_arr] = ml_4_gill(f1, tau_arr, eps_arr);
         [V2,M2,N2,t2,tau_arr,eps_arr] = ml_4_gill(f2, tau_arr, eps_arr);
 
+
         times1 = length(spike_detection(V1, 0));
         times2 = length(spike_detection(V2, 0));
         spike_diff = spike_diff + (times1 - times2);
