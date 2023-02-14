@@ -2,7 +2,7 @@
 
 	\subsection{Random time change representation}
 	Consider a model of a system with states $A$ for closed and $B$ for open of an ion channel.
-	The dynamics of the system are modeled assuming that the dwell times in the two states are determined by independent exponential random variables with parameters $\alpha$ and $\beta$:
+	The dynamics of the system are modelled assuming that the dwell times in the two states are determined by independent exponential random variables with parameters $\alpha$ and $\beta$:
 
 	$$A\xleftrightharpoons[\beta]{\alpha}B$$
 
@@ -68,7 +68,7 @@
 
 	Where $Y_1$ and $Y_2$ are independent, unit-rate Poisson processes.
 	Suppose now that $X_1(0) + X_2(0) = N\ge 1$.
-	Now the model is focusing on the number of open and closed ion channels out of a total of $N$.
+	The model is focusing on the number of open and closed ion channels out of a total of $N$.
 	Suppose that the propensity at which ion channels are opening can be modelled as:
 
 	$$\lambda_1(t, X(t)) = \alpha(t)X_1(t)$$
@@ -86,7 +86,7 @@
 							 &+Y_2\biggl(\int_0^t\beta(s)X_2(s)ds\biggr)\begin{pmatrix}1\\-1\end{pmatrix}
 	\end{align*}
 
-	Now a jumping model consisting of $d$ chemical constituents (ion channel states) undergoing transitions determined via $M>0$ different reaction channels.
+	A jumping model consisting of $d$ chemical constituents (ion channel states) undergoing transitions determined via $M>0$ different reaction channels.
 	Moreover suppose that $X_i(t)$ determines the value of the ith constituent at time $t$, so that $X(t)\in\mathbb{Z}^{d}$, that the propensity function for the kth reaction is $\lambda_k(t, X(t))$ and that if the kth reaction channel takes place at time $t$, then the system is updated according to the addition of the reaction vector $\zeta_k\in\mathbb{Z}^d$:
 
 	$$X(t) = X(t-)+\zeta_k$$
@@ -103,7 +103,8 @@
 								 &-P_{X_0}(x, t)\sum\limits_{k=1}^M\lambda_k(t, x)
 	\end{align*}
 
-	Where $P_{X_0}(x, t)$ is the probability of being in state $x\in\mathbb{Z}^d_{\ge 0}$ at time $t\ge 0$ given an initial condition of $X_0$.
+	Where $P_{X_0}(x, t)$ is the probability of being in state $x\in\mathbb{Z}^d_{\ge 0}$ at time $t\ge 0$ given an initial condition of $X_0$.\\
+
 	When $X$ represents the randomly fluctuating state of an ion channel in a single compartment conductance based neuronal model, the membrane potential $V\in\mathbb{R}$ is added as an additional dynamical variable.
 	The voltage is considered to evolve deterministically, conditional on the states of the ion channels.
 	Suppose that there is a single ion channel type with state variable $X$, then the path-wise representation is supplemented with the solution of Kirchoff's current conservation law:
@@ -129,7 +130,7 @@
 
 		$$\Delta = \min\limits_k\biggl\{\Delta_k:\int_0^{T+\Delta_k}\lambda_k(s, X(s))ds = \tau_T^k\biggr\}$$
 
-		Where $\tau_T^k$ is the first point associated wuth $Y_k$ coming after $\int_0^T\lambda_k(s, X(s))ds$:
+		Where $\tau_T^k$ is the first point associated with $Y_k$ coming after $\int_0^T\lambda_k(s, X(s))ds$:
 
 		\begin{align*}
 			\tau_T^k = \inf\biggl\{&r>\int_0^T\lambda_k(s, X(s))ds:\\
@@ -144,5 +145,5 @@
 		In this algorithm $T_k$ denotes the value of the integrated intensity function $\int_0^t\lambda_k(s, X(s))ds$ and $\tau_k$ the first point associated with $Y_k$ located after $T_k$.
 		All random number are assumed to be independent.
 		With a probability of one, the index $\mu$ is unique at each step.
-		This algorithm also relies on being able to compute a hitting time for each of the $T_k(t) = \int_o^t\lambda_k(s, X(s))ds$ exactly, which is in general not possible, but it will be sufficient with reliable integration software.
+		This algorithm also relies on being able to compute a hitting time for each of the $T_k(t) = \int_0^t\lambda_k(s, X(s))ds$ exactly, which is in general not possible, but it will be sufficient with reliable integration software.
 		If the equations for the voltage or the intensity functions can be analytically solved, such numerical integration is unnecessary and efficiencies can be gained.

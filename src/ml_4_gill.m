@@ -1,15 +1,7 @@
-function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
+function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in, show_figures)
 
-    params = readtable(csv_name); 
+    params = readtable(csv_name);
 
-<<<<<<< HEAD
-    Npotassium_tot = 40;
-    Ntot = Npotassium_tot;
-
-    Mcalcium_tot = 40;
-    Mtot = Mcalcium_tot;
-    tmax=4e3;
-=======
     global Mcalcium_tot Mcalcium
     global Npotassium_tot Npotassium
     global vK vL vCa
@@ -17,7 +9,6 @@ function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
     global C
     global tau
     global I
->>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
 
     % Parameters
     tmax = params.tmax;
@@ -25,20 +16,20 @@ function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
     Npotassium_tot = params.nktot;
     Mcalcium_tot = params.mcatot;
 
-    phi_m = params.phi_m; 
+    phi_m = params.phi_m;
     phi_n = params.phi_n;
-    va = params.va; 
-    vb = params.vb; 
-    vc = params.vc; 
+    va = params.va;
+    vb = params.vb;
+    vc = params.vc;
     vd = params.vd;
 
-    vK = params.vk; 
-    vL = params.vl; 
+    vK = params.vk;
+    vL = params.vl;
     vCa = params.vca;
     gK = params.gk;
-    gL = params.gl; 
+    gL = params.gl;
     gCa = params.gca;
-    C = params.c; 
+    C = params.c;
 
     V0 = params.v0; % start at an arbitrary middle voltage
     M0 = params.m0; % start with calcium channels all closed
@@ -56,7 +47,7 @@ function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
 
     Mcalcium=M0; % initial state of calcium channel
     Npotassium=N0; % initial state of potassium channel
-    
+
     % Morris Lecar
     global Iapp; Iapp=@(t)I; % applied current
     global xi_m; xi_m=@(v)(v-va)/vb; % scaled argument for m-gate input voltage
@@ -79,13 +70,13 @@ function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
     while t(end)<tmax
         index = index + 1;
         if length(tau_arr) < index
-            tau_arr = [tau_arr, -log(rand)]; 
+            tau_arr = [tau_arr, -log(rand)];
         end
 
         if length(eps_arr) < index
-            eps_arr = [eps_arr, rand]; 
+            eps_arr = [eps_arr, rand];
         end
-       
+
         tau = tau_arr(index);
         epsilon = eps_arr(index);
 
@@ -132,13 +123,30 @@ function [V,M,N,t,tau_arr, eps_arr]=ml_4_gill(csv_name, tau_arr_in, eps_arr_in)
 
     end % while t(end)<tmax
 
-    % %% Plot output
-    % figure
-    % subplot(6,1,1),plot(t,M), xlabel('Time'), ylabel('M'),
-    % subplot(6,1,2),plot(t,N), xlabel('Time'), ylabel('N')
-    % subplot(6,1,3),plot(t,V) ,xlabel('Time'), ylabel("V")
-    % subplot(6,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-    % subplot(6,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('M')
+    if show_figures == 1
+        % Plot output
+        figure
+            subplot(5,1,1),
+            plot(t,V, 'LineWidth', 3),
+            xlabel('Time', 'FontSize', 16),
+            ylabel('V', 'FontSize', 16)
+            subplot(5,1,2),
+            plot(t,M, 'r', 'LineWidth', 3),
+            ylabel('M', 'FontSize', 16),
+            xlabel('Time', 'FontSize', 16)
+            subplot(5,1,3),
+            plot(t,N, 'g', 'LineWidth', 3),
+            ylabel('N', 'FontSize', 16),
+            xlabel('Time', 'FontSize', 16)
+            subplot(5,1,4),
+            plot(V,M,'.-', 'color', 'r', 'LineWidth', 2),
+            xlabel('V', 'FontSize', 16), ylabel('M', 'FontSize', 16)
+            subplot(5,1,5),
+            plot(V,N,'.-', 'color', 'g', 'LineWidth', 2),
+            xlabel('V', 'FontSize', 16),
+            ylabel('N', 'FontSize', 16)
+            grid on
+    end
 
 end
 
@@ -165,7 +173,7 @@ end
 
 % Define behavior at threshold crossing
 function [value,isterminal,direction] = nextevent(~,u)
-    
+
     global tau
 
     value=[u(2)+u(3)+u(4)+u(5)-tau];

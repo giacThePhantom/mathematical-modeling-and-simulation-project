@@ -7,13 +7,13 @@ y_0 = [-60, 0];
 
 subplot(2,1,1)
 plot(T, Y(:, 1), 'LineWidth', 3.0);
-xlabel('Time [ms]');
-ylabel('Potential [mV]');
+xlabel('Time [ms]', 'FontSize', 20);
+ylabel('Potential [mV]', 'FontSize', 20);
 
 subplot(2,1,2)
-plot(T, Y(:, 2), 'LineWidth', 3.0);
-xlabel('Time [ms]');
-ylabel('N');
+plot(T, Y(:, 2), 'g', 'LineWidth', 3.0);
+xlabel('Time [ms]', 'FontSize', 20);
+ylabel('N', 'FontSize', 20 );
 
 grid on;
 
@@ -22,7 +22,7 @@ function dy = neuron(t, y)
     v_k = -84;
     v_l = -60;
     v_ca = 120;
-    i_app = 0;
+    i_app = 100;
     g_k = 8;
     g_l = 2;
     C = 20;
@@ -50,26 +50,4 @@ function dy = neuron(t, y)
     dy(:, 1) = (i_app-g_ca*m_inf*(V-v_ca) - g_l*(V-v_l) - g_k*N*(V-v_k))/C;
     dy(:, 2) = (n_inf - N)/tau;
     dy = dy(:);
-end
-
-function compute_s = s(t)
-    if t > 10 && t < 10.1
-        compute_s = 6;
-    elseif t > 15 && t < 25
-        compute_s = 3;
-    elseif t > 30 && t < 32
-        compute_s = 3;
-    elseif t > 36 && t < 38
-        compute_s = 3; 
-    elseif t > 42 && t < 45
-        compute_s = 3;
-    elseif t > 50 && t < 52
-        compute_s = 1;
-    elseif t > 54 && t < 56
-        compute_s = 1; 
-    elseif t > 58 && t < 60
-        compute_s = 1;    
-    else
-        compute_s = 0;
-    end
 end

@@ -93,7 +93,7 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 			\end{itemize}
 		\end{multicols}
 
-		As described in \cite{integrate-fire-params}.
+		As described in \cite{stochastic-neuron}.
 		The trajectory obtained is visible in figure \ref{fig:integrate-fire}.
 
 		\begin{figure}
@@ -102,7 +102,14 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 			\label{fig:integrate-fire}
 		\end{figure}
 
-		The input current $s(t)$ was studied ad hoc to try to characterize at best the behaviour of the system
+		The input current $s(t)$ was studied ad hoc to try to characterize at best the behaviour of the system.
+		We applied impulses for one time step of three different intensities such that:
+
+		\begin{enumerate}
+			\item One impulse was enough to generate a spike.
+			\item More impulses had to cooperate to generate a spike.
+			\item The impulses would not be able to generate a spike but would make the voltage oscillate around a point greater than $E_L$.
+		\end{enumerate}
 
 		\subsubsection{Modelling supra-threshold dynamics}
 		To allow the system to generate spikes the integrate and fire model is augmented with an additional variable $T$, the inter-spike time or IST.
@@ -133,9 +140,30 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 		After that it will increase constantly for $V_R<V<V_T$.
 		The membrane potential is coupled to $T$ via the Gaussian factor $\beta$, centred at $T=0$ and with a small dispersion $\gamma=1ms$.
 		During the first few millisecond this term provides a brief impulse to clam the membrane potential near to $V_R$ modelling the refractory period.
+		We implemented this model in Matlab solving the system of equation with the variable order method \emph{ode15s}, expanding the parameter of the leaky integrate and fire with:
+
+		\begin{multicols}{2}
+			\begin{itemize}
+				\item $alpha = 10^4$.
+				\item $gamma = 1ms$.
+				\item $V_0 = -73mV$.
+				\item $T_0 = 0$.
+			\end{itemize}
+		\end{multicols}
+
+		Again the current was built ad hoc as to explore  at best model's dynamics.
+		The trajectory of the neuron can be seen in figure \ref{fig:supra-threshold}.
+
+		\begin{figure}
+			\includegraphics[width=\textwidth]{Figures/supra-threshold}
+			\caption{Trajectory of the supra-threshold model. \textbf{Top} Membrane voltage, \textbf{Middle} Inter spike time. \textbf{Bottom} Input current.}
+			\label{fig:supra-threshold}
+		\end{figure}
+
+		It can be seen how the inter spike time goes quickly to zero whenever the membrane voltage crosses the threshold, causing it to go quickly to $V_R$.
 
 		\subsubsection{Modelling spike-rate adaptation and synaptic dynamics}
-		Equation \ref{eqs:supra-threshold} can be extended to include ion-channel dynamics to model spike-rate adaptation and synaptic transmission.:
+		Equation \ref{eqs:supra-threshold} can be extended to include ion-channel dynamics to model spike-rate adaptation and synaptic transmission:
 
 		\begin{equation}
 			\begin{aligned}
@@ -171,14 +199,46 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 
 		The rate of closing is proportional to $x_i$, while the rate of opening will be proportional to $1-x_i$.
 		Synaptic inputs is taken in consideration by increasing the opening rate of AMPA channels instead of affecting $V$ directly.
+		We implemented this model with the same variable order method \emph{ode15s} in Matlab as the supra-threshold one, adding to its parameters:
 
-		\subsubsection{A stochastic model neuron}
+		\begin{multicols}{2}
+			\begin{itemize}
+				\item $g_sk = 0.128 nS$.
+				\item $g_ampa = 0.024 nS$.
+				\item $g_gaba = 0.064 nS$.
+				\item $g_nmda = 0.08 nS$.
+				\item $E_sk = -90 mV$.
+				\item $E_ampa = 0 mV$.
+				\item $E_gaba = -70 mV$.
+				\item $E_nmda = 0 mV$.
+				\item $p_ampa = 0.875$.
+				\item $p_gaba = 0.0625$.
+				\item $p_nmda = 0.0625$.
+				\item $tau_ampa = 2.4 ms$.
+				\item $tau_gaba = 7 ms$.
+				\item $tau_nmda = 100 ms$.
+				\item $tau_sk = 80 ms$.
+				\item $a = -53$.
+				\item $b = 100$.
+			\end{itemize}
+		\end{multicols}
+
+		The trajectory can be seen in \ref{fig:synapses}.
+
+		\begin{figure}
+			\includegraphics[width=\textwidth]{Figures/synapse}
+			\caption{Trajectory of the synaptic dynamics model. From top to bottom \textbf{1} Membrane voltage, \textbf{2} Inter spike time. \textbf{3} Percentage of open Potassium channels. \textbf{4} Percentage of open AMPA channels. \textbf{5} Percentage of open GABA channels. \textbf{6} Percentage of open NMDA channels. \textbf{7} Input current.}
+			\label{fig:synapse}
+		\end{figure}
+
+		It can be seen from this how $T$ behave as previously, while the state of the channels cause a different response as before.
+		In particular it can be seen how the fast AMPA channel (in yellow) respond quickly to an input current, while the other have a slower behaviour that cannot be fully characterized in the limited simulation time.
+		This model is useful because it allows the neuron to respond differently based on its history, coupling it with the activity of other neurons in the network, which would cause to change its dynamics.
+
+		\subsubsection{Introducing noise to the leaky integrate and fire model}
 		The addition of system noise in the form of a random input will transform the deterministic equation into a stochastic differential equation or SDE or Langevin equation.
 		This type of equation has an ensemble of solutions.
 		The effect of the variable spike-time arrival disperse trajectories through the state space.
-		Under smoothness constraints on the random input the ensemble of solutions are described by the FPE, which enables them to be framed as a deterministic dynamic equation.
-		This equation models the dispersive effect of stochastic input as a diffusive process.
-		This leads of the description of the system in terms of a probability density over the state space or $\rho(x,t)$.
 		Going back to the system described by equation \ref{det-neu}, with $s(t)$ as a random variable:
 
 		\begin{equation}
@@ -203,75 +263,27 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 			\end{aligned}
 		\end{equation}
 
-		To describe how $\rho(x,t)$ change in time consider a simple integrate and fire model with only an excitatory input and without synaptic dynamics.
-		The master equation detailing the rate of change of $\rho(x,t)$ over time can be written as:
+		We then simulated the leaky fire and integrated model with and $s$ built such that:
 
-		\begin{equation}
-			\begin{aligned}
-				\frac{\partial\rho(x,t)}{\partial t} &= \frac{\partial\rho_{IN}}{\partial t} + \frac{\partial\rho_{OUT}}{\partial t} =\rho(x + h)f(x+h)+\\
-																						 &+\rho(x-h)r(t)-\rho(x)r(t)-\rho(x)f(x)
-			\end{aligned}
-		\end{equation}
+		$$s(t)\begin{cases}20nA & t\in\mathcal{I}\\0 &otherwise\end{cases}$$
 
-		Which, on rearranging:
+		Where $\mathcal{I}$ contains the time of firing $t_i$ sampled from a Poisson distribution with $\lambda = 10$.
+		A trajectory example can be seen in \ref{fig:stochastic-neuron}
 
-		\begin{equation}
-			\frac{\partial\rho(x,t)}{\partial t} = (\rho(x+h)f(x+h)-\rho(x)f(x))+r(t)(\rho(x-h)-\rho(h))
-		\end{equation}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{Figures/stochastic-neuron}
+			\caption{Trajectory of the leaky integrate-and-fire neuronal model with stochastic input current. \textbf{Top} The membrane voltage. \textbf{Bottom} The input current.}
+			\label{fig:stochastic-neuron}
+		\end{figure}
 
-		And approximating the first bracketed expression using a first-order Taylor expansion:
+		We then simulated it for $1000$ seconds to compute the mean impulse rate, which was averaged over $10$ independent runs, obtaining:
 
-		\begin{equation}
-			\frac{\partial\rho(x,t)}{\partial t} = -\frac{\partial}{\partial x}f\rho + r(t)(\rho(x-h)-\rho(x))
-			\label{eqs:population}
-		\end{equation}
+		$$\bar{r}(t) = 0.083$$
 
-		Or the population equation.
-		The first right-hand term is due to the leakage current and generates a steady flow towards $E_L$.
-		The second is due to input and is composed of two terms, considered as replenishing and depleting term respectively.
-		Given an impulse of input, the probability between $x-h$ and $x$ will contribute to flow at $x$, whereas $\rho(x)$ flows away from $x$.
-		The replenishing term can be approximated using a second-order Taylor series expansion about $x$:
-
-		\begin{equation}
-			\rho(x-h)\approx \rho(x) - h\frac{\partial\rho}{\partial x}+\frac{h^2}{2}\frac{\partial^2\rho}{\partial x^2}
-		\end{equation}
-
-		And substituting back into \ref{eqs:population} and using $w^2 = sh$ with $w$ the diffusion coefficient, the diffusion approximation of the population equation, the FPE or the advection-diffusion equation can be obtained:
-
-		\begin{equation}
-			\frac{\partial\rho}{\partial t} = -\frac{\partial((f+s)\rho)}{\partial x} +\frac{w^2}{2}\frac{\partial^2\rho}{\partial x^2}
-			\label{eqs:advection-diffusion}
-		\end{equation}
-
-		Or, more simply:
-
-		\begin{equation}
-			\frac{\partial\rho}{\partial t} = Q(x, s)\rho
-		\end{equation}
-
-		Where $Q(x,s)$ contains all the dynamic information entailed by the differential equations of the model.
-		The first term of equation \ref{eqs:advection-diffusion} is known as the advection term, describes movement of the probability density owning to the system's deterministi dynamics.
-		The second describes dispersion of density brought about by stochastic variations in the input.
-		It is weighted by half the square of the diffusion coefficient, which quantifies the root-mean-squared distance travelled owing to this variability.
-		An assumption to be made is that $h$ will be very small, as the accuracy of the Taylor expansion increases as $h\rightarrow 0$.
-		It has been demonstrated how this works for neuronal models.
-		The advection-diffusion in \ref{eqs:advection-diffusion} generalizes to models with multiple states, such as the more complex integrate-and-fire deterministic model described earlier:
-
-		\begin{equation}
-			\frac{\partial P}{\partial t} = \nabla\cdot(W\nabla - F(x,s))P
-		\end{equation}
-
-		Where:
-
-		\begin{itemize}
-			\item $P$ is the probability distribution over a multi-dimensional state space.
-			\item $W$ is the co-variation matrix involving diffusion coefficient with the denominator $2$ absorbed into it.
-			\item An example of $F(x,s)$ can be found in \ref{eqs:synaptic-dynamics}.
-		\end{itemize}
 
 	\subsection{Expanding the stochastic neuronal model}
 	In this paper two piecewise stochastic representations for the models are introduced.
-	These are similar to the Langevin model presented earlier with the difference that the noise arise via stochastic counting processes as opposed to Brownian motions.
+	In this representations the noise arise via stochastic counting processes.
 	These representations imply different exact simulation strategies, which are not being explored in this context.
 	From a computational standpoint the change to path wise representation is useful because:
 
@@ -285,9 +297,9 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 	Because of this this work should contribute in a way to:
 
 	\begin{itemize}
-		\item Formulate two path wise representations for the specific models under consideration.
+		\item Formulate two pathwise representations for the specific models under consideration.
 		\item A presentation of the corresponding exact simulation strategies for the different representations.
-		\item A comparison of the error induced by utilizing approximated simulation strategies on the Morris-Lecar model.
+		\item A comparison of the two strategies applied on the Morris-Lecar model.
 	\end{itemize}
 
 	Moreover this work show how to use the different representations in the development of methods for parametric sensitivity analysis.

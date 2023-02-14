@@ -1,5 +1,7 @@
 clear all;
 close all;
+
+% Generate n random integers follow Poisson with parameter (==mean) lambda
 sim_time = 100; %s
 dt = 0.0002;
 T = 0:dt:sim_time; % 1 second simulation
@@ -13,21 +15,21 @@ V_R = -90;
 
 s = zeros(sim_time/dt + 1, 1);
 
-% Generate n random integers follow Poisson with parameter (==mean) lambda
 lambda=10;
 t = 0;
 c = 0
 while t < sim_time,
     t = t -log(rand(1,1)/lambda);
     if t < sim_time,
-        s(floor(t/dt)) = 37.5;
+        s(floor(t/dt)) = 20;
         c = c + 1;
     end
 end
 
+
+
  for t=1:length(T)-1,
      if Vm(t) >= V_th,
-
          Vm(t+1) = V_R;
 
      else,
@@ -42,16 +44,16 @@ end
  subplot(2,1,1);
  plot(T,Vm,'LineWidth', 3.0);
 
- xlabel('Time [ms]');
+ xlabel('Time [ms]', 'FontSize', 20);
 
- ylabel('Voltage [mV]');
+ ylabel('Voltage [mV]', 'FontSize', 20);
 
  subplot(2,1,2)
  plot(T, s, 'r', 'LineWidth', 3.0);
 
- xlabel('Time [ms]');
+ xlabel('Time [ms]', 'FontSize', 20);
 
- ylabel('Current [nA]');
+ ylabel('Current [nA]', 'FontSize', 20);
 
  grid on;
 

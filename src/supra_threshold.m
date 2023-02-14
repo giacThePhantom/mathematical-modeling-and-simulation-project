@@ -19,18 +19,18 @@ end
 
 subplot(3,1,1)
 plot(T, Y(:, 1), 'LineWidth', 3.0);
-xlabel('Time [s]');
-ylabel('Potential [mV]');
+xlabel('Time [s]', 'FontSize',16);
+ylabel('Potential [mV]', 'FontSize',16);
 grid on;
 subplot(3,1,2)
 plot(T, Y(:, 2), 'g', 'LineWidth', 3.0);
-xlabel('Time [s]');
-ylabel('T');
+xlabel('Time [s]', 'FontSize',16);
+ylabel('T', 'FontSize',16);
 grid on;
 subplot(3,1,3)
 plot(t_array, s_array, 'r', 'LineWidth', 3.0);
-xlabel('Time [s]');
-ylabel('Current');
+xlabel('Time [s]', 'FontSize',16);
+ylabel('Current', 'FontSize',16);
 grid on;
 
 function dy = neuron(t, y)

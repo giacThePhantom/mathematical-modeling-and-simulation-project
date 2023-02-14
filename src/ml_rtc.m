@@ -30,7 +30,7 @@ function [V,N,t,Ntot]=ml_rtc()
     N=N0; % use N to record the time course
 
     % Morris Lecar
-    global Iapp; Iapp=@(t)0; % applied current
+    global Iapp; Iapp=@(t)100; % applied current
     global minf; minf=@(v)0.5*(1+tanh((v-va)/vb)); % m-gate activation
     global xi; xi=@(v)(v-vc)/vd;  % scaled argument for n-gate input
     global ninf; ninf=@(v)0.5*(1+tanh(xi(v)));  % n-gate activation function
@@ -72,10 +72,18 @@ function [V,N,t,Ntot]=ml_rtc()
 
     %% Plot output
     figure
-    subplot(3,1,1),plot(t,V),xlabel('time'),ylabel('V')
-    subplot(3,1,2),plot(t,N),xlabel('time'),ylabel('N')
-    subplot(3,1,3),plot(V, N, '-.'),xlabel('V'),ylabel('N')
-    %subplot(3,1,3),plot(t,Iapp),xlabel('time'),ylabel('I')
+    subplot(3,1,1)
+    plot(t,V, 'LineWidth', 3)
+    xlabel('time', 'FontSize', 16)
+    ylabel('V', 'FontSize', 16)
+    subplot(3,1,2)
+    plot(t,N, 'g', 'LineWidth', 2)
+    xlabel('time', 'FontSize', 16)
+    ylabel('N', 'FontSize', 16)
+    subplot(3,1,3)
+    plot(V, N, '-.', 'LineWidth', 2, 'color', 'g')
+    xlabel('V', 'FontSize', 16)
+    ylabel('N', 'FontSize', 16)
     shg
 end
 

@@ -1,6 +1,6 @@
-function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
+function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures),
 
-    params = readtable(csv_name); 
+    params = readtable(csv_name);
 
     global Mcalcium_tot Mcalcium
     global Npotassium_tot Npotassium
@@ -17,20 +17,20 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
     Npotassium_tot = params.nktot;
     Mcalcium_tot = params.mcatot;
 
-    phi_m = params.phi_m; 
+    phi_m = params.phi_m;
     phi_n = params.phi_n;
-    va = params.va; 
-    vb = params.vb; 
-    vc = params.vc; 
+    va = params.va;
+    vb = params.vb;
+    vc = params.vc;
     vd = params.vd;
 
-    vK = params.vk; 
-    vL = params.vl; 
+    vK = params.vk;
+    vL = params.vl;
     vCa = params.vca;
     gK = params.gk;
-    gL = params.gl; 
+    gL = params.gl;
     gCa = params.gca;
-    C = params.c; 
+    C = params.c;
 
     V0 = params.v0; % start at an arbitrary middle voltage
     M0 = params.m0; % start with calcium channels all closed
@@ -68,7 +68,7 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
     global beta_n; beta_n=@(v)((1-ninf(v))./tau_n(v));
 
     % ODE options including reset
-    options=odeset('Events',@nextevent); 
+    options=odeset('Events',@nextevent);
 
     index = 0;
     tau_mat = tau_mat_in;
@@ -78,7 +78,7 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
 
         index = index + 1;
         if size(tau_mat, 1) < index
-            tau_arr = [-log(rand), -log(rand), -log(rand), -log(rand)]; 
+            tau_arr = [-log(rand), -log(rand), -log(rand), -log(rand)];
             tau_mat = [tau_mat; tau_arr];
         end
 
@@ -89,15 +89,15 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
             tau4 = tau_mat(index, 4);
             index = index + 1;
             if size(tau_mat, 1) < index
-                tau_arr = [-log(rand), -log(rand), -log(rand), -log(rand)]; 
+                tau_arr = [-log(rand), -log(rand), -log(rand), -log(rand)];
                 tau_mat = [tau_mat; tau_arr];
-            end    
+            end
         end
 
         U0=[V0;0;0;0;0;M0;N0];
         tspan=[t(end),tmax];
         [tout,Uout,~,~,event_idx]=ode23(@dudtfunc,tspan,U0,options);
-        
+
         Vout=Uout(:,1); % voltage at time of next event
         Mout=Uout(:,6); % number of calcium channels open at end of next event
         Nout=Uout(:,7); % number of potassium channels open at end of next event
@@ -124,18 +124,13 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
             N0=N0-1;    % decrement potassium channel state
             tau4=tau4+tau_mat(index, 4); % increment in tau4 likewise
         end
- 
+
         Mcalcium=M0;
         Npotassium=N0;
         if M0>Mcalcium_tot, error('M>Mtot'), end
         if M0<0, error('M<0'), end
         if N0>Npotassium_tot, error('N>Ntot'), end
         if N0<0, error('N<0'), end
-<<<<<<< HEAD
-        Uout(end, 2)
-=======
-
->>>>>>> 6565d74c2c3807fb42d25695ccd82660aaca5c72
         T1=T1+Uout(end,2);
         T2=T2+Uout(end,3);
         T3=T3+Uout(end,4);
@@ -149,11 +144,25 @@ function [V,M,N,t,tau_mat]=ml_4_rtc(csv_name, tau_mat_in, show_figures)
     if show_figures == 1
         % Plot output
         figure
-            subplot(5,1,1),plot(t,M),ylabel('M'), xlabel('Time')
-            subplot(5,1,2),plot(t,N),ylabel('N'), xlabel('Time')
-            subplot(5,1,3),plot(t,V),xlabel('Time'), ylabel('V')
-            subplot(5,1,4),plot(V,M,'.-'),xlabel('V'), ylabel('M')
-            subplot(5,1,5),plot(V,N,'.-'),xlabel('V'), ylabel('N')
+            subplot(5,1,1),
+            plot(t,V, 'LineWidth', 3),
+            xlabel('Time', 'FontSize', 16),
+            ylabel('V', 'FontSize', 16)
+            subplot(5,1,2),
+            plot(t,M, 'r', 'LineWidth', 3),
+            ylabel('M', 'FontSize', 16),
+            xlabel('Time', 'FontSize', 16)
+            subplot(5,1,3),
+            plot(t,N, 'g', 'LineWidth', 3),
+            ylabel('N', 'FontSize', 16),
+            xlabel('Time', 'FontSize', 16)
+            subplot(5,1,4),
+            plot(V,M,'.-', 'color', 'r', 'LineWidth', 2),
+            xlabel('V', 'FontSize', 16), ylabel('M', 'FontSize', 16)
+            subplot(5,1,5),
+            plot(V,N,'.-', 'color', 'g', 'LineWidth', 2),
+            xlabel('V', 'FontSize', 16),
+            ylabel('N', 'FontSize', 16)
             grid on
     end
 end % End of function mlexactboth
