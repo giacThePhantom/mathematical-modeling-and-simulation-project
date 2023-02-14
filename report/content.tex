@@ -155,24 +155,19 @@ Then we computed the average sensitivity for each step increase as:
 
 $$S = \langle\langle\tilde{s}(\theta_i,\theta_j\rangle\rangle$$
 
-	\subsection{Spike detection}
-	To compute the observable of interest $g$, we employed the spike detection algorithm presented in \cite{spike-detection}.
-	This algorithm allows to compute the mid point of the spikes as to allow for a faster computation with respect to algorithms that find the peaks.
-	The spikes are defined as the position where $V(t)$ is greater than a predefined threshold.
-
 	\subsection{The common random number method}
 	The common random number CRN method simulates processes according to Gillespie representation with the same Poisson process $Y$ and the same stream of random variables $\{\epsilon_i\}$. For this method:
 
 	$$S_{K} = 0.079$$
 	$$S_{Ca} = -0.013$$ 
 	
- 	\subsection{The common reaction path method}
-	The common reaction path method CRP simulates both processes according to the same random time change representation with the same Poisson processes $Y_k$.
-	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes. For this method: 
+	where 
 
-	
-	$$S_{K} = 0.077$$
-	$$S_{Ca} = -0.019$$ 
+	$$ S_{J}
+
+	\subsection{The common reaction path method}
+	The common reaction path method CRP simulates both processes according to the same random time change representation with the same Poisson processes $Y_k$.
+	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes.
 
 \section{Discussion}
 The random time change representation can be useful to computational neuroscience as it allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible.
