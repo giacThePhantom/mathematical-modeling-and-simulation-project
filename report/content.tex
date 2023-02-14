@@ -20,6 +20,7 @@
 \input{chapters/05_more-than-one-channel-type}
 
 \section{Comparison of the exact algorithm with a piecewise constant propensity approximation}
+\label{section:comparison}
 The most common implementation for hybrid ion channel models is an approximate method in which the per capita reaction propensities are held fixed between channel events: in particular in algorithm \ref{algo:random-time-change-sim}, $\int_t^{t+\Delta k}\lambda_k(V(s), X(s))ds$ is replaced with $\Delta_k\lambda_k(V(t), X(t))$, leaving the remainder unchanged.
 In this type of algorithms the sequence of channel states jumps is generated using the propensity immediately following the most recent jump rather than taking into account the time dependence of the reaction propensities due to the changing voltage.
 This is analogous to the forward Euler method for the numerical solution of ordinary differential equations.
@@ -161,36 +162,32 @@ $$S = \langle\langle\tilde{s}(\theta_i,\theta_j\rangle\rangle$$
 	$$S_{K} = 0.079$$
 	$$S_{Ca} = -0.013$$ 
 	
-	where 
-
-	$$ S_{J}
-
-	\subsection{The common reaction path method}
+ 	\subsection{The common reaction path method}
 	The common reaction path method CRP simulates both processes according to the same random time change representation with the same Poisson processes $Y_k$.
-	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes.
+	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes. For this method: 
+
+	
+	$$S_{K} = 0.077$$
+	$$S_{Ca} = -0.019$$ 
 
 \section{Discussion}
-The random time change representation can be useful to computational neuroscience as it allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible.
-The random time change approach avoids several approximations: for example in simulation algorithms based on a fixed time step chemical Langevin approach, it is necessary to assume that the increments in channel state are Gaussian distributed over an appropriate time interval.
-However in exact simulation of small patches the exact algorithm visits states incompatible with the Gaussian increment approximation regardless of time step size.
-Another algorithm found in literature is the piecewise constant propensity or approximate forward algorithm.
-This ignore changes to membrane potential during the intervals between channel state changes.
-As the sensitivity of ion channel opening and closing to voltage is fundamental these algorithm are not appropriate unless time between openings and closing is especially small.
-This study restrict attention to the suprathreshold regime of the Morris-Lecar model, in which the applied current puts the system above the Hoph bifurcation marking onset of oscillations.
-Spiking is not the result of noise-facilitated release.
-Another study used eigenfunction expansion methods, path integrals and theory of large deviations to study spike initiation as noise facilitated escape problem in the excitable regime, as well as to incorporate synaptic currents into a stochastic network model using versions of the exact algorithm presented in this paper.
-the usual separation-of-time scales picture breaks done: the firing rate obtained by 1D Kramers rate theory when the slow recovery variable (fraction of open potassium channels) is taken to be fixed does not match that obtained by direct simulation with the exact algorithm.
-By considering a maximum likelihood approach to the 2D escape problem, spontaneous closure of potassium channels contributes significantly to noise induced escape than spontaneous opening of sodium channel.
-The algorithm presented are applicable beyond the effects of channel noise on the regularity of action potential firing in a single compartment neuron model.
-Exact simulation of hybrid stochastic models have been used to study spontaneous dendritic NMDA spikes, intracellular growth of the T7 bacteriophage and hybrid stochastic network models taking into account piecewise deterministic synaptic currents.
-The latter example represents a significant extension of the neural master equation approach to stochastic population models.
-The random time change representation extends naturally to scenarios in which each channel has a greater number of states, but it would be better to combine it with complexity reduction methods such as the stochastic shielding algorithm.
-Analysis of algorithms combining stochastic shielding and the random time change framework are a promising direction for future research.
+\label{section:discussion}
 
+In this report we present the random time change representation and the Gillespie representation as useful methods for computational neuroscience simulations of the Morris-Lecar model. We focus specifically on the suprathreshold regime of the Morris-Lecar model, in which the applied current puts the system above the Hoph bifurcation marking onset of oscillations: spiking is not the result of noise-facilitated release. \\ 
 
+The Gillespie representation can be extended in this case to take into account ion channels driven by the time-varying membrane potential. On the other hand, the random time change simulation allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible. The random time change approach avoids several approximations: for example in simulation algorithms based on a fixed time step chemical Langevin approach, it is necessary to assume that the increments in channel state are Gaussian distributed over an appropriate time interval. The random time change representation extends naturally to scenarios in which each channel has a greater number of states. \\
+
+A closer look to the data reported in \ref{section:comparison}: 
+\begin{itemize}
+	\item reveals that both types of simulations are behaving as expected, with the potassium channels being more sensitive than the calcium ones to the variations of parameters (the number of maximum channels for each channel type) in both types of simulations (biological reason? speed of activation?). 
+	\item shows how the Gillespie simulation seems to be less sensitive to the variations of number of channels, both both types of channels.\\
+	\item opens up to the possibility of introducing variance reduction strategies and parameter optimization
+\end{itemize}
+
+It's important to also highlight that the algorithms presented in this report are applicable beyond the effects of channel noise on the regularity of action potential firing in a single compartment neuron model. Exact simulation of hybrid stochastic models have been used to study spontaneous dendritic NMDA spikes and intracellular growth of the T7 bacteriophage. 
 
 
 % \begin{figure}[hbt!]
-% \centering
+% \centeringthe potassium channels are more sensitive than the calcium ones to the variations of parameters (in this case the number of maximum channels for each channel type) in both types of simulations (biological reason? speed of activation?). 
 % \label{volcano}
 % \end{figure}
