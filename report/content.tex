@@ -85,8 +85,7 @@ For any exact simulation algorithm, once the voltage component falls between $v_
 The random time change formalism can be used to develop new and faster computational methods with no loss in accuracy coupling two processes in order to reduce the variance and increase the speed of different natural estimatore.
 Consider for example the computation of parametric sensitivities, which is a tool that allow to determine parameters to which a system output is most responsive.
 Suppose that the intensity or propensity functions are dependent on some vectors of parameters $\theta$.
-$\theta$ may represent a subset of the system's mass action kinetics constants, the cell capacitance, or the underlying number of channels of each type.
-To know how sensitively a quantity such as the average firing rate or interspike interval variance depends on $\theta$ a family of models $(V^\theta, X^\theta)$, parameeterized by $\theta$ is considered, with stochastic equations:
+$\theta$, in our case, includes the membrane capacitance, the underlying number of channels of each type, the reversal potentials, the maximal conductance and the input current. We investigated how sensitively the average firing rate depends on $\theta$ for family of models $(V^\theta, X^\theta)$, parameterized by $\theta$ is considered, with stochastic equations:
 
 $$\frac{d}{dt}V^\theta(t) = f(\theta, V^\theta(t), X^\theta(t))$$
 
@@ -96,6 +95,7 @@ Where $f$ is some function and all other notation is as before.
 Some quantities depend on the entire sample path.
 Let $g(\theta, V^\theta, X^\theta)$ be a path functional capturing the quantity of interest.
 In order to evaluate the relative shift in expectation of $g$ due to a perturbation of the parameter vector, the estimation would be:
+
 
 \begin{align*}
 	\tilde{s} &=\epsilon^{-1}\mathbb{E}\bigl[g(\theta', V^{\theta'}, X^{\theta'})-g(\theta, V^\theta, X^\theta)\bigr]\approx\\
@@ -120,53 +120,59 @@ Which can be prohibitive.
 Reducing the variance of the estimator can be achieved coupling the processes $(V_{[i]}^{\theta'}, X_{[i]}^{\theta'})$ and $(V_{[i]}^\theta, X_{[i]}^{\theta})$ so that they are correlated by constructing them on the same probability space.
 Different approach to this problem are discussed in the next sections.
 
+In our case, ${\theta}$, includes:
+
+\begin{itemize}
+	\item The membrane capacitance.
+	\item The underlying number of channels of each type. 
+	\item The reversal potentials.
+	\item The maximal conductance and the input current.
+\end{itemize}
+
+So:
+
+$$\theta = \begin{pmatrix} C & N_{K} & N_{Ca} & \vec{E} & \vec{g} & s\end{pmatrix}$$
+
+We specifically investigated how the average firing rate ($g$) for 5 sample paths changes as a result of the variation of number of potassium and calcium channels. 
+To do so we built a vector of $\theta$, $\Theta$, changing for each element the values of 
+
+$$N_K = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]$$ 
+
+And 
+
+$$N_{Ca} = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]$$
+
+To estimate the sensitivity of the models with regards to the change of the number of channels, we compared the two processes measuring the \tilde{s} function for each couple:
+
+$$\tilde{s}(\theta_i, \theta_j) = (g(\theta_i, V, X), g(\theta_j, V, X): \theta_i, \theta_j\in \Theta$$
+
+Then, to uncover the sensitivity with respect to each channel we summed over the variations of the other one and averaged over each step increase:
+
+$$\langle\tilde{s}(\theta_i, \theta_j)\rangle = \frac{1}{11}\sum\limits_{i}^{10}\tilde{s}(\theta_{N_k = N_K[i]}\theta_{N_K= N_K[i+1]})$$
+
+Analogously for $N_{Ca}$.
+Then we computed the average sensitivity for each step increase as:
+
+$$S = \langle\langle\tilde{s}(\theta_i,\theta_j\rangle\rangle$$
+
+	\subsection{Spike detection}
+	To compute the observable of interest $g$, we employed the spike detection algorithm presented in \cite{spike-detection}.
+	This algorithm allows to compute the mid point of the spikes as to allow for a faster computation with respect to algorithms that find the peaks.
+	The spikes are defined as the position where $V(t)$ is greater than a predefined threshold.
+
 	\subsection{The common random number method}
-	The common random number CRN method simulates bot processes according to Gillespie representation with the same Poisson process $Y$ and the same stream of random variables $\{\epsilon_i\}$.
+	The common random number CRN method simulates processes according to Gillespie representation with the same Poisson process $Y$ and the same stream of random variables $\{\epsilon_i\}$. For this method:
 
-	\subsection{The common reaction path method}
+	$$S_{K} = 0.079$$
+	$$S_{Ca} = -0.013$$ 
+	
+ 	\subsection{The common reaction path method}
 	The common reaction path method CRP simulates both processes according to the same random time change representation with the same Poisson processes $Y_k$.
-	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes.
+	One stream of uniform random variables for each reaction channel is created and used for the simulation of both processes. For this method: 
 
-	\subsection{The coupled finite difference method}
-	The coupled finite difference method CFD utilizes a split coupling method.
-	It splits the counting process for each of the reaction channels into three pieces:
-
-	\begin{itemize}
-		\item One counting process shared by $X^\theta$ and $X^{\theta'}$ and has propensity equal to the minimum of their respective intensities.
-		\item One that only accounts for the jumps of $X^\theta$.
-		\item One than only accounts for the jumps of $X^{\theta'}$.
-	\end{itemize}
-
-	Letting $a\land b = \min\{a, b\}$, the precise coupling is:
-
-	\begin{align*}
-		X^{\theta'}(t) = &X_0^{\theta'} + \sum\limits_kY_{k, 1}\biggl(\int_0^tm_k(\theta, \theta', s)ds\biggr)\zeta_k+\\
-										 &+\sum\limits_{k}Y_{k, 2}\biggl(\int_o^t\lambda_k^{\theta'}(V^{\theta'}(s), X^{\theta'}(s))-m_k(\theta, \theta', s)ds\biggr)\zeta_k
-	\end{align*}
-
-	\begin{align*}
-		X^\theta(t) = &X^\theta(t) + \sum\limits_{l}Y_{k,1}\biggl(\int_0^tm_k(\theta, \theta', s)ds\biggr)\zeta_k+\\
-									&+\sum\limits_kY_{k, 3}\biggl(\int_0^t\lambda_k^0(V^\theta(s), X^\theta(s))-m_k(\theta, \theta', s)ds\biggr)\zeta_k
-	\end{align*}
-
-	Where:
-
-	$$m_k(\theta, \theta', s) = \lambda_k^0(V^\theta(s), X^\theta(s))\land\lambda_k^{\theta'}(V^{\theta'}(s), X^{\theta'}(s))$$
-
-	And $\{Y_{k, 1}, Y_{k, 2}, Y_{k, 3}\}$ are independent unit-rate Poisson processes.
-
-	\subsection{Covariance and methods' performace}
-	The algorithm presented could still produce statistically equivalent path.
-	This is not the case for the methods for parametric sensitivities provided.
-	Each of the methods constructs a coupled pair of processes $((V_{[i]}^{\theta'}, X_{[i]}^{\theta'}),(V_{[i]}^\theta, X_{[i]}^{\theta}))$  and the marginal processes $(V_{[i]}^{\theta'}, X_{[i]}^{\theta'})$ and $(V_{[i]}^\theta, X_{[i]}^{\theta})$ are all statistically equivalent no matter the method used.
-	The covariance $Cov((V_{[i]}^{\theta'}, X_{[i]}^{\theta'}),(V_{[i]}^\theta, X_{[i]}^{\theta}))$  can be different.
-	This is important since the objective is the variance reduction for any component $X_j$:
-
-	$$Var(X_k^\theta(t)-X_j^{\theta'}(t)) = Var(X_j^\theta(t))+Var(X_k^{\theta'}(t))-2Cov(X_j^\theta(t), X_j^{\theta'(t)})$$
-
-	Minimizing the variance is equivalent to maximizing the covariance.
-	The CRN method is the worst at maximizing covariance.
-	The CFD method with the split coupling procedure is the best, though the CRP method can be more efficient in some context.
+	
+	$$S_{K} = 0.077$$
+	$$S_{Ca} = -0.019$$ 
 
 \section{Discussion}
 The random time change representation can be useful to computational neuroscience as it allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible.
