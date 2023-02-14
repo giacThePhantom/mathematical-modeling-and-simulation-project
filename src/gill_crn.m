@@ -8,14 +8,14 @@ function statistics = compute_gill_statistics(f1, f2)
 
     diff_params = params1_arr - params2_arr;
     norm = sqrt(sum(diff_params.^2));
-    
-    N = 2;
+
+    N = 5;
     spike_diff = 0;
     for i=1:N
 
         tau_arr = [];
         eps_arr = [];
-        
+
         [V1,M1,N1,t1,tau_arr,eps_arr] = ml_4_gill(f1, tau_arr, eps_arr);
         [V2,M2,N2,t2,tau_arr,eps_arr] = ml_4_gill(f2, tau_arr, eps_arr);
 

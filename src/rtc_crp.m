@@ -8,8 +8,7 @@ function statistics = compute_rtc_statistics(f1, f2)
 
     diff_params = params1_arr - params2_arr;
     norm = sqrt(sum(diff_params.^2));
-
-    N = 10;
+    N = 5;
     spike_diff = 0;
     for i=1:N
         tau_mat = [ ; ; ; ];

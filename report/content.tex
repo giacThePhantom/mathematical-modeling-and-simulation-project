@@ -1,6 +1,14 @@
 \begin{abstract}
+	In this report we present a number of models describing neuronal dynamics.
+	Firstly we present a simple leaky integrate-and-fire model, a fully deterministic representation of the neuron, which equates it to a single resistance-capacitance circuit.
+	The ability of generating spikes in this model is hard coded posing a threshold on the membrane potential.
+	This model is then expanded as to model supra-threshold dynamics, adding to the model a new state variable, the inter-spike time, allowing to model time-dependent changes in the systems parameter.
+	The deterministic model is expanded again to model spike-rate adaptation and synaptic transmission.
+	The deterministic representation of the model doesn't allow to explore channels opening and closing, so we introduce a piecewise stochastic representation for the model.
+	The neuron is then modelled as an hybrid system in which the voltage evolves deterministically in between stochastic channel events.
+	We implemented two representation for the stochastic model: the random time change and Gillespie's direct method.
+	Finally we explored how these two representation differs and propose a methodology to fit them to experimental data.
 \end{abstract}
-
 \input{chapters/01_introduction}
 
 \section{Stochastic representations}
