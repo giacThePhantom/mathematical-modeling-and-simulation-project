@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.11.15)  15 FEB 2023 11:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.12.19)  15 FEB 2023 12:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1403,7 +1403,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 11.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 (Font)              scaled to size 7.0pt on input line 11.
-<unitn_logo.pdf, id=112, 405.515pt x 125.46875pt>
+<unitn_logo.pdf, id=116, 405.515pt x 125.46875pt>
 File: unitn_logo.pdf Graphic file (type pdf)
 <use unitn_logo.pdf>
 Package pdftex.def Info: unitn_logo.pdf  used on input line 11.
@@ -1485,7 +1485,7 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/m/it' aliased to
 (Font)              `T1/SourceSansPro-TLF/regular/it' on input line 62.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/regular/it' will be
 (Font)              scaled to size 10.0pt on input line 62.
-<Figures/integrate-fire.png, id=138, 774.54587pt x 358.20782pt>
+<Figures/integrate-fire.png, id=142, 774.54587pt x 358.20782pt>
 File: Figures/integrate-fire.png Graphic file (type png)
 <use Figures/integrate-fire.png>
 Package pdftex.def Info: Figures/integrate-fire.png  used on input line 100.
@@ -1496,19 +1496,19 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-TLF/semibold/n' will be
 (Font)              scaled to size 8.0pt on input line 101.
 
 [2 <./Figures/integrate-fire.png (PNG copy)>]
-<Figures/supra-threshold.png, id=157, 685.8122pt x 343.2825pt>
+<Figures/supra-threshold.png, id=161, 685.8122pt x 343.2825pt>
 File: Figures/supra-threshold.png Graphic file (type png)
 <use Figures/supra-threshold.png>
 Package pdftex.def Info: Figures/supra-threshold.png  used on input line 158.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
-<Figures/synapse.png, id=161, 685.8122pt x 343.2825pt>
+<Figures/synapse.png, id=165, 685.8122pt x 343.2825pt>
 File: Figures/synapse.png Graphic file (type png)
 <use Figures/synapse.png>
 Package pdftex.def Info: Figures/synapse.png  used on input line 229.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
  [3 <./Figures/supra-threshold.png (PNG copy)> <./Figures/synapse.png (PNG copy
 )>]
-<Figures/stochastic-neuron.png, id=171, 685.8122pt x 343.2825pt>
+<Figures/stochastic-neuron.png, id=175, 685.8122pt x 343.2825pt>
 File: Figures/stochastic-neuron.png Graphic file (type png)
 <use Figures/stochastic-neuron.png>
 Package pdftex.def Info: Figures/stochastic-neuron.png  used on input line 274.
@@ -1535,7 +1535,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 ))
 (./chapters/03_gillespie-representation.tex [6] (./algorithms/gillespie.tex))
 (./chapters/04_morris-lecar.tex [7]
-<Figures/morris-lecar.png, id=213, 685.8122pt x 343.2825pt>
+<Figures/morris-lecar.png, id=217, 685.8122pt x 343.2825pt>
 File: Figures/morris-lecar.png Graphic file (type png)
 <use Figures/morris-lecar.png>
 Package pdftex.def Info: Figures/morris-lecar.png  used on input line 57.
@@ -1550,12 +1550,12 @@ Overfull \hbox (10.98743pt too wide) detected at line 96
 []
  []
 
-<Figures/ml-rtc.png, id=215, 685.8122pt x 343.2825pt>
+<Figures/ml-rtc.png, id=219, 685.8122pt x 343.2825pt>
 File: Figures/ml-rtc.png Graphic file (type png)
 <use Figures/ml-rtc.png>
 Package pdftex.def Info: Figures/ml-rtc.png  used on input line 108.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
-<Figures/ml-gill.png, id=217, 685.8122pt x 343.2825pt>
+<Figures/ml-gill.png, id=221, 685.8122pt x 343.2825pt>
 File: Figures/ml-gill.png Graphic file (type png)
 <use Figures/ml-gill.png>
 Package pdftex.def Info: Figures/ml-gill.png  used on input line 118.
@@ -1567,86 +1567,69 @@ Overfull \hbox (9.62503pt too wide) detected at line 60
 []
  []
 
-<Figures/morris-lecar-4.png, id=231, 685.8122pt x 343.2825pt>
+<Figures/morris-lecar-4.png, id=235, 685.8122pt x 343.2825pt>
 File: Figures/morris-lecar-4.png Graphic file (type png)
 <use Figures/morris-lecar-4.png>
 Package pdftex.def Info: Figures/morris-lecar-4.png  used on input line 79.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
-<Figures/ml-rtc-4.png, id=233, 685.8122pt x 343.2825pt>
+<Figures/ml-rtc-4.png, id=237, 685.8122pt x 343.2825pt>
 File: Figures/ml-rtc-4.png Graphic file (type png)
 <use Figures/ml-rtc-4.png>
 Package pdftex.def Info: Figures/ml-rtc-4.png  used on input line 89.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
-<Figures/ml-gill-4.png, id=235, 685.8122pt x 343.2825pt>
+<Figures/ml-gill-4.png, id=239, 685.8122pt x 343.2825pt>
 File: Figures/ml-gill-4.png Graphic file (type png)
 <use Figures/ml-gill-4.png>
 Package pdftex.def Info: Figures/ml-gill-4.png  used on input line 99.
 (pdftex.def)             Requested size: 247.49997pt x 123.8854pt.
-) [10 <./Figures/morris-lecar-4.png (PNG copy)> <./Figures/ml-rtc-4.png (PNG co
-py)> <./Figures/ml-gill-4.png (PNG copy)>]
-Overfull \hbox (0.80005pt too wide) detected at line 50
-\U/zeur/m/n/10 ^^Z[]\T1/cmr/m/n/10 (\T1/cmr/m/it/10 v\T1/cmr/m/n/10 , \T1/cmr/m
-/it/10 t\T1/cmr/m/n/10 ) = []\T1/cmr/m/it/10 Pr\T1/cmr/m/n/10 {\T1/cmr/m/it/10 
-M\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 ) = \T1/cmr/m/it/10 m\T1/cmr/m
-/n/10 , \T1/cmr/m/it/10 N\T1/cmr/m/n/10 (\T1/cmr/m/it/10 t\T1/cmr/m/n/10 ) = \T
-1/cmr/m/it/10 n\T1/cmr/m/n/10 , \T1/cmr/m/it/10 V \OMS/cmsy/m/n/10 2 \T1/cmr/m/
-n/10 [\T1/cmr/m/it/10 v\T1/cmr/m/n/10 , \T1/cmr/m/it/10 v \T1/cmr/m/n/10 + \T1/
-cmr/m/it/10 dv\T1/cmr/m/n/10 ]}
- []
-
-
-Overfull \hbox (5.40607pt too wide) detected at line 62
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (14.83011pt too wide) in paragraph at lines 81--84
-[]\T1/cmr/m/n/10 (-20) Where $\T1/cmr/m/it/10 (-20) v[]$ \T1/cmr/m/n/10 (-20) a
-nd $\T1/cmr/m/it/10 (-20) v[]$ \T1/cmr/m/n/10 (-20) where cho-sen so that $\T1/
-cmr/m/it/10 (-20) F\T1/cmr/m/n/10 (-20) (\T1/cmr/m/it/10 (-20) v[]\T1/cmr/m/n/1
-0 (-20) , \T1/cmr/m/it/10 (-20) n\T1/cmr/m/n/10 (-20) , \T1/cmr/m/it/10 (-20) m
- \T1/cmr/m/n/10 (-20) >
- []
-
-[11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 176--177
+) (./chapters/06_comparison_piecewise-constant-propensity-approximation.tex
+[10 <./Figures/morris-lecar-4.png (PNG copy)> <./Figures/ml-rtc-4.png (PNG copy
+)> <./Figures/ml-gill-4.png (PNG copy)>]) [11]
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--184
+LaTeX Warning: Reference `section:comparison' on page 12 undefined on input lin
+e 120.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
 
  []
 
-) (./build/principal.bbl) (./appendix.tex [13]
+
+Overfull \hbox (14.53993pt too wide) in paragraph at lines 130--131
+\T1/cmr/m/n/10 (-20) found at []https://github.com/giacThePhantom/mathematical-
+
+ []
+
+) (./build/principal.bbl) (./appendix.tex [12]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 2.
 
-<Figures/1/K_RTC_.png, id=264, 2168.1pt x 1084.05pt>
+<Figures/1/K_RTC_.png, id=263, 2168.1pt x 1084.05pt>
 File: Figures/1/K_RTC_.png Graphic file (type png)
 <use Figures/1/K_RTC_.png>
 Package pdftex.def Info: Figures/1/K_RTC_.png  used on input line 7.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/1/Ca_RTC_.png, id=266, 2168.1pt x 1084.05pt>
+<Figures/1/Ca_RTC_.png, id=265, 2168.1pt x 1084.05pt>
 File: Figures/1/Ca_RTC_.png Graphic file (type png)
 <use Figures/1/Ca_RTC_.png>
 Package pdftex.def Info: Figures/1/Ca_RTC_.png  used on input line 8.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/1/K_GILLESPIE_.png, id=267, 2168.1pt x 1084.05pt>
+<Figures/1/K_GILLESPIE_.png, id=266, 2168.1pt x 1084.05pt>
 File: Figures/1/K_GILLESPIE_.png Graphic file (type png)
 <use Figures/1/K_GILLESPIE_.png>
 Package pdftex.def Info: Figures/1/K_GILLESPIE_.png  used on input line 10.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/1/Ca_GILLESPIE_.png, id=268, 2168.1pt x 1084.05pt>
+<Figures/1/Ca_GILLESPIE_.png, id=267, 2168.1pt x 1084.05pt>
 File: Figures/1/Ca_GILLESPIE_.png Graphic file (type png)
 <use Figures/1/Ca_GILLESPIE_.png>
 Package pdftex.def Info: Figures/1/Ca_GILLESPIE_.png  used on input line 11.
@@ -1660,22 +1643,22 @@ Overfull \hbox (13.1933pt too wide) in paragraph at lines 4--13
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 17.
 
-<Figures/10/K_RTC_.png, id=269, 2168.1pt x 1084.05pt>
+<Figures/10/K_RTC_.png, id=268, 2168.1pt x 1084.05pt>
 File: Figures/10/K_RTC_.png Graphic file (type png)
 <use Figures/10/K_RTC_.png>
 Package pdftex.def Info: Figures/10/K_RTC_.png  used on input line 22.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/10/Ca_RTC_.png, id=270, 2168.1pt x 1084.05pt>
+<Figures/10/Ca_RTC_.png, id=269, 2168.1pt x 1084.05pt>
 File: Figures/10/Ca_RTC_.png Graphic file (type png)
 <use Figures/10/Ca_RTC_.png>
 Package pdftex.def Info: Figures/10/Ca_RTC_.png  used on input line 23.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/10/K_GILLESPIE_.png, id=271, 2168.1pt x 1084.05pt>
+<Figures/10/K_GILLESPIE_.png, id=270, 2168.1pt x 1084.05pt>
 File: Figures/10/K_GILLESPIE_.png Graphic file (type png)
 <use Figures/10/K_GILLESPIE_.png>
 Package pdftex.def Info: Figures/10/K_GILLESPIE_.png  used on input line 25.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/10/Ca_GILLESPIE_.png, id=272, 2168.1pt x 1084.05pt>
+<Figures/10/Ca_GILLESPIE_.png, id=271, 2168.1pt x 1084.05pt>
 File: Figures/10/Ca_GILLESPIE_.png Graphic file (type png)
 <use Figures/10/Ca_GILLESPIE_.png>
 Package pdftex.def Info: Figures/10/Ca_GILLESPIE_.png  used on input line 26.
@@ -1689,22 +1672,22 @@ Overfull \hbox (13.1933pt too wide) in paragraph at lines 19--28
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 33.
 
-<Figures/50/K_RTC_.png, id=273, 2168.1pt x 1084.05pt>
+<Figures/50/K_RTC_.png, id=272, 2168.1pt x 1084.05pt>
 File: Figures/50/K_RTC_.png Graphic file (type png)
 <use Figures/50/K_RTC_.png>
 Package pdftex.def Info: Figures/50/K_RTC_.png  used on input line 38.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/50/Ca_RTC_.png, id=274, 2168.1pt x 1084.05pt>
+<Figures/50/Ca_RTC_.png, id=273, 2168.1pt x 1084.05pt>
 File: Figures/50/Ca_RTC_.png Graphic file (type png)
 <use Figures/50/Ca_RTC_.png>
 Package pdftex.def Info: Figures/50/Ca_RTC_.png  used on input line 39.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/50/K_GILLESPIE_.png, id=275, 2168.1pt x 1084.05pt>
+<Figures/50/K_GILLESPIE_.png, id=274, 2168.1pt x 1084.05pt>
 File: Figures/50/K_GILLESPIE_.png Graphic file (type png)
 <use Figures/50/K_GILLESPIE_.png>
 Package pdftex.def Info: Figures/50/K_GILLESPIE_.png  used on input line 41.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/50/Ca_GILLESPIE_.png, id=276, 2168.1pt x 1084.05pt>
+<Figures/50/Ca_GILLESPIE_.png, id=275, 2168.1pt x 1084.05pt>
 File: Figures/50/Ca_GILLESPIE_.png Graphic file (type png)
 <use Figures/50/Ca_GILLESPIE_.png>
 Package pdftex.def Info: Figures/50/Ca_GILLESPIE_.png  used on input line 42.
@@ -1718,22 +1701,22 @@ Overfull \hbox (13.1933pt too wide) in paragraph at lines 35--44
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 48.
 
-<Figures/100/K_RTC_.png, id=277, 2168.1pt x 1084.05pt>
+<Figures/100/K_RTC_.png, id=276, 2168.1pt x 1084.05pt>
 File: Figures/100/K_RTC_.png Graphic file (type png)
 <use Figures/100/K_RTC_.png>
 Package pdftex.def Info: Figures/100/K_RTC_.png  used on input line 53.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/100/Ca_RTC_.png, id=278, 2168.1pt x 1084.05pt>
+<Figures/100/Ca_RTC_.png, id=277, 2168.1pt x 1084.05pt>
 File: Figures/100/Ca_RTC_.png Graphic file (type png)
 <use Figures/100/Ca_RTC_.png>
 Package pdftex.def Info: Figures/100/Ca_RTC_.png  used on input line 54.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/100/K_GILLESPIE_.png, id=279, 2168.1pt x 1084.05pt>
+<Figures/100/K_GILLESPIE_.png, id=278, 2168.1pt x 1084.05pt>
 File: Figures/100/K_GILLESPIE_.png Graphic file (type png)
 <use Figures/100/K_GILLESPIE_.png>
 Package pdftex.def Info: Figures/100/K_GILLESPIE_.png  used on input line 56.
 (pdftex.def)             Requested size: 231.7462pt x 115.87144pt.
-<Figures/100/Ca_GILLESPIE_.png, id=280, 2168.1pt x 1084.05pt>
+<Figures/100/Ca_GILLESPIE_.png, id=279, 2168.1pt x 1084.05pt>
 File: Figures/100/Ca_GILLESPIE_.png Graphic file (type png)
 <use Figures/100/Ca_GILLESPIE_.png>
 Package pdftex.def Info: Figures/100/Ca_GILLESPIE_.png  used on input line 57.
@@ -1745,27 +1728,30 @@ Overfull \hbox (13.1933pt too wide) in paragraph at lines 50--59
 
 ) 
 AED: lastpage setting LastPage
-[14
+[13
 
  <./Figures/1/K_RTC_.png> <./Figures/1/Ca_RTC_.png> <./Figures/1/K_GILLESPIE_.p
-ng> <./Figures/1/Ca_GILLESPIE_.png>] [15 <./Figures/10/K_RTC_.png> <./Figures/1
+ng> <./Figures/1/Ca_GILLESPIE_.png>] [14 <./Figures/10/K_RTC_.png> <./Figures/1
 0/Ca_RTC_.png> <./Figures/10/K_GILLESPIE_.png> <./Figures/10/Ca_GILLESPIE_.png>
  <./Figures/50/K_RTC_.png> <./Figures/50/Ca_RTC_.png> <./Figures/50/K_GILLESPIE
-_.png> <./Figures/50/Ca_GILLESPIE_.png>] [16 <./Figures/100/K_RTC_.png> <./Figu
+_.png> <./Figures/50/Ca_GILLESPIE_.png>] [15 <./Figures/100/K_RTC_.png> <./Figu
 res/100/Ca_RTC_.png> <./Figures/100/K_GILLESPIE_.png> <./Figures/100/Ca_GILLESP
 IE_.png>] (./build/principal.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `principal.out' has not changed.
-(rerunfilecheck)             Checksum: 31037C9F7FD868BE01F85A1F469143BC;6014.
+(rerunfilecheck)             Checksum: E22A7C85D267D19297067D5EA942F4E3;6050.
  ) 
 Here is how much of TeX's memory you used:
- 27430 strings out of 478238
- 502044 string characters out of 5850455
- 855340 words of memory out of 5000000
- 44752 multiletter control sequences out of 15000+600000
- 604852 words of font info for 285 fonts, out of 8000000 for 9000
+ 27437 strings out of 478238
+ 502528 string characters out of 5850455
+ 855239 words of memory out of 5000000
+ 44756 multiletter control sequences out of 15000+600000
+ 604906 words of font info for 285 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  87i,22n,131p,1676b,895s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/t
@@ -1777,25 +1763,25 @@ sourcesanspro/SourceSansPro-Semibold.pfb></usr/share/texmf-dist/fonts/type1/ado
 be/sourcesanspro/SourceSansPro-SemiboldIt.pfb></usr/share/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
-fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm7.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-dist/fonts/type1/
-public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super
-/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><
-/usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texm
-f-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/ty
-pe1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
-uper/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfti1000.p
-fb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on ./build/principal.pdf (16 pages, 9065181 bytes).
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/
+eurm10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/euler/eurm7.pfb><
+/usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/shar
+e/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-d
+ist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf-dist/fonts/type1
+/public/cm-super/sfrm0600.pfb></usr/share/texmf-dist/fonts/type1/public/cm-supe
+r/sfrm0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb>
+</usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/tex
+mf-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/cm-super/sfti0800.pfb></usr/share/texmf-dist/fonts/type1/public/cm-
+super/sfti1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1000.
+pfb>
+Output written on ./build/principal.pdf (15 pages, 9050248 bytes).
 PDF statistics:
- 442 PDF objects out of 1000 (max. 8388607)
- 325 compressed objects within 4 object streams
+ 438 PDF objects out of 1000 (max. 8388607)
+ 324 compressed objects within 4 object streams
  75 named destinations out of 1000 (max. 500000)
- 78688 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 78696 words of extra memory for PDF output out of 89155 (max. 10000000)
 

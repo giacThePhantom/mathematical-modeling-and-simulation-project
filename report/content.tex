@@ -4,7 +4,7 @@
 	The ability of generating spikes in this model is hard coded posing a threshold on the membrane potential.
 	This model is then expanded as to model supra-threshold dynamics, adding to the model a new state variable, the inter-spike time, allowing to model time-dependent changes in the systems parameter.
 	The deterministic model is expanded again to model spike-rate adaptation and synaptic transmission.
-	The deterministic representation of the model doesn't allow to explore channels opening and closing, so we introduce a piecewise stochastic representation for the model.
+	The deterministic representation of the model doesn't allow to explore channels dynamics, so we introduce a piecewise stochastic representation for the model.
 	The neuron is then modelled as an hybrid system in which the voltage evolves deterministically in between stochastic channel events.
 	We implemented two representation for the stochastic model: the random time change and Gillespie's direct method.
 	Finally we explored how these two representation differs and propose a methodology to fit them to experimental data.
@@ -19,68 +19,7 @@
 
 \input{chapters/05_more-than-one-channel-type}
 
-\section{Comparison of the exact algorithm with a piecewise constant propensity approximation}
-\label{section:comparison}
-The most common implementation for hybrid ion channel models is an approximate method in which the per capita reaction propensities are held fixed between channel events: in particular in algorithm \ref{algo:random-time-change-sim}, $\int_t^{t+\Delta k}\lambda_k(V(s), X(s))ds$ is replaced with $\Delta_k\lambda_k(V(t), X(t))$, leaving the remainder unchanged.
-In this type of algorithms the sequence of channel states jumps is generated using the propensity immediately following the most recent jump rather than taking into account the time dependence of the reaction propensities due to the changing voltage.
-This is analogous to the forward Euler method for the numerical solution of ordinary differential equations.
-The solution of a stochastic differential equation with a given initial condition is a map from the sample space $\Omega$ to a space of trajectories.
-In this context $\Omega$ is one independent unit rate Poisson process per reaction channel.
-For the planar model a point in $\Omega$ amounts to fixing two Poisson process, $Y_{open}$ and $Y_{closed}$ to drive the transitions of the potassium channels.
-For the full 3D model there are four processes:
-
-\begin{multicols}{2}
-	\begin{itemize}
-		\item $Y_1 \equiv Y_{Ca, open}$.
-		\item $Y_2 \equiv Y_{Ca, closed}$.
-		\item $Y_3 \equiv Y_{K, open}$.
-		\item $Y_4 \equiv Y_{K, closed}$.
-	\end{itemize}
-\end{multicols}
-
-The exact algorithm provides a numerical solution of the map from $\{Y_k\}_{k=1}^4\in\Omega$ and initial conditions $(M_0, N_0, V_0)$ to the trajectory $(M(t), N(t), V(t))$.
-The approximate piecewise algorithm gives a map from the same domain to a different trajectory $(\tilde{M}(t), \tilde{N}(t), \tilde{V}(t)$.
-To make a pathways comparison the initial condition and the four Poisson processes are fixed and the resulting trajectories are compared.
-Both algorithms produce a sequence of noise-dependent voltage spike with similar firing rates.
-The two trajectories remain close together initially and the timing for the first spike is similar for both.
-Over time discrepancies between the trajectories accumulate: the timing of the second and third spikes is different and before ten spikes the spike trains have become uncorrelated.
-Even though the trajectories diverge the two processes could still generate sample paths with similar time-dependent or stationary distributions: the two algorithms could still be close in a weak sense.
-Given $M_{tot}$ and $N_{tot}$ the density for the hybrid Markov process can be written as:
-
-$$\rho_{m,n}(v,t) = \frac{1}{dv}Pr\{M(t) = m, N(t) = n, V\in[v, v+dv]\}$$
-
-Obeying the master equation:
-
-\begin{align*}
-	\frac{\partial\rho_{m, n}(v, t)}{\partial t} =& - \frac{\partial(F(v, n, m)\rho_{m, n}(v, t))}{\partial v} +\\
-																								&-(\alpha_m(v)(M_{tot}-m)+\beta_m(v)m+\\
-																								&+\alpha_n(v)\cdot(N_{tot}-m)+\beta_n(v)n)\rho_{m, n}(v, t)+\\
-																								&+(M_{tot}-m+1)\alpha_m(v)\rho_{m-1, n}(v, t)+\\
-																								&+(m+1)\beta_m(v)\rho_{m+1, n}(v, t)+\\
-																								&+(N_{tot}-n+1)\alpha_n(v)\rho_{m, n-1}(v,t)+\\
-																								&+(n+1)\beta_n(v)\rho_{m, n+1}(v, t)
-\end{align*}
-
-With initial condition $\rho_{m,n}(v,0)\ge 0$ given by any integrable density such that $\in_{v\in\mathbb{R}}\sum\limits_{m,n}\rho_{m, n}(v, 0)dv \equiv 1$ and boundary conditions:$\rho\rightarrow 0$ as $|v|\rightarrow\infty$ and $\rho\equiv 0$ for either $m, n<0$ or $m> M_{tot}$ or $n>N_{tot}$.
-The approximate algorithm does not generate a Markov process since the transition probabilities depend on the past rather than the present value of the voltage.
-Because of this they do not satisfy the master equation, but it is plausible that they may have a unique stationary distributoin.
-
-Looking the histograms in the $(v, n)$ plane with entries summed over $m$.
-The algorithms were run with independent randomm number streams in the limit cycle regime ($I_{app} = 100$) fir $I_{max} \approx 200000$ time units, sampled every $10$.
-Considering $N_{tot} = M_{tot} = k$, for $k<5$ the difference is obvious, while increasing $k$ the histograms become more and more similar.
-
-Looking now at bar plots of the histograms with points projected on the voltage axis: entries summed over $m$ and $n$, the plots become increasingly similar the greater the $k$>
-
-To quantify the similarity of the histogram the empirical $L_1$ difference between them has been computed.
-For the full $(v, n, m)$ histograms and then for the collapsed voltage axis.
-Let $\rho_{m,n}(v)$ and $\tilde{\rho}_{m, n}(v)$ denote the stationary distributions for the exact and approximate algorithms respectively.
-To compare the two the $L_1$ distance between them is approximated:
-
-$$d(\rho,\tilde{\rho}) = \int_{v_{\min}}^{v{\max}}\biggl(\sum\limits_{m=0}^{M_{tot}}\sum\limits_{n=0}^{N_{tot}}|\rho_{m, n}(v)-\tilde{\rho}_{m,n}(v)|\biggr)dv$$
-
-Where $v_{min}$ and $v_{max}$ where chosen so that $F(v_{min}, n, m>0\land F(v_{max}, n, m)<0\forall m,n$.
-Such value must exist since $F(v,n,m)$ is linear and monotonically decreasing for $v$ for any fixed pair of $(n,m)$.
-For any exact simulation algorithm, once the voltage component falls between $v_{min}\le v \le v_{max}$ it remains in that interval for all time.
+\input{chapters/06_comparison_piecewise-constant-propensity-approximation}
 
 \section{Coupling, variance reduction and parametric sensitivities}
 The random time change formalism can be used to develop new and faster computational methods with no loss in accuracy coupling two processes in order to reduce the variance and increase the speed of different natural estimatore.
@@ -149,12 +88,13 @@ $$\tilde{s}(\theta_i, \theta_j) = (g(\theta_i, V, X), g(\theta_j, V, X): \theta_
 
 Then, to uncover the sensitivity with respect to each channel we summed over the variations of the other one and averaged over each step increase:
 
-$$\langle\tilde{s}(\theta_i, \theta_j)\rangle = \frac{1}{11}\sum\limits_{i}^{10}\tilde{s}(\theta_{N_k = N_K[i]}\theta_{N_K= N_K[i+1]})$$
+$$\tilde{s}_{N_k[i], N_k[i+1]} = \langle\tilde{s}(\theta_{N_k[i]}, \theta_{N_k[i+1]})\rangle$$
 
-Analogously for $N_{Ca}$.
 Then we computed the average sensitivity for each step increase as:
 
-$$S = \langle\langle\tilde{s}(\theta_i,\theta_j\rangle\rangle$$
+$$S_K = \langle\tilde{s}_{N_k[i], N_k[i+1]}\rangle = \frac{1}{11}\sum\limits_{i=1}^{10}\tilde{s}_{N_k[i], N_k[i+1]}$$
+
+Analogously for $N_{Ca}$.
 
 	\subsection{The common random number method}
 	The common random number CRN method simulates processes according to Gillespie representation with the same Poisson process $Y$ and the same stream of random variables $\{\epsilon_i\}$. For this method:
@@ -173,21 +113,24 @@ $$S = \langle\langle\tilde{s}(\theta_i,\theta_j\rangle\rangle$$
 \section{Discussion}
 \label{section:discussion}
 
-In this report we present the random time change representation and the Gillespie representation as useful methods for computational neuroscience simulations of the Morris-Lecar model. We focus specifically on the suprathreshold regime of the Morris-Lecar model, in which the applied current puts the system above the Hoph bifurcation marking onset of oscillations: spiking is not the result of noise-facilitated release. \\ 
+In this report we present the random time change representation and the Gillespie representation as useful methods for computational neuroscience simulations of the Morris-Lecar model. We focus specifically on the suprathreshold regime of the Morris-Lecar model, in which the applied current puts the system above the Hoph bifurcation marking onset of oscillations: spiking is not the result of noise-facilitated release. \\
 
 The Gillespie representation can be extended in this case to take into account ion channels driven by the time-varying membrane potential. On the other hand, the random time change simulation allows for generalization of computational methods developed in the context of biochemistry, in which the propensities depend upon the state of the jump process only, so that variance reduction strategies become feasible. The random time change approach avoids several approximations: for example in simulation algorithms based on a fixed time step chemical Langevin approach, it is necessary to assume that the increments in channel state are Gaussian distributed over an appropriate time interval. The random time change representation extends naturally to scenarios in which each channel has a greater number of states. \\
 
-A closer look to the data reported in \ref{section:comparison}: 
+A closer look to the data reported in \ref{section:comparison}:
 \begin{itemize}
-	\item reveals that both types of simulations are behaving as expected, with the potassium channels being more sensitive than the calcium ones to the variations of parameters (the number of maximum channels for each channel type) in both types of simulations (biological reason? speed of activation?). 
-	\item shows how the Gillespie simulation seems to be less sensitive to the variations of number of channels, both both types of channels.\\
+	\item reveals that both types of simulations are behaving as expected, with the potassium channels being more sensitive than the calcium ones to the variations of parameters (the number of maximum channels for each channel type) in both types of simulations, justifying the planar approximation of the Morris Lecar model.
+	\item shows how the Gillespie simulation seems to be more sensitive to the variations of number of channels, both both types of channels.\\
 	\item opens up to the possibility of introducing variance reduction strategies and parameter optimization
 \end{itemize}
 
-It's important to also highlight that the algorithms presented in this report are applicable beyond the effects of channel noise on the regularity of action potential firing in a single compartment neuron model. Exact simulation of hybrid stochastic models have been used to study spontaneous dendritic NMDA spikes and intracellular growth of the T7 bacteriophage. 
+It's important to also highlight that the algorithms presented in this report are applicable beyond the effects of channel noise on the regularity of action potential firing in a single compartment neuron model. Exact simulation of hybrid stochastic models have been used to study spontaneous dendritic NMDA spikes and intracellular growth of the T7 bacteriophage.
+
+\section{Data availability}
+All the models were implemented in Matlab and can be found at \href{https://github.com/giacThePhantom/mathematical-modeling-and-simulation-project}{https://github.com/giacThePhantom/mathematical-modeling-and-simulation-project}.
 
 
 % \begin{figure}[hbt!]
-% \centeringthe potassium channels are more sensitive than the calcium ones to the variations of parameters (in this case the number of maximum channels for each channel type) in both types of simulations (biological reason? speed of activation?). 
+% \centeringthe potassium channels are more sensitive than the calcium ones to the variations of parameters (in this case the number of maximum channels for each channel type) in both types of simulations (biological reason? speed of activation?).
 % \label{volcano}
 % \end{figure}
