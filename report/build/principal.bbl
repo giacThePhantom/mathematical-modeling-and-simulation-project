@@ -10,13 +10,6 @@ Variable order method.
 \newblock \url{https://it.mathworks.com/help/matlab/ref/ode15s.html}.
 \newblock Accessed: \today.
 
-\bibitem{spike-detection}
-A.~Choong.
-\newblock spike\_detection(spike\_data,threshold).
-\newblock {\em
-  \url{https://www.mathworks.com/matlabcentral/fileexchange/64799-spike\_detection-spike\_data-threshold}},
-  2023.
-
 \bibitem{stochastic-neuron}
 L.~Harrison, O.~David, and K.~Friston.
 \newblock Stochastic models of neuronal dynamics.
