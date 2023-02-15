@@ -140,7 +140,7 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 		After that it will increase constantly for $V_R<V<V_T$.
 		The membrane potential is coupled to $T$ via the Gaussian factor $\beta$, centred at $T=0$ and with a small dispersion $\gamma=1ms$.
 		During the first few millisecond this term provides a brief impulse to clam the membrane potential near to $V_R$ modelling the refractory period.
-		We implemented this model in Matlab solving the system of equation with the variable order method \emph{ode15s}, expanding the parameter of the leaky integrate and fire with:
+		We implemented this model in Matlab solving the system of equation with the variable order method \emph{ode15s} \cite{ode15s}, expanding the parameter of the leaky integrate and fire with:
 
 		\begin{multicols}{2}
 			\begin{itemize}
@@ -199,7 +199,7 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 
 		The rate of closing is proportional to $x_i$, while the rate of opening will be proportional to $1-x_i$.
 		Synaptic inputs is taken in consideration by increasing the opening rate of AMPA channels instead of affecting $V$ directly.
-		We implemented this model with the same variable order method \emph{ode15s} in Matlab as the supra-threshold one, adding to its parameters:
+		We implemented this model with the same variable order method \emph{ode15s} \cite{ode15s} in Matlab as the supra-threshold one, adding to its parameters:
 
 		\begin{multicols}{2}
 			\begin{itemize}
@@ -228,7 +228,7 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 		\begin{figure}
 			\includegraphics[width=\textwidth]{Figures/synapse}
 			\caption{Trajectory of the synaptic dynamics model. From top to bottom \textbf{1} Membrane voltage, \textbf{2} Inter spike time. \textbf{3} Percentage of open Potassium channels. \textbf{4} Percentage of open AMPA channels. \textbf{5} Percentage of open GABA channels. \textbf{6} Percentage of open NMDA channels. \textbf{7} Input current.}
-			\label{fig:synapse}
+			\label{fig:synapses}
 		\end{figure}
 
 		It can be seen from this how $T$ behave as previously, while the state of the channels cause a different response as before.
@@ -297,7 +297,7 @@ The use of the PDMP formalism allowed the formulation of limit theorems, dimensi
 	Because of this this work should contribute in a way to:
 
 	\begin{itemize}
-		\item Formulate two pathwise representations for the specific models under consideration.
+		\item Formulate two path-wise representations for the specific models under consideration.
 		\item A presentation of the corresponding exact simulation strategies for the different representations.
 		\item A comparison of the two strategies applied on the Morris-Lecar model.
 	\end{itemize}
